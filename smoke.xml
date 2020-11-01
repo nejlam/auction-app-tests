@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Smoke test" verbose="9">
+    <parameter name="url" value="https://auction-app-test.netlify.app/"/>
+    <parameter name="browser" value="chrome"/>
+
+    <test name="Make Reservation">
+        <classes>
+            <class name="smoke.RegisterAccount"/>
+        </classes>
+    </test>
+
+</suite>
