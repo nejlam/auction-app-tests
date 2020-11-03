@@ -35,8 +35,6 @@ public class AccountPage extends PageBase {
     }
 
     public Boolean verifySuccessMessage(String successMessage){
-        if(!successMessage.equals(getSuccessMessage().getText()))
-            System.out.println("Actual message: "+getSuccessMessage().getText()+"Expected message: "+successMessage);
         return getSuccessMessage().getText().contains(successMessage);
     }
 }
