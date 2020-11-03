@@ -11,6 +11,7 @@ public class HomePage extends PageBase {
     final static private String LOGIN_LINK_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[1]";
     final static private String CREATE_ACCOUNT_LINK_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[2]";
     final static private String HOME_PAGE_LINK = "//*[@id='root']/div/div[2]/div[2]/a[1]";
+    final static private String FEATURED_PRODUCT = "//*[@id='root']/div/div[3]/div[1]/div[2]/div/button";
 
 
     public HomePage(WebDriver driver){
@@ -27,6 +28,9 @@ public class HomePage extends PageBase {
     @FindBy(xpath = HOME_PAGE_LINK)
     private WebElement homepageLink;
 
+    @FindBy(xpath = FEATURED_PRODUCT)
+    private WebElement featuredProduct;
+
     public WebElement getHomepageLink(){
         return homepageLink;
     }
@@ -37,6 +41,10 @@ public class HomePage extends PageBase {
 
     public WebElement getCreateAccountLink(){
         return createAccountLink;
+    }
+
+    public WebElement getFeaturedProduct(){
+        return featuredProduct;
     }
 
     public RegistrationPage clickCreateAccountLink(){
@@ -55,4 +63,8 @@ public class HomePage extends PageBase {
         return classValue.contains(attributeValue);
     }
 
+    public ItemPage clickOnFirstProduct(){
+        getFeaturedProduct().click();
+        return new ItemPage(getDriver());
+    }
 }
