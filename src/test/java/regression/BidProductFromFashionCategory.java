@@ -49,11 +49,11 @@ public class BidProductFromFashionCategory extends TestBase {
     }
 
     @Test(priority = 6)
-    public void selectFirstItem(){
-        new ShopPage(driver).clickFirstItem();
+    public void selectRandomItem(){
+        new ShopPage(driver).selectRandomProduct();
     }
 
-    //Verify first item
+    //Verify item
 
     @Test(priority = 8)
     public void placeBid() throws InterruptedException {

@@ -43,7 +43,6 @@ public class PlaceBid extends TestBase {
         Assert.assertTrue((new HomePage(driver)).verifyHomepageLink(ACTIVE_LINK_ATTRIBUTE_VALUE));
     }
 
-
     @Test(priority = 4)
     public void clickFeaturedProduct(){
         new HomePage(driver).clickOnFirstProduct();
