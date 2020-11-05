@@ -12,9 +12,9 @@ public class ItemPage extends PageBase {
     final static private String FEATURED_IMG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/img[1]";
     final static private String ADD_BID_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div/input";
     final static private String PLACE_BID_BTN = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/button";
-    final static private String START_PRICE_MSG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/div";
+    final static private String START_PRICE_MSG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div/div";
     final static private String PRODUCT_TITLE = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/h1";
-    final static private String ALERT_MSG_XPATH = "//*[@id=\"root\"]/div/div[3]";
+    final static private String ALERT_MSG_CLASS = "alert";
 
     public ItemPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -36,7 +36,7 @@ public class ItemPage extends PageBase {
     @FindBy(xpath = PRODUCT_TITLE)
     private WebElement productTitle;
 
-    @FindBy(xpath = ALERT_MSG_XPATH)
+    @FindBy(className = ALERT_MSG_CLASS)
     private WebElement alertMsg;
 
     public WebElement getAlertMsg(){
@@ -79,8 +79,6 @@ public class ItemPage extends PageBase {
         WebDriverWait wait = new WebDriverWait(getDriver(),30);
         wait.until(ExpectedConditions.elementToBeClickable(getAddBidInput()));
         getAddBidInput().sendKeys(getItemStartValue());
-        //logs the product's name
-        System.out.println(getProductTitle().getText());
         wait.until(ExpectedConditions.elementToBeClickable(getPlaceBidBtn()));
         if(getPlaceBidBtn().isEnabled()) {
             getPlaceBidBtn().click();
@@ -88,9 +86,7 @@ public class ItemPage extends PageBase {
     }
 
     public String getItemStartValue(){
-        String startPriceValue = extractStartPriceValue().replaceAll("\\D+","");
-        //logs product's start price
-        System.out.println(startPriceValue);
+        String startPriceValue = extractStartPriceValue().replaceAll("[^0-9?!\\.]","");
         return startPriceValue;
     }
 }
