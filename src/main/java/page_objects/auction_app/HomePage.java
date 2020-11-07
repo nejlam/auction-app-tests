@@ -1,5 +1,6 @@
 package page_objects.auction_app;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 
 import java.util.List;
+import java.util.Random;
 
 public class HomePage extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/";
@@ -16,6 +18,7 @@ public class HomePage extends PageBase {
     final static private String HOME_PAGE_LINK = "//*[@id='root']/div/div[2]/div[2]/a[1]";
     final static private String FEATURED_PRODUCT = "//*[@id='root']/div/div[3]/div[1]/div[2]/div/button";
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
+    final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
 
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -36,6 +39,13 @@ public class HomePage extends PageBase {
 
     @FindBy(xpath = CATEGORIES_LIST_XPATH)
     private List<WebElement> categoriesList;
+
+    @FindBy(xpath = FEATURED_PRODUCTS_LIST_XPATH)
+    private List<WebElement> featuredProductsList;
+
+    public List<WebElement> getFeaturedProductsList() {
+        return featuredProductsList;
+    }
 
     public List<WebElement> getCategoriesList() {
         return categoriesList;
@@ -60,6 +70,7 @@ public class HomePage extends PageBase {
     public ShopPage clickCategory(int index){
         WebDriverWait wait = new WebDriverWait(getDriver(), 20);
         wait.until(ExpectedConditions.visibilityOfAllElements(getCategoriesList()));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[1]/div[1]/button"), 7));
         getCategoriesList().get(index).click();
         return new ShopPage(getDriver());
     }
@@ -81,6 +92,19 @@ public class HomePage extends PageBase {
 
     public ItemPage clickOnFirstProduct(){
         getFeaturedProduct().click();
+        return new ItemPage(getDriver());
+    }
+
+    public ItemPage selectRandomFeaturedProduct(){
+        // Find and click on a random product
+        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+        wait.until(ExpectedConditions.visibilityOfAllElements(getFeaturedProductsList()));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3"), 3));
+
+        List<WebElement> allProducts = getFeaturedProductsList();
+        Random rand = new Random();
+        int randomProduct = rand.nextInt(allProducts.size());
+        allProducts.get(randomProduct).click();
         return new ItemPage(getDriver());
     }
 }
