@@ -4,15 +4,16 @@
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
 
+    <!--
     <test name="Bid product from Fashion Category">
         <classes>
             <class name="regression.BidProductFromFashionCategory"/>
         </classes>
     </test>
-    <!--
+    !-->
     <test name="Verify Item page">
         <classes>
             <class name="regression.VerifyItemPage"/>
         </classes>
-    </test> !-->
+    </test>
 </suite>

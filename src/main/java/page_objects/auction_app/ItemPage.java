@@ -1,7 +1,5 @@
 package page_objects.auction_app;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +26,8 @@ public class ItemPage extends PageBase {
     final static private String LOGIN_BTN_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[1]";
     final static private String BIDS_TABLE_XPATH = "//*[@id='root']/div/div[3]/div[2]/table";
     final static private String HIGHEST_BID_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[3]/span";
+    final static private String HIGHEST_BID_TABLE_XPATH = "//*[@id='root']/div/div[3]/div[2]/table/tbody/tr[1]/td[3]";
+    final static private String ALERT_CLOSE_BTN = "//*[@id='root']/div/div[3]/button";
 
     WebDriverWait wait = new WebDriverWait(getDriver(),30);
 
@@ -80,6 +80,20 @@ public class ItemPage extends PageBase {
 
     @FindBy(xpath = HIGHEST_BID_XPATH)
     private WebElement highestBid;
+
+    @FindBy(xpath = HIGHEST_BID_TABLE_XPATH)
+    private WebElement highestBidTable;
+
+    @FindBy(xpath = ALERT_CLOSE_BTN)
+    private WebElement alertCloseBtn;
+
+    public WebElement getAlertCloseBtn(){
+        return alertCloseBtn;
+    }
+
+    public WebElement getHighestBidFromTable(){
+        return highestBidTable;
+    }
 
     public WebElement getHighestBid(){
         return highestBid;
@@ -198,14 +212,23 @@ public class ItemPage extends PageBase {
         return getBidsTable().isDisplayed();
     }
 
+    public Boolean verifyHighestBidInTable() {
+        System.out.println("Highest bid is: " + getHighestBidFromTable().getText() + "end");
+        return getHighestBidFromTable().getText().equals("$" + getNewHighestBidValue());
+    }
+
+    //METHODS
+
+    public void closeAlertBtn(){
+        getAlertCloseBtn().click();
+    }
+
     public LoginPage clickLoginButton(){
         getLoginBtn().click();
         return new LoginPage(getDriver());
     }
 
-    public void placeBid(String bidValue) throws InterruptedException {
-        Thread.sleep(10000);
-        wait.until(ExpectedConditions.elementToBeClickable(getAddBidInput()));
+    public void placeBid(String bidValue){
         getAddBidInput().sendKeys(getBidValue(bidValue));
         //logs the product's name
         System.out.println(getProductTitle().getText());
@@ -213,10 +236,16 @@ public class ItemPage extends PageBase {
     }
 
     private void clickBidButton(){
-        wait.until(ExpectedConditions.elementToBeClickable(getPlaceBidBtn()));
         if(getPlaceBidBtn().isEnabled()) {
             getPlaceBidBtn().click();
         }
+    }
+
+    public String getNewHighestBidValue(){
+        double HighestValue = Double.parseDouble(getBidValue(extractHighestBid()));
+        double newHighestValueDouble = HighestValue + 0.1;
+        String newHighestValue = String.valueOf(newHighestValueDouble);
+        return newHighestValue;
     }
 
     private String getBidValue(String bidMsg) {
