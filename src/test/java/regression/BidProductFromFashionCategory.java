@@ -14,8 +14,6 @@ public class BidProductFromFashionCategory extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String PASSWORD = "11111111";
     final static private String EMAIL = "bethharmon@gmail.com";
-    int fashionCategoryIndex = 0;
-    final static private String FASHION = "FASHION";
 
 
     @Test(priority = 0)
@@ -39,14 +37,14 @@ public class BidProductFromFashionCategory extends TestBase {
     }
 
     @Test(priority = 4)
-    public void selectCategory(){
-        new HomePage(driver).clickCategory(fashionCategoryIndex);
+    public void selectRandomCategory(){
+        new HomePage(driver).clickRandomCategory();
     }
 
-    @Test(priority = 5)
+    /*@Test(priority = 5)
     public void verifyCategory(){
         Assert.assertTrue(new ShopPage(driver).verifyCategoryPage(FASHION));
-    }
+    }*/
 
     @Test(priority = 6)
     public void selectRandomItem(){
@@ -57,7 +55,7 @@ public class BidProductFromFashionCategory extends TestBase {
 
     @Test(priority = 8)
     public void placeBid() throws InterruptedException {
-        new ItemPage(driver).placeBid();
+        new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
     }
 
     @Test(priority = 9)

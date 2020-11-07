@@ -55,11 +55,12 @@ public class PlaceBid extends TestBase {
 
     @Test(priority = 6)
     public void placeBid() throws InterruptedException {
-        new ItemPage(driver).placeBid();
+        new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
     }
 
     @Test(priority = 7)
     public void verifyAlertMsg(){
         Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
     }
+
 }

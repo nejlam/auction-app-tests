@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RegisterAccount extends TestBase {
-    final static private String FIRST_NAME = "Bethara";
+    final static private String FIRST_NAME = "Beth";
     final static private String LAST_NAME = "Harmon";
     final static private String EMAIL = "betharmon@gmail.com";
     final static private String PASSWORD = "12345678";

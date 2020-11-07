@@ -20,6 +20,8 @@ public class HomePage extends PageBase {
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
     final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
 
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
@@ -68,7 +70,6 @@ public class HomePage extends PageBase {
     }
 
     public ShopPage clickCategory(int index){
-        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
         wait.until(ExpectedConditions.visibilityOfAllElements(getCategoriesList()));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[1]/div[1]/button"), 7));
         getCategoriesList().get(index).click();
@@ -95,9 +96,19 @@ public class HomePage extends PageBase {
         return new ItemPage(getDriver());
     }
 
+    public ShopPage clickRandomCategory(){
+        wait.until(ExpectedConditions.visibilityOfAllElements(getFeaturedProductsList()));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3"), 3));
+
+        List<WebElement> allCategories = getCategoriesList();
+        Random rand = new Random();
+        int randomProduct = rand.nextInt(allCategories.size()-1);
+        allCategories.get(randomProduct).click();
+        return new ShopPage(getDriver());
+    }
+
     public ItemPage selectRandomFeaturedProduct(){
         // Find and click on a random product
-        WebDriverWait wait = new WebDriverWait(getDriver(), 20);
         wait.until(ExpectedConditions.visibilityOfAllElements(getFeaturedProductsList()));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3"), 3));
 

@@ -9,4 +9,10 @@
             <class name="regression.BidProductFromFashionCategory"/>
         </classes>
     </test>
+    <!--
+    <test name="Verify Item page">
+        <classes>
+            <class name="regression.VerifyItemPage"/>
+        </classes>
+    </test> !-->
 </suite>
