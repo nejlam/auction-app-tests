@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Regression tests" verbose="9">
+<suite name="Regression tests" verbose="9" parallel="tests">
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
 
