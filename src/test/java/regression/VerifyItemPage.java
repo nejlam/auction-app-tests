@@ -10,7 +10,7 @@ import testUtils.TestBase;
 
 public class VerifyItemPage extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
-    final static private String EMAIL = "bethharmon@gmail.com";
+    final static private String EMAIL = "betharmon@gmail.com";
     final static private String PASSWORD = "11111111";
 
     @Test(priority = 0)
@@ -21,11 +21,6 @@ public class VerifyItemPage extends TestBase {
     @Test(priority = 1)
     public void selectItemFromFeaturedProducts(){
         new HomePage(driver).selectRandomFeaturedProduct();
-    }
-
-    @Test(priority = 2)
-    public void verifyItemTitle(){
-
     }
 
     @Test(priority = 3)
@@ -78,36 +73,46 @@ public class VerifyItemPage extends TestBase {
         new LoginPage(driver).populateLoginForm(EMAIL, PASSWORD);
     }
 
-    @Test (priority = 13)
-    public void addStartPriceBid(){
-        new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
+    @Test(priority = 13)
+    public void addToWishlist(){
+        new ItemPage(driver).clickWishlistBtn();
     }
 
     @Test(priority = 14)
-    public void verifyAlert(){
+    public void verifyAlertBtn(){
+        Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
+        new ItemPage(driver).closeAlertBtn();
+    }
+
+    @Test (priority = 15)
+    public void placeStartPriceBid(){
+        new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
+    }
+
+    @Test(priority = 16)
+    public void verifyAlertButton(){
         new ItemPage(driver).verifyAlertMsg();
         new ItemPage(driver).closeAlertBtn();
     }
 
-
-    @Test(priority = 15)
+    @Test(priority = 17)
     public void verifyBidsTable(){
         Assert.assertTrue(new ItemPage(driver).verifyBidsTable());
     }
 
-    @Test(priority = 16)
-    public void addHighestBid(){
+    @Test(priority = 18)
+    public void placeHighestBid(){
         new ItemPage(driver).placeBid(new ItemPage(driver).getNewHighestBidValue());
     }
 
-    @Test(priority = 17)
+    @Test(priority = 19)
     public void verifyAlertMsg(){
         new ItemPage(driver).verifyAlertMsg();
         new ItemPage(driver).closeAlertBtn();
     }
 
-    @Test(priority = 19)
-    public void verifyBidIsTheHighestInTable() throws InterruptedException {
+    @Test(priority = 20)
+    public void verifyBidIsTheHighestInTable(){
         Assert.assertTrue(new ItemPage(driver).verifyHighestBidInTable());
-    } //comparison issues
+    }
 }

@@ -31,6 +31,10 @@ public class ItemPage extends PageBase {
 
     WebDriverWait wait = new WebDriverWait(getDriver(),30);
 
+    private void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
     public ItemPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
@@ -111,10 +115,6 @@ public class ItemPage extends PageBase {
         return detailsSection;
     }
 
-    public List<WebElement> getRelatedItemsList(){
-        return relatedItemsList;
-    }
-
     public WebElement getWishlistBtn(){
         return wishlistBtn;
     }
@@ -158,12 +158,12 @@ public class ItemPage extends PageBase {
 
     //EXTRACT BID VALUES
 
-    public String extractEnterPriceMsg(){
-        return getEnterPriceMsg().getText();
+    private String getBidText(WebElement bidMsg){
+        return bidMsg.getText();
     }
 
-    public String extractHighestBid(){
-        return getHighestBid().getText();
+    public String extractEnterPriceMsg(){
+        return getEnterPriceMsg().getText();
     }
 
     //VERIFICATIONS
@@ -196,10 +196,6 @@ public class ItemPage extends PageBase {
         return getFeaturedImg().isDisplayed();
     }
 
-    public int verifyNumberOfRelatedItems(){
-        return getRelatedItemsList().size();
-    }
-
     public Boolean verifyAlertMsg(){
         return getAlertMsg().isDisplayed();
     }
@@ -213,13 +209,15 @@ public class ItemPage extends PageBase {
     }
 
     public Boolean verifyHighestBidInTable() {
-        System.out.println("Highest bid is: " + getHighestBidFromTable().getText() + "end");
-        return getHighestBidFromTable().getText().equals("$" + getNewHighestBidValue());
+        String tableHighestBid = getBidValue(getBidText(getHighestBidFromTable()));
+        String highestBid = getBidValue(getBidText(getHighestBid()));
+        return highestBid.equals(tableHighestBid);
     }
 
     //METHODS
 
     public void closeAlertBtn(){
+        waitForVisibility(getAlertCloseBtn());
         getAlertCloseBtn().click();
     }
 
@@ -228,8 +226,13 @@ public class ItemPage extends PageBase {
         return new LoginPage(getDriver());
     }
 
-    public void placeBid(String bidValue){
-        getAddBidInput().sendKeys(getBidValue(bidValue));
+    public void placeBid(String bidValueMsg){
+        waitForVisibility(getHighestBid());
+        waitForVisibility(getEnterPriceMsg());
+        System.out.println("Item name: " + getProductTitle().getText());
+        System.out.println("Enter price msg: " + extractEnterPriceMsg());
+        System.out.println("Enter bid value: " + getBidValue(extractEnterPriceMsg()));
+        getAddBidInput().sendKeys(getBidValue(bidValueMsg));
         //logs the product's name
         System.out.println(getProductTitle().getText());
         clickBidButton();
@@ -241,19 +244,19 @@ public class ItemPage extends PageBase {
         }
     }
 
+    public void clickWishlistBtn(){
+        getWishlistBtn().click();
+    }
+
     public String getNewHighestBidValue(){
-        double HighestValue = Double.parseDouble(getBidValue(extractHighestBid()));
+        double HighestValue = Double.parseDouble(getBidValue(getBidText(getHighestBid())));
         double newHighestValueDouble = HighestValue + 0.1;
         String newHighestValue = String.valueOf(newHighestValueDouble);
         return newHighestValue;
     }
 
     private String getBidValue(String bidMsg) {
-        wait.until(ExpectedConditions.visibilityOf(getHighestBid()));
-        wait.until(ExpectedConditions.visibilityOf(getEnterPriceMsg()));
         String bidValue = bidMsg.replaceAll("[^0-9?!\\.]","");
-        System.out.println(bidValue);
-        System.out.println(bidMsg);
         return bidValue;
     }
 }

@@ -25,7 +25,6 @@ public class RegisterAccount extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
 
 
-
     @BeforeTest
     public String getEmail() throws IOException {
         SimpleDateFormat formatter = new SimpleDateFormat("MMddHHmm");

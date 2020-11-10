@@ -20,11 +20,20 @@ public class HomePage extends PageBase {
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
     final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
 
-    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
 
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
+    }
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
+    private void waitForVisibilityAllElements(List<WebElement> list){
+        wait.until(ExpectedConditions.visibilityOfAllElements(list));
+    }
+
+    private void waitForListElementsNum(String listXpath, int number){
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(listXpath), number));
     }
 
     @FindBy(xpath = LOGIN_LINK_XPATH)
@@ -69,12 +78,6 @@ public class HomePage extends PageBase {
         return featuredProduct;
     }
 
-    public ShopPage clickCategory(int index){
-        wait.until(ExpectedConditions.visibilityOfAllElements(getCategoriesList()));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[1]/div[1]/button"), 7));
-        getCategoriesList().get(index).click();
-        return new ShopPage(getDriver());
-    }
 
     public RegistrationPage clickCreateAccountLink(){
         getCreateAccountLink().click();
@@ -97,8 +100,8 @@ public class HomePage extends PageBase {
     }
 
     public ShopPage clickRandomCategory(){
-        wait.until(ExpectedConditions.visibilityOfAllElements(getFeaturedProductsList()));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3"), 3));
+        waitForVisibilityAllElements(getFeaturedProductsList());
+        waitForListElementsNum(CATEGORIES_LIST_XPATH, 5);
 
         List<WebElement> allCategories = getCategoriesList();
         Random rand = new Random();
@@ -109,8 +112,8 @@ public class HomePage extends PageBase {
 
     public ItemPage selectRandomFeaturedProduct(){
         // Find and click on a random product
-        wait.until(ExpectedConditions.visibilityOfAllElements(getFeaturedProductsList()));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3"), 3));
+        waitForVisibilityAllElements(getFeaturedProductsList());
+        waitForListElementsNum(FEATURED_PRODUCTS_LIST_XPATH, 3);
 
         List<WebElement> allProducts = getFeaturedProductsList();
         Random rand = new Random();

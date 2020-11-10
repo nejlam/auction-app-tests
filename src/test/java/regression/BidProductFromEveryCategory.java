@@ -10,10 +10,10 @@ import testUtils.TestBase;
 
 import java.io.IOException;
 
-public class BidProductFromFashionCategory extends TestBase {
+public class BidProductFromEveryCategory extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String PASSWORD = "11111111";
-    final static private String EMAIL = "bethharmon@gmail.com";
+    final static private String EMAIL = "betharmon@gmail.com";
 
 
     @Test(priority = 0)
@@ -41,25 +41,31 @@ public class BidProductFromFashionCategory extends TestBase {
         new HomePage(driver).clickRandomCategory();
     }
 
-    /*@Test(priority = 5)
-    public void verifyCategory(){
-        Assert.assertTrue(new ShopPage(driver).verifyCategoryPage(FASHION));
-    }*/
 
     @Test(priority = 6)
     public void selectRandomItem(){
         new ShopPage(driver).selectRandomProduct();
     }
 
-    //Verify item
+    @Test(priority = 7)
+    public void addToWishlist(){
+        new ItemPage(driver).clickWishlistBtn();
+    }
 
     @Test(priority = 8)
-    public void placeBid() throws InterruptedException {
-        new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
+    public void verifyAlertBtn(){
+        Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
+        new ItemPage(driver).closeAlertBtn();
     }
 
     @Test(priority = 9)
+    public void placeBid(){
+        new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
+    }
+
+    @Test(priority = 10)
     public void verifyAlertMsg(){
         Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
     }
+
 }
