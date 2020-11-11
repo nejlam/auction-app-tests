@@ -23,7 +23,6 @@ public class ItemPage extends PageBase {
     final static private String RELATED_ITEMS_SECTION_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]";
     final static private String DETAILS_SECTION = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[4]/div";
     final static private String BIDS_INFO_SECTION_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[3]";
-    final static private String LOGIN_BTN_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[1]";
     final static private String BIDS_TABLE_XPATH = "//*[@id='root']/div/div[3]/div[2]/table";
     final static private String HIGHEST_BID_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[3]/span";
     final static private String HIGHEST_BID_TABLE_XPATH = "//*[@id='root']/div/div[3]/div[2]/table/tbody/tr[1]/td[3]";
@@ -33,6 +32,9 @@ public class ItemPage extends PageBase {
 
     private void waitForVisibility(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+    private void waitElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public ItemPage(WebDriver driver){
@@ -76,9 +78,6 @@ public class ItemPage extends PageBase {
     @FindBy(xpath = BIDS_INFO_SECTION_XPATH)
     private WebElement bidsInfo;
 
-    @FindBy(xpath = LOGIN_BTN_XPATH)
-    private WebElement loginBtn;
-
     @FindBy(xpath = BIDS_TABLE_XPATH)
     private WebElement bidsTable;
 
@@ -105,10 +104,6 @@ public class ItemPage extends PageBase {
 
     public WebElement getBidsTable(){
         return bidsTable;
-    }
-
-    public WebElement getLoginBtn(){
-        return loginBtn;
     }
 
     public WebElement getDetailsSection(){
@@ -222,7 +217,7 @@ public class ItemPage extends PageBase {
     }
 
     public LoginPage clickLoginButton(){
-        getLoginBtn().click();
+        new HomePage(getDriver()).clickLoginLink();
         return new LoginPage(getDriver());
     }
 
@@ -245,6 +240,7 @@ public class ItemPage extends PageBase {
     }
 
     public void clickWishlistBtn(){
+        waitElementToBeClickable(getWishlistBtn());
         getWishlistBtn().click();
     }
 

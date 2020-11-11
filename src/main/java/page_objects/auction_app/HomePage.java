@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 public class HomePage extends PageBase {
-    final static private String PAGE_URL_REGEX = "\\/";
+    final static private String PAGE_URL_REGEX = "\\/d*";
     final static private String LOGIN_LINK_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[1]";
     final static private String CREATE_ACCOUNT_LINK_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[2]";
     final static private String HOME_PAGE_LINK = "//*[@id='root']/div/div[2]/div[2]/a[1]";
