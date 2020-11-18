@@ -224,12 +224,11 @@ public class ItemPage extends PageBase {
     public void placeBid(String bidValueMsg){
         waitForVisibility(getHighestBid());
         waitForVisibility(getEnterPriceMsg());
+        System.out.println("---------placeBid() messages-------");
         System.out.println("Item name: " + getProductTitle().getText());
         System.out.println("Enter price msg: " + extractEnterPriceMsg());
         System.out.println("Enter bid value: " + getBidValue(extractEnterPriceMsg()));
         getAddBidInput().sendKeys(getBidValue(bidValueMsg));
-        //logs the product's name
-        System.out.println(getProductTitle().getText());
         clickBidButton();
     }
 
@@ -255,5 +254,16 @@ public class ItemPage extends PageBase {
         String bidValue = bidMsg.replaceAll("[^0-9?!\\.]","");
         return bidValue;
     }
+
+    public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
+        System.out.println("Msg before loop:" + extractEnterPriceMsg());
+        if(getEnterPriceMsg().getText().equals("Enter $0 or more")) {
+            System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
+            Thread.sleep(10000);
+            System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
+        } placeBid(getEnterPriceMsg().getText());
+    return this;
+    }
+
 }
 

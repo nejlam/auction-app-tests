@@ -85,7 +85,7 @@ public class VerifyItemPage extends TestBase {
     }
 
     @Test (priority = 15)
-    public void placeStartPriceBid(){
+    public void placeStartPriceBid() throws InterruptedException {
         new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
     }
 
