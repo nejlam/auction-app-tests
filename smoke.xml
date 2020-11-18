@@ -4,6 +4,7 @@
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
 
+    <!--
     <test name="Register Account">
         <classes>
             <class name="smoke.RegisterAccount"/>
@@ -13,6 +14,12 @@
     <test name="Place Bid">
         <classes>
             <class name="smoke.PlaceBid"/>
+        </classes>
+    </test>
+!-->
+    <test name="Add New Product">
+        <classes>
+            <class name="smoke.AddNewProduct"/>
         </classes>
     </test>
 

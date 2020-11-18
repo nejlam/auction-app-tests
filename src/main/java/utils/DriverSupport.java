@@ -28,6 +28,7 @@ public class DriverSupport {
         java.util.Properties p = new Properties();
 
         if (browser.equals("firefox")) {
+            System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
             FirefoxOptions options = new FirefoxOptions();
             options.addArguments("headless");
             options.addArguments("--start-maximized");

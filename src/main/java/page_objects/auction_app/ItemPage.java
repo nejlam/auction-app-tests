@@ -163,6 +163,10 @@ public class ItemPage extends PageBase {
 
     //VERIFICATIONS
 
+    public Boolean verifySuccessfulAdd(String successMsg){
+        return getAlertMsg().equals(successMsg);
+    }
+
     public Boolean verifyBidsInfoSection(){
         return getBidsInfo().isDisplayed();
     }
