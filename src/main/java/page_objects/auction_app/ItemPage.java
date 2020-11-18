@@ -257,11 +257,13 @@ public class ItemPage extends PageBase {
 
     public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
         System.out.println("Msg before loop:" + extractEnterPriceMsg());
-        if(getEnterPriceMsg().getText().equals("Enter $0 or more")) {
+        if(extractEnterPriceMsg().equals("Enter $0 or more")) {
             System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
-            Thread.sleep(10000);
+            synchronized (getDriver()){
+                wait(10000);
+            }
             System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
-        } placeBid(getEnterPriceMsg().getText());
+        } placeBid(extractEnterPriceMsg());
     return this;
     }
 
