@@ -7,14 +7,35 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 
+import java.util.List;
+
 public class ItemPage extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/shop\\d*";
     final static private String FEATURED_IMG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/img[1]";
     final static private String ADD_BID_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div/input";
     final static private String PLACE_BID_BTN = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/button";
-    final static private String START_PRICE_MSG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/div";
+    final static private String ENTER_PRICE_MSG_XPATH = "/html/body/div/div/div[3]/div[1]/div[2]/div[2]/div/div";
     final static private String PRODUCT_TITLE = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/h1";
-    final static private String ALERT_MSG_XPATH = "//*[@id=\"root\"]/div/div[3]";
+    final static private String ALERT_MSG_CLASS = "alert";
+    final static private String START_PRICE_MSG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/div";
+    final static private String WISHLIST_BTN_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[4]/button";
+    final static private String RELATED_ITEMS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/div";
+    final static private String RELATED_ITEMS_SECTION_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]";
+    final static private String DETAILS_SECTION = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[4]/div";
+    final static private String BIDS_INFO_SECTION_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[3]";
+    final static private String BIDS_TABLE_XPATH = "//*[@id='root']/div/div[3]/div[2]/table";
+    final static private String HIGHEST_BID_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[3]/span";
+    final static private String HIGHEST_BID_TABLE_XPATH = "//*[@id='root']/div/div[3]/div[2]/table/tbody/tr[1]/td[3]";
+    final static private String ALERT_CLOSE_BTN = "//*[@id='root']/div/div[3]/button";
+
+    WebDriverWait wait = new WebDriverWait(getDriver(),30);
+
+    private void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+    private void waitElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
 
     public ItemPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -30,14 +51,72 @@ public class ItemPage extends PageBase {
     @FindBy(xpath = PLACE_BID_BTN)
     private WebElement placeBidBtn;
 
-    @FindBy(xpath = START_PRICE_MSG_XPATH)
-    private WebElement startPriceMsg;
+    @FindBy(xpath = ENTER_PRICE_MSG_XPATH)
+    private WebElement enterPriceMsg;
 
     @FindBy(xpath = PRODUCT_TITLE)
     private WebElement productTitle;
 
-    @FindBy(xpath = ALERT_MSG_XPATH)
+    @FindBy(className = ALERT_MSG_CLASS)
     private WebElement alertMsg;
+
+    @FindBy(xpath = START_PRICE_MSG_XPATH)
+    private WebElement startPriceMsg;
+
+    @FindBy(xpath = WISHLIST_BTN_XPATH)
+    private WebElement wishlistBtn;
+
+    @FindBy(xpath = RELATED_ITEMS_LIST_XPATH)
+    private List<WebElement> relatedItemsList;
+
+    @FindBy(xpath = RELATED_ITEMS_SECTION_XPATH)
+    private WebElement relatedItemsSection;
+
+    @FindBy(xpath = DETAILS_SECTION)
+    private WebElement detailsSection;
+
+    @FindBy(xpath = BIDS_INFO_SECTION_XPATH)
+    private WebElement bidsInfo;
+
+    @FindBy(xpath = BIDS_TABLE_XPATH)
+    private WebElement bidsTable;
+
+    @FindBy(xpath = HIGHEST_BID_XPATH)
+    private WebElement highestBid;
+
+    @FindBy(xpath = HIGHEST_BID_TABLE_XPATH)
+    private WebElement highestBidTable;
+
+    @FindBy(xpath = ALERT_CLOSE_BTN)
+    private WebElement alertCloseBtn;
+
+    public WebElement getAlertCloseBtn(){
+        return alertCloseBtn;
+    }
+
+    public WebElement getHighestBidFromTable(){
+        return highestBidTable;
+    }
+
+    public WebElement getHighestBid(){
+        return highestBid;
+    }
+
+    public WebElement getBidsTable(){
+        return bidsTable;
+    }
+
+    public WebElement getDetailsSection(){
+        return detailsSection;
+    }
+
+    public WebElement getWishlistBtn(){
+        return wishlistBtn;
+    }
+
+    public WebElement getRelatedItemsSection(){
+        return relatedItemsSection;
+    }
 
     public WebElement getAlertMsg(){
         return alertMsg;
@@ -47,12 +126,8 @@ public class ItemPage extends PageBase {
         return productTitle;
     }
 
-    public WebElement getStartPriceMsg(){
-        return startPriceMsg;
-    }
-
-    public String extractStartPriceValue(){
-        return getStartPriceMsg().getText();
+    public WebElement getEnterPriceMsg(){
+        return enterPriceMsg;
     }
 
     public WebElement getPlaceBidBtn(){
@@ -67,6 +142,51 @@ public class ItemPage extends PageBase {
         return featuredImg;
     }
 
+    public WebElement getStartPriceMsg(){
+        return startPriceMsg;
+    }
+
+    public WebElement getBidsInfo(){
+        return bidsInfo;
+    }
+
+
+    //EXTRACT BID VALUES
+
+    private String getBidText(WebElement bidMsg){
+        return bidMsg.getText();
+    }
+
+    public String extractEnterPriceMsg(){
+        return getEnterPriceMsg().getText();
+    }
+
+    //VERIFICATIONS
+
+    public Boolean verifyBidsInfoSection(){
+        return getBidsInfo().isDisplayed();
+    }
+
+    public Boolean verifyDetailsSection(){
+        return getDetailsSection().isDisplayed();
+    }
+
+    public Boolean verifyStartPriceMsg(){
+        return getStartPriceMsg().isDisplayed();
+    }
+
+    public Boolean verifyBidButton(){
+        return getAddBidInput().isDisplayed();
+    }
+
+    public Boolean verifyBidInputField(){
+        return getAddBidInput().isDisplayed();
+    }
+
+    public Boolean verifyWishlistBtn(){
+        return getWishlistBtn().isDisplayed();
+    }
+
     public Boolean verifyFeaturedImage(){
         return getFeaturedImg().isDisplayed();
     }
@@ -75,22 +195,77 @@ public class ItemPage extends PageBase {
         return getAlertMsg().isDisplayed();
     }
 
-    public void placeBid() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(getDriver(),30);
-        wait.until(ExpectedConditions.elementToBeClickable(getAddBidInput()));
-        getAddBidInput().sendKeys(getItemStartValue());
-        //logs the product's name
-        System.out.println(getProductTitle().getText());
-        wait.until(ExpectedConditions.elementToBeClickable(getPlaceBidBtn()));
+    public Boolean verifyRelatedItemsSection(){
+        return getRelatedItemsSection().isDisplayed();
+    }
+
+    public Boolean verifyBidsTable(){
+        return getBidsTable().isDisplayed();
+    }
+
+    public Boolean verifyHighestBidInTable() {
+        String tableHighestBid = getBidValue(getBidText(getHighestBidFromTable()));
+        String highestBid = getBidValue(getBidText(getHighestBid()));
+        return highestBid.equals(tableHighestBid);
+    }
+
+    //METHODS
+
+    public void closeAlertBtn(){
+        waitForVisibility(getAlertCloseBtn());
+        getAlertCloseBtn().click();
+    }
+
+    public LoginPage clickLoginButton(){
+        new HomePage(getDriver()).clickLoginLink();
+        return new LoginPage(getDriver());
+    }
+
+    public void placeBid(String bidValueMsg){
+        waitForVisibility(getHighestBid());
+        waitForVisibility(getEnterPriceMsg());
+        System.out.println("---------placeBid() messages-------");
+        System.out.println("Item name: " + getProductTitle().getText());
+        System.out.println("Enter price msg: " + extractEnterPriceMsg());
+        System.out.println("Enter bid value: " + getBidValue(extractEnterPriceMsg()));
+        getAddBidInput().sendKeys(getBidValue(bidValueMsg));
+        clickBidButton();
+    }
+
+    private void clickBidButton(){
         if(getPlaceBidBtn().isEnabled()) {
             getPlaceBidBtn().click();
         }
     }
 
-    public String getItemStartValue(){
-        String startPriceValue = extractStartPriceValue().replaceAll("\\D+","");
-        //logs product's start price
-        System.out.println(startPriceValue);
-        return startPriceValue;
+    public void clickWishlistBtn(){
+        waitElementToBeClickable(getWishlistBtn());
+        getWishlistBtn().click();
     }
+
+    public String getNewHighestBidValue(){
+        double HighestValue = Double.parseDouble(getBidValue(getBidText(getHighestBid())));
+        double newHighestValueDouble = HighestValue + 0.1;
+        String newHighestValue = String.valueOf(newHighestValueDouble);
+        return newHighestValue;
+    }
+
+    private String getBidValue(String bidMsg) {
+        String bidValue = bidMsg.replaceAll("[^0-9?!\\.]","");
+        return bidValue;
+    }
+
+    public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
+        System.out.println("Msg before loop:" + extractEnterPriceMsg());
+        if(extractEnterPriceMsg().equals("Enter $0 or more")) {
+            System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
+            synchronized (getDriver()){
+                wait(10000);
+            }
+            System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
+        } placeBid(extractEnterPriceMsg());
+    return this;
+    }
+
 }
+

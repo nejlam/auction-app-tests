@@ -1,27 +1,20 @@
-package smoke;
+package regression;
 
-import com.opencsv.CSVReader;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import page_objects.auction_app.HomePage;
 import page_objects.auction_app.ItemPage;
 import page_objects.auction_app.LoginPage;
+import page_objects.auction_app.ShopPage;
 import testUtils.TestBase;
 
-import java.io.FileReader;
 import java.io.IOException;
 
-public class PlaceBid extends TestBase {
+public class BidProductFromEveryCategory extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
-    final static private String PASSWORD = "12345678";
+    final static private String PASSWORD = "11111111";
+    final static private String EMAIL = "betharmon@gmail.com";
 
-
-    @BeforeTest
-    public String getEmail() throws IOException {
-        CSVReader reader = new CSVReader(new FileReader("data/data.csv"));
-        String[] email = reader.readNext();
-        return email[0];
-    }
 
     @Test(priority = 0)
     public void verifyHomePage(){
@@ -34,8 +27,8 @@ public class PlaceBid extends TestBase {
     }
 
     @Test(priority = 2)
-    public void populateLoginForm() throws IOException {
-        new LoginPage(driver).populateLoginForm(getEmail(), PASSWORD);
+    public void populateLoginForm() {
+        new LoginPage(driver).populateLoginForm(EMAIL, PASSWORD);
     }
 
     @Test(priority = 3)
@@ -44,21 +37,33 @@ public class PlaceBid extends TestBase {
     }
 
     @Test(priority = 4)
-    public void clickFeaturedProduct(){
-        new HomePage(driver).clickOnFirstProduct();
+    public void selectRandomCategory(){
+        new HomePage(driver).clickRandomCategory();
     }
 
-    @Test(priority = 5)
-    public void verifyItemFeaturedImage(){
-        Assert.assertTrue(new ItemPage(driver).verifyFeaturedImage());
-    }
 
     @Test(priority = 6)
+    public void selectRandomItem(){
+        new ShopPage(driver).selectRandomProduct();
+    }
+
+    /*@Test(priority = 7)
+    public void addToWishlist(){
+        new ItemPage(driver).clickWishlistBtn();
+    }
+
+    @Test(priority = 8)
+    public void verifyAlertBtn(){
+        Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
+        new ItemPage(driver).closeAlertBtn();
+    }
+*/
+    @Test(priority = 9)
     public void placeBid() throws InterruptedException {
         new ItemPage(driver).checkMsgAndPlaceBid();
     }
 
-    @Test(priority = 7)
+    @Test(priority = 10)
     public void verifyAlertMsg(){
         Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
     }

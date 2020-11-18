@@ -13,6 +13,8 @@ public class RegistrationPage extends PageBase {
     final static private String PASSWORD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div/form/div[4]/input";
     final static private String SUBMIT_BUTTON_XPATH = "//*[@id='root']/div/div[3]/div/form/button";
     final static private String ALERT_MSG_XPATH = "//*[@id='root']/div/div[3]";
+    final static private String AGREE_TO_TERMS_CHECK = "//*[@id='root']/div/div[3]/div/form/div[5]/div[1]/label";
+
 
     public RegistrationPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -36,6 +38,13 @@ public class RegistrationPage extends PageBase {
 
     @FindBy(xpath = ALERT_MSG_XPATH)
     private WebElement alertMessage;
+
+    @FindBy(xpath = AGREE_TO_TERMS_CHECK)
+    private WebElement agreeToTermsCheck;
+
+    public WebElement getAgreeToTermsCheck(){
+        return agreeToTermsCheck;
+    }
 
     public WebElement getFirstNameInputField(){
         return firstNameInputField;
@@ -66,6 +75,7 @@ public class RegistrationPage extends PageBase {
         getLastNameInputField().sendKeys(lastName);
         getEmailInputField().sendKeys(email);
         getPasswordInputField().sendKeys(password);
+        getAgreeToTermsCheck().click();
         getSubmitButton().click();
         return new AccountPage(getDriver());
     }
