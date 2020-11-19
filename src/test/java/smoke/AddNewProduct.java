@@ -29,6 +29,10 @@ public class AddNewProduct extends TestBase {
     final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\productPhotos\\img";
     final static private String PHOTO_EXTENSION = ".jpg";
     final static private int PHOTOS_QUANTITY = 10;
+    final static private String NAME_ON_CARD = "Beth";
+    final static private String CARD_NUMBER = "1111111111111";
+    final static private String CVC = "1234";
+
 
 
     @BeforeTest
@@ -108,10 +112,30 @@ public class AddNewProduct extends TestBase {
 
     @Test(priority = 10)
     public void populateLocationInfo(){
-        new SellerPageLocationAndShipping(driver).populateRequiredForm(getLorem().getWords(1), COUNTRY, CITY, ZIPCODE, PHONE);
+        new SellerPageLocationAndShipping(driver).populateLocationForm(getLorem().getWords(1), COUNTRY, CITY, ZIPCODE, PHONE);
     }
 
     @Test(priority = 11)
+    public void chooseShippingCostBear(){
+        new SellerPageLocationAndShipping(driver).clickShippingPayment();
+    }
+
+    @Test(priority = 12)
+    public void chooseFeatureProduct(){
+        new SellerPageLocationAndShipping(driver).clickFeatureProductPayment();
+    }
+
+    @Test(priority = 13)
+    public void populatePaymentInfo(){
+        new SellerPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
+    }
+
+    @Test(priority = 14)
+    public void finishAddingItem(){
+        new SellerPageLocationAndShipping(driver).clickDoneBtn();
+    }
+
+    @Test(priority = 15)
     public void verifyProductIsAdded(){
         new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT);
     }

@@ -16,10 +16,10 @@ public class SellerPageLocationAndShipping extends PageBase {
     final static private String CITY_DROPDOWN_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option[2]";
     final static private String ZIPCODE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[3]/input";
     final static private String PHONE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div/input";
-    final static private String SHIPPING_CHECKBOX_XPATH = "//*[@id='custom-shipping-checkbox']";
-    final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='custom-featured-checkbox']";
-    final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='custom-paypal-checkbox']";
-    final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='custom-credit-card-checkbox']";
+    final static private String SHIPPING_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/div/label";
+    final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/div/label";
+    final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[2]/label";
+    final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[3]/label";
     //credit card info vars
     final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
     final static private String CARD_NUMBER_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[2]/input";
@@ -29,7 +29,7 @@ public class SellerPageLocationAndShipping extends PageBase {
     final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option[4]";
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
 
-    final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/button[2]";
+    final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[8]/button[2]";
 
 
     public SellerPageLocationAndShipping(WebDriver driver){
@@ -172,7 +172,7 @@ public class SellerPageLocationAndShipping extends PageBase {
 
     //METHODS
 
-    public ItemPage populateRequiredForm(String address, String country, String city, String zipCode, String phone){
+    public void populateLocationForm(String address, String country, String city, String zipCode, String phone){
         getAddressInput().sendKeys(address);
         getCountryDropdown().selectByVisibleText(country);
         //issues with dropdown values not loading
@@ -180,17 +180,30 @@ public class SellerPageLocationAndShipping extends PageBase {
         getCityDropdown().selectByVisibleText(city);
         getZipcodeInput().sendKeys(zipCode);
         getPhoneInput().sendKeys(phone);
+    }
+
+    public void populateCardPaymentForm(String nameOnCard, String cardNumber, String cvc){
+     getCreditCardCheckbox().click();
+     getNameOnCardInput().sendKeys(nameOnCard);
+     getCardNumberInput().sendKeys(cardNumber);
+     //getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
+     //getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
+     getExpYearDropdown().selectByValue("2022");
+     getExpMonthDropdown().selectByVisibleText("July");
+     getCvcInput().sendKeys(cvc);
+    }
+
+    public ItemPage clickDoneBtn(){
         getDoneBtn().click();
         return new ItemPage(getDriver());
     }
 
-    public void populatePaymentForm(String nameOnCard, String cardNumber, String cvc){
-     getCreditCardCheckbox().click();
-     getNameOnCardInput().sendKeys(nameOnCard);
-     getCardNumberInput().sendKeys(cardNumber);
-     getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
-     getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
-     getCvcInput().sendKeys(cvc);
+    public void clickFeatureProductPayment(){
+        getFeatureCheckbox().click();
+    }
+
+    public void clickShippingPayment(){
+        getShippingCheckbox().click();
     }
 
 }
