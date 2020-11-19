@@ -1,6 +1,8 @@
 package page_objects.auction_app;
 
 
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,7 +22,12 @@ public class SellerPageProductInfo extends PageBase {
     final static private String NEXT_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/button[2]";
     final static private String CATEGORY_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[1]/select/option";
     final static private String SUBCATEGORY_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option[2]";
-
+    final static private String COLOR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[1]/select";
+    final static private String SIZE_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[2]/select";
+    final static private String COLOR_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[1]/select/option[1]";
+    final static private String SIZE_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[2]/select/option[1]";
+    final static private String UPLOAD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/input";
+    final static private String UPLOADED_FILES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/div/div[1]/div";
 
     public SellerPageProductInfo(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -56,11 +63,53 @@ public class SellerPageProductInfo extends PageBase {
     @FindBy(xpath = SUBCATEGORY_VALUES_XPATH)
     private List<WebElement> subcategoryValues;
 
-    public List<WebElement> getSubcategoryValue(){
+    @FindBy(xpath = COLOR_DROPDOWN_XPATH)
+    private WebElement colorDropdown;
+
+    @FindBy(xpath = COLOR_VALUES_XPATH)
+    private List<WebElement> colorValues;
+
+    @FindBy(xpath = SIZE_DROPDOWN_XPATH)
+    private WebElement sizeDropdown;
+
+    @FindBy(xpath = SIZE_VALUES)
+    private List<WebElement> sizeValues;
+
+    @FindBy(xpath = UPLOAD_INPUT_XPATH)
+    private WebElement uploadInput;
+
+    @FindBy(xpath = UPLOADED_FILES_XPATH)
+    private List<WebElement> uploadedFilesList;
+
+    public List<WebElement> getUploadedFilesList(){
+        return uploadedFilesList;
+    }
+
+    public WebElement getUploadInput(){
+        return uploadInput;
+    }
+
+    public List<WebElement> getSizeValues(){
+        return sizeValues;
+    }
+
+    public Select getSizeDropdown(){
+        return new Select(sizeDropdown);
+    }
+
+    public List<WebElement> getColorValues(){
+        return colorValues;
+    }
+
+    public Select getColorDropdown(){
+        return new Select(colorDropdown);
+    }
+
+    public List<WebElement> getSubcategoryValues(){
         return subcategoryValues;
     }
 
-    public List<WebElement> getCategoryValue(){
+    public List<WebElement> getCategoryValues(){
         return categoryValues;
     }
 
@@ -93,15 +142,33 @@ public class SellerPageProductInfo extends PageBase {
         return new SellerPageProductInfo(getDriver());
     }
 
-    public SellerPageSetPrices populateForm(String title, String description) throws InterruptedException {
+    public SellerPageSetPrices populateForm(String title, String description, String filePath, String extension, int quantity) throws InterruptedException {
         getItemTitleInput().sendKeys(title);
-        //issues with subcategory values not loading
+        //issues with dropdown values not loading
         //getCategoryDropdown().selectByIndex(getRandomNumber(2, categoryValues.size()));
         //getSubcategoryDropdown().selectByIndex(getRandomNumber(2, subcategoryValues.size()));
         getCategoryDropdown().selectByVisibleText("Fashion");
         getSubcategoryDropdown().selectByVisibleText("Shirts");
         getDescriptionInput().sendKeys(description);
+        //getColorDropdown().selectByIndex(getRandomNumber(2, getColorValues().size()));
+        //getSizeDropdown().selectByIndex(getRandomNumber(2, getSizeValues().size()));
+        getColorDropdown().selectByVisibleText("Black");
+        getSizeDropdown().selectByVisibleText("Medium");
+        uploadPhotosJpg(filePath,extension, quantity);
         getNextBtn().click();
         return new SellerPageSetPrices(getDriver());
+    }
+
+    private void uploadPhotosJpg(String filePath, String fileExtension, int quantity){
+        int num = quantity + 1;
+        for(int i = 1; i<num; i++){
+            String photoPath = filePath + i + fileExtension;
+            getUploadInput().sendKeys(photoPath);
+        }
+    }
+
+    public boolean verifyNumberOfAddedPhotos(int quantity){
+        int uploadedPhotosSize = getUploadedFilesList().size();
+        return uploadedPhotosSize == quantity;
     }
 }

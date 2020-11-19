@@ -26,6 +26,9 @@ public class AddNewProduct extends TestBase {
     final static private String PHONE = "61123123";
     final static private String SUCCESS_ALERT = "You have successfully added a new product!";
     final static private String CITY = "Sarajevo";
+    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\productPhotos\\img";
+    final static private String PHOTO_EXTENSION = ".jpg";
+    final static private int PHOTOS_QUANTITY = 10;
 
 
     @BeforeTest
@@ -89,20 +92,26 @@ public class AddNewProduct extends TestBase {
 
     @Test(priority = 7)
     public void populateProductInfo() throws InterruptedException {
-        new SellerPageProductInfo(driver).populateForm(getLorem().getTitle(2,5), getLorem().getWords(5,10));
+        new SellerPageProductInfo(driver).populateForm(getLorem().getTitle(2,5), getLorem().getWords(5,10),
+                PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
     }
 
     @Test(priority = 8)
+    public void verifyAddedPhotos(){
+        Assert.assertTrue(new SellerPageProductInfo(driver).verifyNumberOfAddedPhotos(PHOTOS_QUANTITY));
+    }
+
+    @Test(priority = 9)
     public void populatePriceInfo(){
         new SellerPageSetPrices(driver).populateForm(getToday(), getEndDate());
     }
 
-    @Test(priority = 9)
+    @Test(priority = 10)
     public void populateLocationInfo(){
         new SellerPageLocationAndShipping(driver).populateRequiredForm(getLorem().getWords(1), COUNTRY, CITY, ZIPCODE, PHONE);
     }
 
-    @Test(priority = 10)
+    @Test(priority = 11)
     public void verifyProductIsAdded(){
         new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT);
     }

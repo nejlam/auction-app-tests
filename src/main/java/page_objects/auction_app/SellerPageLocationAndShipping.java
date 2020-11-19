@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page_objects.PageBase;
-
-import java.nio.file.WatchEvent;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +20,7 @@ public class SellerPageLocationAndShipping extends PageBase {
     final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='custom-featured-checkbox']";
     final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='custom-paypal-checkbox']";
     final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='custom-credit-card-checkbox']";
-    //credit card info
+    //credit card info vars
     final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
     final static private String CARD_NUMBER_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[2]/input";
     final static private String EXP_YEAR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select";
@@ -30,7 +28,6 @@ public class SellerPageLocationAndShipping extends PageBase {
     final static private String EXP_MONTH_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select";
     final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option[4]";
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
-
 
     final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/button[2]";
 
