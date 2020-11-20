@@ -31,7 +31,6 @@ public class AccountPage extends PageBase {
         return accountTabs;
     }
 
-
     public WebElement getSuccessMessage(){
         return createAccSuccessMessage;
     }

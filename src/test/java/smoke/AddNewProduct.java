@@ -26,13 +26,16 @@ public class AddNewProduct extends TestBase {
     final static private String PHONE = "61123123";
     final static private String SUCCESS_ALERT = "You have successfully added a new product!";
     final static private String CITY = "Sarajevo";
-    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\productPhotos\\img";
+    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\product_photos\\img";
     final static private String PHOTO_EXTENSION = ".jpg";
     final static private int PHOTOS_QUANTITY = 10;
     final static private String NAME_ON_CARD = "Beth";
     final static private String CARD_NUMBER = "1111111111111";
     final static private String CVC = "1234";
-
+    final static private String SELLER_TAB = "SELLER";
+    final static private String PRODUCT_INFO_TEXT = "DETAIL INFORMATION ABOUT PRODUCT";
+    final static private String PRICES_INFO_TEXT = "SET PRICES";
+    final static private String LOCATION_SHIPPING_INFO_TEXT = "LOCATION & SHIPPING";
 
 
     @BeforeTest
@@ -55,8 +58,8 @@ public class AddNewProduct extends TestBase {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
         calendar.add(Calendar.DATE, 1);
-        Date currentDatePlusOneMonth = calendar.getTime();
-        return dateFormat.format(currentDatePlusOneMonth);
+        Date currentDatePlusOneDay = calendar.getTime();
+        return dateFormat.format(currentDatePlusOneDay);
     }
 
     @Test(priority=0)
@@ -90,52 +93,72 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 6)
-    public void openSellWizard(){
-        new SellerPageProductInfo(driver).clickStartSellingBtn();
+    public void verifySellerPage(){
+        Assert.assertTrue(new SellerPage(driver).verifyActiveTab(SELLER_TAB));
     }
 
     @Test(priority = 7)
-    public void populateProductInfo() throws InterruptedException {
-        new SellerPageProductInfo(driver).populateForm(getLorem().getTitle(2,5), getLorem().getWords(5,10),
-                PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
+    public void openSellWizard(){
+        new SellerPage(driver).clickStartSellingBtn();
     }
 
     @Test(priority = 8)
-    public void verifyAddedPhotos(){
-        Assert.assertTrue(new SellerPageProductInfo(driver).verifyNumberOfAddedPhotos(PHOTOS_QUANTITY));
+    public void verifyProductInfoStep(){
+        Assert.assertTrue(new SellPageProductInfo(driver).verifyStepTitle(PRODUCT_INFO_TEXT));
     }
 
     @Test(priority = 9)
-    public void populatePriceInfo(){
-        new SellerPageSetPrices(driver).populateForm(getToday(), getEndDate());
+    public void populateProductInfo() throws InterruptedException {
+        new SellPageProductInfo(driver).populateForm(getLorem().getTitle(2,5), getLorem().getWords(5,10),
+                PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
     }
 
     @Test(priority = 10)
-    public void populateLocationInfo(){
-        new SellerPageLocationAndShipping(driver).populateLocationForm(getLorem().getWords(1), COUNTRY, CITY, ZIPCODE, PHONE);
+    public void verifyAddedPhotos(){
+        Assert.assertTrue(new SellPageProductInfo(driver).verifyNumberOfAddedPhotos(PHOTOS_QUANTITY));
     }
 
     @Test(priority = 11)
-    public void chooseShippingCostBear(){
-        new SellerPageLocationAndShipping(driver).clickShippingPayment();
+    public void verifyPriceInfoStep(){
+        Assert.assertTrue(new SellPageSetPrices(driver).verifyStepTitle(PRICES_INFO_TEXT));
     }
 
     @Test(priority = 12)
-    public void chooseFeatureProduct(){
-        new SellerPageLocationAndShipping(driver).clickFeatureProductPayment();
+    public void populatePriceInfo(){
+        new SellPageSetPrices(driver).populateForm(getToday(), getEndDate());
     }
 
     @Test(priority = 13)
-    public void populatePaymentInfo(){
-        new SellerPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
+    public void verifyLocationAndShippingStep(){
+        Assert.assertTrue(new SellPageLocationAndShipping(driver).verifyStepTitle(LOCATION_SHIPPING_INFO_TEXT));
     }
 
     @Test(priority = 14)
-    public void finishAddingItem(){
-        new SellerPageLocationAndShipping(driver).clickDoneBtn();
+    public void populateLocationInfo(){
+        new SellPageLocationAndShipping(driver).populateLocationForm(getLorem().getWords(1), COUNTRY, CITY, ZIPCODE, PHONE);
     }
 
     @Test(priority = 15)
+    public void chooseShippingCostBear(){
+        new SellPageLocationAndShipping(driver).clickShippingPayment();
+    }
+
+    @Test(priority = 16)
+    public void chooseFeatureProduct(){
+        new SellPageLocationAndShipping(driver).clickFeatureProductPayment();
+    }
+
+    @Test(priority = 17)
+    public void populatePaymentInfo(){
+        new SellPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
+    }
+
+    @Test(priority = 18)
+    public void finishAddingItem(){
+        new SellPageLocationAndShipping(driver).clickDoneBtn();
+    }
+
+    @Test(priority = 19)
     public void verifyProductIsAdded(){
         new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT);
     }

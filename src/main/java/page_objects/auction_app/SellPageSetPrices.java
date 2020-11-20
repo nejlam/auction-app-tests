@@ -1,26 +1,33 @@
 package page_objects.auction_app;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 
-public class SellerPageSetPrices extends PageBase {
+public class SellPageSetPrices extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/my_account/seller\\d*";
     final static private String PRICE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[1]/div/input";
     final static private String START_DATE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[1]/div[1]/div[1]/div/input";
     final static private String END_DATE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/div[1]/div[1]/div/input";
     final static private String NEXT_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[3]/button[2]";
+    final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
 
-    public SellerPageSetPrices(WebDriver driver){
+    public SellPageSetPrices(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
 
     WebDriverWait wait = new WebDriverWait(getDriver(),30);
+
+    public void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
     private void waitElementToBeClickable(WebElement element){
         wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -47,6 +54,13 @@ public class SellerPageSetPrices extends PageBase {
     @FindBy(xpath = NEXT_BTN_XPATH)
     private WebElement nextBtn;
 
+    @FindBy(xpath = STEP_TITLE)
+    private WebElement stepTitle;
+
+    public WebElement getStepTitle(){
+        return stepTitle;
+    }
+
     public WebElement getNextBtn(){
         return nextBtn;
     }
@@ -70,5 +84,11 @@ public class SellerPageSetPrices extends PageBase {
         waitElementToBeClickable(getNextBtn());
         getNextBtn().click();
     }
+
+    public boolean verifyStepTitle(String stepTitle){
+        waitForVisibility(getPriceInput());
+        return getStepTitle().getText().equals(stepTitle);
+    }
+
 
 }

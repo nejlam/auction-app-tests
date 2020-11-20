@@ -40,6 +40,7 @@ public class LoginPage extends PageBase {
     public void populateLoginForm(String email, String password){
         getEmailInputField().sendKeys(email);
         getPasswordInputField().sendKeys(password);
+        new HomePage(getDriver()).waitForElementToBeClickable(getLoginBtn());
         getLoginBtn().click();
     }
 }

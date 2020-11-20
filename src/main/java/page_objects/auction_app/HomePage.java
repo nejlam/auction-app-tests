@@ -34,6 +34,10 @@ public class HomePage extends PageBase {
         wait.until(ExpectedConditions.visibilityOfAllElements(list));
     }
 
+    public void waitForElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
     private void waitForListElementsNum(String listXpath, int number){
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(listXpath), number));
     }
@@ -88,6 +92,7 @@ public class HomePage extends PageBase {
     }
 
     public AccountPage clickAccountPageLink(){
+        waitForElementToBeClickable(getAccountPage());
         getAccountPage().click();
         return new AccountPage(getDriver());
     }

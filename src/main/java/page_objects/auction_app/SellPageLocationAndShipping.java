@@ -8,7 +8,7 @@ import page_objects.PageBase;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SellerPageLocationAndShipping extends PageBase {
+public class SellPageLocationAndShipping extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/my_account/seller\\d*";
     final static private String ADDRESS_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[1]/input";
     final static private String COUNTRY_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[1]/select";
@@ -30,9 +30,10 @@ public class SellerPageLocationAndShipping extends PageBase {
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
 
     final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[8]/button[2]";
+    final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
 
 
-    public SellerPageLocationAndShipping(WebDriver driver){
+    public SellPageLocationAndShipping(WebDriver driver) {
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
@@ -96,83 +97,90 @@ public class SellerPageLocationAndShipping extends PageBase {
     @FindBy(xpath = EXP_YEAR_VALUES_XPATH)
     private List<WebElement> expYearValues;
 
+    @FindBy(xpath = STEP_TITLE)
+    private WebElement stepTitle;
+
     //GETTERS
 
-    public List<WebElement> getExpYearValues(){
+    public WebElement getStepTitle() {
+        return stepTitle;
+    }
+
+    public List<WebElement> getExpYearValues() {
         return expYearValues;
     }
 
-    public List<WebElement> getExpMonthValues(){
+    public List<WebElement> getExpMonthValues() {
         return expMonthValues;
     }
 
-    public List<WebElement> getCityDropdownValues(){
+    public List<WebElement> getCityDropdownValues() {
         return cityDropdownValues;
     }
 
-    public WebElement getDoneBtn(){
+    public WebElement getDoneBtn() {
         return doneBtn;
     }
 
-    public WebElement getCvcInput(){
+    public WebElement getCvcInput() {
         return cvcInput;
     }
 
-    public Select getExpMonthDropdown(){
+    public Select getExpMonthDropdown() {
         return new Select(expMonthDropdown);
     }
 
-    public Select getExpYearDropdown(){
+    public Select getExpYearDropdown() {
         return new Select(expYearDropdown);
     }
 
-    public WebElement getCardNumberInput(){
+    public WebElement getCardNumberInput() {
         return cardNumberInput;
     }
 
-    public WebElement getNameOnCardInput(){
+    public WebElement getNameOnCardInput() {
         return nameOnCardInput;
     }
 
-    public WebElement getCreditCardCheckbox(){
+    public WebElement getCreditCardCheckbox() {
         return creditCardCheckbox;
     }
 
-    public WebElement getPayPalCheckbox(){
+    public WebElement getPayPalCheckbox() {
         return payPalCheckbox;
     }
 
-    public WebElement getFeatureCheckbox(){
+    public WebElement getFeatureCheckbox() {
         return featureCheckbox;
     }
 
-    public WebElement getShippingCheckbox(){
+    public WebElement getShippingCheckbox() {
         return shippingCheckbox;
     }
 
-    public WebElement getPhoneInput(){
+    public WebElement getPhoneInput() {
         return phoneInput;
     }
 
-    public WebElement getZipcodeInput(){
+    public WebElement getZipcodeInput() {
         return zipcodeInput;
     }
 
-    public Select getCityDropdown(){
+    public Select getCityDropdown() {
         return new Select(cityDropdown);
     }
 
-    public WebElement getAddressInput(){
+    public WebElement getAddressInput() {
         return addressInput;
     }
 
-    public Select getCountryDropdown(){
+    public Select getCountryDropdown() {
         return new Select(countryDropdown);
     }
 
     //METHODS
 
-    public void populateLocationForm(String address, String country, String city, String zipCode, String phone){
+    public void populateLocationForm(String address, String country, String city, String zipCode, String phone) {
         getAddressInput().sendKeys(address);
         getCountryDropdown().selectByVisibleText(country);
         //issues with dropdown values not loading
@@ -182,28 +190,33 @@ public class SellerPageLocationAndShipping extends PageBase {
         getPhoneInput().sendKeys(phone);
     }
 
-    public void populateCardPaymentForm(String nameOnCard, String cardNumber, String cvc){
-     getCreditCardCheckbox().click();
-     getNameOnCardInput().sendKeys(nameOnCard);
-     getCardNumberInput().sendKeys(cardNumber);
-     //getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
-     //getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
-     getExpYearDropdown().selectByValue("2022");
-     getExpMonthDropdown().selectByVisibleText("July");
-     getCvcInput().sendKeys(cvc);
+    public void populateCardPaymentForm(String nameOnCard, String cardNumber, String cvc) {
+        getCreditCardCheckbox().click();
+        getNameOnCardInput().sendKeys(nameOnCard);
+        getCardNumberInput().sendKeys(cardNumber);
+        //getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
+        //getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
+        getExpYearDropdown().selectByValue("2022");
+        getExpMonthDropdown().selectByVisibleText("July");
+        getCvcInput().sendKeys(cvc);
     }
 
-    public ItemPage clickDoneBtn(){
+    public ItemPage clickDoneBtn() {
         getDoneBtn().click();
         return new ItemPage(getDriver());
     }
 
-    public void clickFeatureProductPayment(){
+    public void clickFeatureProductPayment() {
         getFeatureCheckbox().click();
     }
 
-    public void clickShippingPayment(){
+    public void clickShippingPayment() {
         getShippingCheckbox().click();
+    }
+
+    public boolean verifyStepTitle(String stepTitle) {
+        new SellPageSetPrices(getDriver()).waitForVisibility(getAddressInput());
+        return getStepTitle().getText().equals(stepTitle);
     }
 
 }
