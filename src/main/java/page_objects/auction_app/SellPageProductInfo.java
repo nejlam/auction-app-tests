@@ -1,8 +1,6 @@
 package page_objects.auction_app;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -145,12 +143,12 @@ public class SellPageProductInfo extends PageBase {
         getDescriptionInput().sendKeys(description);
         getColorDropdown().selectByIndex(getRandomNumber(2, getColorValues().size()));
         getSizeDropdown().selectByIndex(getRandomNumber(2, getSizeValues().size()));
-        uploadPhotosJpg(filePath,extension, quantity);
+        uploadPhotos(filePath,extension, quantity);
         getNextBtn().click();
         return new SellPageSetPrices(getDriver());
     }
 
-    private void uploadPhotosJpg(String filePath, String fileExtension, int quantity){
+    private void uploadPhotos(String filePath, String fileExtension, int quantity){
         int num = quantity + 1;
         for(int i = 1; i<num; i++){
             String photoPath = filePath + i + fileExtension;

@@ -34,7 +34,7 @@ public class HomePage extends PageBase {
         wait.until(ExpectedConditions.visibilityOfAllElements(list));
     }
 
-    public void waitForElementToBeClickable(WebElement element){
+    private void waitForElementToBeClickable(WebElement element){
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 

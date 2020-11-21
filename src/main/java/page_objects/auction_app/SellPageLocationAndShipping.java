@@ -1,9 +1,11 @@
 package page_objects.auction_app;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -42,6 +44,13 @@ public class SellPageLocationAndShipping extends PageBase {
         int randomNum = ThreadLocalRandom.current().nextInt(min, max);
         return randomNum;
     }
+
+    WebDriverWait wait = new WebDriverWait(getDriver(),30);
+
+    public void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
 
     @FindBy(xpath = ADDRESS_INPUT_XPATH)
     private WebElement addressInput;
@@ -211,7 +220,7 @@ public class SellPageLocationAndShipping extends PageBase {
     }
 
     public boolean verifyStepTitle(String stepTitle) {
-        new SellPageSetPrices(getDriver()).waitForVisibility(getAddressInput());
+        waitForVisibility(getAddressInput());
         return getStepTitle().getText().equals(stepTitle);
     }
 

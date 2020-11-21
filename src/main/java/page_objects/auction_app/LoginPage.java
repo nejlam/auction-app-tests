@@ -3,13 +3,24 @@ package page_objects.auction_app;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
+
 
 public class LoginPage extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/login\\d*";
     final static private String EMAIL_INPUT_XPATH = "//*[@id='root']/div/div[3]/div/form/div[1]/input";
     final static private String PASSWORD_INPUT_XPATH = "//*[@id=\"root\"]/div/div[3]/div/form/div[2]/input";
     final static private String LOGIN_BTN_XPATH = "//*[@id=\"root\"]/div/div[3]/div/form/button";
+
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
+
+    private void waitForElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
 
     public LoginPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -40,7 +51,7 @@ public class LoginPage extends PageBase {
     public void populateLoginForm(String email, String password){
         getEmailInputField().sendKeys(email);
         getPasswordInputField().sendKeys(password);
-        new HomePage(getDriver()).waitForElementToBeClickable(getLoginBtn());
+        waitForElementToBeClickable(getLoginBtn());
         getLoginBtn().click();
     }
 }

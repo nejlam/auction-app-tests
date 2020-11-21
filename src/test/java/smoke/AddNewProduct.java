@@ -159,7 +159,7 @@ public class AddNewProduct extends TestBase {
 
     @Test(priority = 19)
     public void verifyProductIsAdded(){
-        new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT);
+       Assert.assertTrue(new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT));
     }
 
 }
