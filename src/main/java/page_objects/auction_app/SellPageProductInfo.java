@@ -1,6 +1,8 @@
 package page_objects.auction_app;
 
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,11 +20,11 @@ public class SellPageProductInfo extends PageBase {
     final static private String DESCRIPTION_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[3]/textarea";
     final static private String NEXT_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/button[2]";
     final static private String CATEGORY_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[1]/select/option";
-    final static private String SUBCATEGORY_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option[2]";
+    final static private String SUBCATEGORY_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option";
     final static private String COLOR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[1]/select";
     final static private String SIZE_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[2]/select";
-    final static private String COLOR_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[1]/select/option[1]";
-    final static private String SIZE_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[2]/select/option[1]";
+    final static private String COLOR_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[1]/select/option";
+    final static private String SIZE_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div[2]/select/option";
     final static private String UPLOAD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/input";
     final static private String UPLOADED_FILES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/div/div[1]/div";
     final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
@@ -138,16 +140,11 @@ public class SellPageProductInfo extends PageBase {
 
     public SellPageSetPrices populateForm(String title, String description, String filePath, String extension, int quantity) throws InterruptedException {
         getItemTitleInput().sendKeys(title);
-        //issues with dropdown values not loading
-        //getCategoryDropdown().selectByIndex(getRandomNumber(2, categoryValues.size()));
-        //getSubcategoryDropdown().selectByIndex(getRandomNumber(2, subcategoryValues.size()));
-        getCategoryDropdown().selectByVisibleText("Fashion");
-        getSubcategoryDropdown().selectByVisibleText("Shirts");
+        getCategoryDropdown().selectByIndex(getRandomNumber(2, getCategoryValues().size()));
+        getSubcategoryDropdown().selectByIndex(getRandomNumber(2, getSubcategoryValues().size()));
         getDescriptionInput().sendKeys(description);
-        //getColorDropdown().selectByIndex(getRandomNumber(2, getColorValues().size()));
-        //getSizeDropdown().selectByIndex(getRandomNumber(2, getSizeValues().size()));
-        getColorDropdown().selectByVisibleText("Black");
-        getSizeDropdown().selectByVisibleText("Medium");
+        getColorDropdown().selectByIndex(getRandomNumber(2, getColorValues().size()));
+        getSizeDropdown().selectByIndex(getRandomNumber(2, getSizeValues().size()));
         uploadPhotosJpg(filePath,extension, quantity);
         getNextBtn().click();
         return new SellPageSetPrices(getDriver());

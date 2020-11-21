@@ -25,7 +25,6 @@ public class AddNewProduct extends TestBase {
     final static private String ZIPCODE = "71000";
     final static private String PHONE = "61123123";
     final static private String SUCCESS_ALERT = "You have successfully added a new product!";
-    final static private String CITY = "Sarajevo";
     final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\product_photos\\img";
     final static private String PHOTO_EXTENSION = ".jpg";
     final static private int PHOTOS_QUANTITY = 10;
@@ -135,7 +134,7 @@ public class AddNewProduct extends TestBase {
 
     @Test(priority = 14)
     public void populateLocationInfo(){
-        new SellPageLocationAndShipping(driver).populateLocationForm(getLorem().getWords(1), COUNTRY, CITY, ZIPCODE, PHONE);
+        new SellPageLocationAndShipping(driver).populateLocationForm(getLorem().getWords(1), COUNTRY, ZIPCODE, PHONE);
     }
 
     @Test(priority = 15)
@@ -162,4 +161,5 @@ public class AddNewProduct extends TestBase {
     public void verifyProductIsAdded(){
         new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT);
     }
+
 }

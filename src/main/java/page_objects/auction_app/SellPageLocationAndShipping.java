@@ -13,7 +13,7 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String ADDRESS_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[1]/input";
     final static private String COUNTRY_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[1]/select";
     final static private String CITY_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select";
-    final static private String CITY_DROPDOWN_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option[2]";
+    final static private String CITY_DROPDOWN_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option";
     final static private String ZIPCODE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[3]/input";
     final static private String PHONE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div/input";
     final static private String SHIPPING_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/div/label";
@@ -24,9 +24,9 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
     final static private String CARD_NUMBER_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[2]/input";
     final static private String EXP_YEAR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select";
-    final static private String EXP_YEAR_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select/option[2]";
+    final static private String EXP_YEAR_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select/option";
     final static private String EXP_MONTH_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select";
-    final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option[4]";
+    final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option";
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
 
     final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[8]/button[2]";
@@ -180,12 +180,10 @@ public class SellPageLocationAndShipping extends PageBase {
 
     //METHODS
 
-    public void populateLocationForm(String address, String country, String city, String zipCode, String phone) {
+    public void populateLocationForm(String address, String country, String zipCode, String phone) {
         getAddressInput().sendKeys(address);
         getCountryDropdown().selectByVisibleText(country);
-        //issues with dropdown values not loading
-        //getCityDropdown().selectByIndex(getRandomNumber(1, getCityDropdownValues().size()));
-        getCityDropdown().selectByVisibleText(city);
+        getCityDropdown().selectByIndex(getRandomNumber(1, getCityDropdownValues().size()));
         getZipcodeInput().sendKeys(zipCode);
         getPhoneInput().sendKeys(phone);
     }
@@ -194,10 +192,8 @@ public class SellPageLocationAndShipping extends PageBase {
         getCreditCardCheckbox().click();
         getNameOnCardInput().sendKeys(nameOnCard);
         getCardNumberInput().sendKeys(cardNumber);
-        //getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
-        //getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
-        getExpYearDropdown().selectByValue("2022");
-        getExpMonthDropdown().selectByVisibleText("July");
+        getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
+        getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
         getCvcInput().sendKeys(cvc);
     }
 
