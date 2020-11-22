@@ -47,17 +47,6 @@ public class BidProductFromEveryCategory extends TestBase {
         new ShopPage(driver).selectRandomProduct();
     }
 
-    /*@Test(priority = 7)
-    public void addToWishlist(){
-        new ItemPage(driver).clickWishlistBtn();
-    }
-
-    @Test(priority = 8)
-    public void verifyAlertBtn(){
-        Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
-        new ItemPage(driver).closeAlertBtn();
-    }
-*/
     @Test(priority = 9)
     public void placeBid() throws InterruptedException {
         new ItemPage(driver).checkMsgAndPlaceBid();

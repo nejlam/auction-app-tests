@@ -27,7 +27,7 @@ public class AddNewProduct extends TestBase {
     final static private String SUCCESS_ALERT = "You have successfully added a new product!";
     final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\product_photos\\img";
     final static private String PHOTO_EXTENSION = ".jpg";
-    final static private int PHOTOS_QUANTITY = 10;
+    final static private int PHOTOS_QUANTITY = 3;
     final static private String NAME_ON_CARD = "Beth";
     final static private String CARD_NUMBER = "1111111111111";
     final static private String CVC = "1234";
@@ -107,7 +107,7 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 9)
-    public void populateProductInfo() throws InterruptedException {
+    public void populateProductInfo(){
         new SellPageProductInfo(driver).populateForm(getLorem().getTitle(2,5), getLorem().getWords(5,10),
                 PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
     }
@@ -118,46 +118,51 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 11)
+    public void verifyMsgAfterPhotosUpload(){
+        Assert.assertTrue(new SellPageProductInfo(driver).verifyMsgForPhotoUploads(PHOTOS_QUANTITY));
+    }
+
+    @Test(priority = 12)
     public void verifyPriceInfoStep(){
         Assert.assertTrue(new SellPageSetPrices(driver).verifyStepTitle(PRICES_INFO_TEXT));
     }
 
-    @Test(priority = 12)
+    @Test(priority = 13)
     public void populatePriceInfo(){
         new SellPageSetPrices(driver).populateForm(getToday(), getEndDate());
     }
 
-    @Test(priority = 13)
+    @Test(priority = 14)
     public void verifyLocationAndShippingStep(){
         Assert.assertTrue(new SellPageLocationAndShipping(driver).verifyStepTitle(LOCATION_SHIPPING_INFO_TEXT));
     }
 
-    @Test(priority = 14)
+    @Test(priority = 15)
     public void populateLocationInfo(){
         new SellPageLocationAndShipping(driver).populateLocationForm(getLorem().getWords(1), COUNTRY, ZIPCODE, PHONE);
     }
 
-    @Test(priority = 15)
+    @Test(priority = 16)
     public void chooseShippingCostBear(){
         new SellPageLocationAndShipping(driver).clickShippingPayment();
     }
 
-    @Test(priority = 16)
+    @Test(priority = 17)
     public void chooseFeatureProduct(){
         new SellPageLocationAndShipping(driver).clickFeatureProductPayment();
     }
 
-    @Test(priority = 17)
+    @Test(priority = 18)
     public void populatePaymentInfo(){
         new SellPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
     }
 
-    @Test(priority = 18)
+    @Test(priority = 19)
     public void finishAddingItem(){
         new SellPageLocationAndShipping(driver).clickDoneBtn();
     }
 
-    @Test(priority = 19)
+    @Test(priority = 20)
     public void verifyProductIsAdded(){
        Assert.assertTrue(new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT));
     }
