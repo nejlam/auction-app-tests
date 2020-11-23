@@ -24,6 +24,13 @@ public class RegisterAccount extends TestBase {
     final static private String EXPECTED_ACCOUNT_SUCCESS_MSG = "Account created successfully";
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
 
+    public String getHomeActiveLinkValue(){
+        return ACTIVE_LINK_ATTRIBUTE_VALUE;
+    }
+
+    public String getPassword(){
+        return PASSWORD;
+    }
 
     @BeforeTest
     public String getEmail() throws IOException {

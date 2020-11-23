@@ -163,6 +163,10 @@ public class ItemPage extends PageBase {
 
     //VERIFICATIONS
 
+    public Boolean verifySuccessfulAdd(String successMsg){
+        return getAlertMsg().getText().contains(successMsg);
+    }
+
     public Boolean verifyBidsInfoSection(){
         return getBidsInfo().isDisplayed();
     }
@@ -204,8 +208,8 @@ public class ItemPage extends PageBase {
     }
 
     public Boolean verifyHighestBidInTable() {
-        String tableHighestBid = getBidValue(getBidText(getHighestBidFromTable()));
-        String highestBid = getBidValue(getBidText(getHighestBid()));
+        String tableHighestBid = getNum(getBidText(getHighestBidFromTable()));
+        String highestBid = getNum(getBidText(getHighestBid()));
         return highestBid.equals(tableHighestBid);
     }
 
@@ -227,8 +231,8 @@ public class ItemPage extends PageBase {
         System.out.println("---------placeBid() messages-------");
         System.out.println("Item name: " + getProductTitle().getText());
         System.out.println("Enter price msg: " + extractEnterPriceMsg());
-        System.out.println("Enter bid value: " + getBidValue(extractEnterPriceMsg()));
-        getAddBidInput().sendKeys(getBidValue(bidValueMsg));
+        System.out.println("Enter bid value: " + getNum(extractEnterPriceMsg()));
+        getAddBidInput().sendKeys(getNum(bidValueMsg));
         clickBidButton();
     }
 
@@ -244,15 +248,20 @@ public class ItemPage extends PageBase {
     }
 
     public String getNewHighestBidValue(){
-        double HighestValue = Double.parseDouble(getBidValue(getBidText(getHighestBid())));
-        double newHighestValueDouble = HighestValue + 0.1;
-        String newHighestValue = String.valueOf(newHighestValueDouble);
+        double highestValue = Double.parseDouble(getNum(getBidText(getHighestBid())));
+        String newHighestValue = "";
+        if(highestValue == 999999.99){
+            newHighestValue = String.valueOf(highestValue);
+        }else{
+            double newHighestValueDouble = highestValue + 0.1;
+            newHighestValue = String.valueOf(newHighestValueDouble);
+        }
         return newHighestValue;
     }
 
-    private String getBidValue(String bidMsg) {
-        String bidValue = bidMsg.replaceAll("[^0-9?!\\.]","");
-        return bidValue;
+    private String getNum(String msg) {
+        String msgNum = msg.replaceAll("[^0-9?!\\.]","");
+        return msgNum;
     }
 
     public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
