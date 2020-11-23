@@ -48,12 +48,18 @@ public class RegisterAccount extends TestBase {
         new HomePage(driver).clickCreateAccountLink();
     }
 
+
     @Test(priority = 2)
+    public void checkAgreeToTerms(){
+        new RegistrationPage(driver).clickAgreeToTermsCheck();
+    }
+
+    @Test(priority = 3)
     public void populateRegistrationForm() throws IOException {
         new RegistrationPage(driver).populateForm(FIRST_NAME, LAST_NAME, getEmail(), PASSWORD);
     }
 
-    @Test(priority = 3)
+    @Test(priority = 4)
     public void verifyAccountIsRegistered(){
         Assert.assertTrue(new AccountPage(driver).verifySuccessMessage(EXPECTED_ACCOUNT_SUCCESS_MSG));
     }

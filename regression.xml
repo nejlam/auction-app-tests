@@ -3,7 +3,7 @@
 <suite name="Regression tests" verbose="9">
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
-
+<!--
     <test name="Bid product from Every Category">
         <classes>
             <class name="regression.BidProductFromEveryCategory"/>
@@ -15,5 +15,10 @@
             <class name="regression.VerifyItemPage"/>
         </classes>
     </test>
-
+!-->
+    <test name="Register Without Accepting Terms">
+        <classes>
+            <class name="regression.RegisterWithoutAcceptingTerms"/>
+        </classes>
+    </test>
 </suite>
