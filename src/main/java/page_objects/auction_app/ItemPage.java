@@ -164,7 +164,7 @@ public class ItemPage extends PageBase {
     //VERIFICATIONS
 
     public Boolean verifySuccessfulAdd(String successMsg){
-        return getAlertMsg().equals(successMsg);
+        return getAlertMsg().getText().contains(successMsg);
     }
 
     public Boolean verifyBidsInfoSection(){
@@ -248,9 +248,14 @@ public class ItemPage extends PageBase {
     }
 
     public String getNewHighestBidValue(){
-        double HighestValue = Double.parseDouble(getNum(getBidText(getHighestBid())));
-        double newHighestValueDouble = HighestValue + 0.1;
-        String newHighestValue = String.valueOf(newHighestValueDouble);
+        double highestValue = Double.parseDouble(getNum(getBidText(getHighestBid())));
+        String newHighestValue = "";
+        if(highestValue == 999999.99){
+            newHighestValue = String.valueOf(highestValue);
+        }else{
+            double newHighestValueDouble = highestValue + 0.1;
+            newHighestValue = String.valueOf(newHighestValueDouble);
+        }
         return newHighestValue;
     }
 

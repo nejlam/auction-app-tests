@@ -170,7 +170,7 @@ public class SellPageProductInfo extends PageBase {
 
     private void uploadPhotos(String filePath, String fileExtension, int quantity){
         String photoPath = "";
-        for(int i = 1; i<=quantity; i++){
+        for(int i = 1; i<quantity; i++){
             photoPath = filePath + i + fileExtension;
             getUploadInput().sendKeys(photoPath);
         }
