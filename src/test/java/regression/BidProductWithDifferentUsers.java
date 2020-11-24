@@ -13,6 +13,10 @@ public class BidProductWithDifferentUsers extends TestBase {
 
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String SEARCH_QUERY = "Product";
+    final static private String PASSWORD = "aaaaaaaa";
+    final static private String HIGHEST_BID_SUCCESS_MSG = "Congratulations! You are the highest bider!";
+    String email = System.getProperty("email");
+
 
     @Test(priority = 0)
     public void verifyHomePage(){
@@ -25,9 +29,8 @@ public class BidProductWithDifferentUsers extends TestBase {
     }
 
     @Test(priority = 2)
-    @Parameters({"email", "password"})
-    public void populateLoginForm(String email, String password) {
-        new LoginPage(driver).populateLoginForm(email, password);
+    public void populateLoginForm() {
+        new LoginPage(driver).populateLoginForm(email, PASSWORD);
     }
 
     @Test(priority = 3)
@@ -51,12 +54,18 @@ public class BidProductWithDifferentUsers extends TestBase {
     }
 
     @Test(priority = 7)
-    public void placeBid() throws InterruptedException {
-        new ItemPage(driver).checkMsgAndPlaceBid();
+    public void placeHighestBid(){
+        new ItemPage(driver).placeBid(new ItemPage(driver).getNewHighestBidValue());
     }
 
     @Test(priority = 8)
-    public void verifyAlertMsg(){
-        Assert.assertTrue(new ItemPage(driver).verifyAlertMsg());
+    public void verifyAlertMsgTxt(){
+       new ItemPage(driver).verifyAlertMsgTxt(HIGHEST_BID_SUCCESS_MSG);
     }
+
+    @Test(priority = 20)
+    public void verifyBidIsTheHighestInTable(){
+        Assert.assertTrue(new ItemPage(driver).verifyHighestBidInTable());
+    }
+
 }

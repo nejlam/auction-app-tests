@@ -8,8 +8,6 @@ import page_objects.auction_app.LoginPage;
 import page_objects.auction_app.ShopPage;
 import testUtils.TestBase;
 
-import java.io.IOException;
-
 public class BidProductFromEveryCategory extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String PASSWORD = "11111111";

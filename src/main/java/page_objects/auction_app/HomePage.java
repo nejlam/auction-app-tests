@@ -145,8 +145,7 @@ public class HomePage extends PageBase {
         return new ItemPage(getDriver());
     }
 
-    public ShopPage searchProduct(String query){
+    public void searchProduct(String query){
         getSearchInput().sendKeys(query, Keys.ENTER);
-        return new ShopPage(getDriver());
     }
 }

@@ -213,6 +213,10 @@ public class ItemPage extends PageBase {
         return highestBid.equals(tableHighestBid);
     }
 
+    public Boolean verifyAlertMsgTxt(String msg){
+        return getAlertMsg().getText().contains(msg);
+    }
+
     //METHODS
 
     public void closeAlertBtn(){

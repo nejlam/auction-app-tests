@@ -3,22 +3,19 @@
 <suite name="Regression tests" verbose="9">
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
-    <parameter name="email" value=""/>
-    <parameter name="password" value=""/>
 
-<!--
     <test name="Bid product from Every Category">
-        <classes>
-            <class name="regression.BidProductFromEveryCategory"/>
-        </classes>
+            <classes>
+                <class name="regression.BidProductFromEveryCategory"/>
+            </classes>
     </test>
 
     <test name="Verify Item page">
-        <classes>
-            <class name="regression.VerifyItemPage"/>
-        </classes>
+            <classes>
+                <class name="regression.VerifyItemPage"/>
+            </classes>
     </test>
-!-->
+
     <test name="Bid product with different users">
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
