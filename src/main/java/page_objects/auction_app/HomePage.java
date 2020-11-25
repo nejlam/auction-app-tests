@@ -1,9 +1,6 @@
 package page_objects.auction_app;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -145,7 +142,15 @@ public class HomePage extends PageBase {
         return new ItemPage(getDriver());
     }
 
-    public void searchProduct(String query){
+
+    public ShopPage searchItem(String query) throws InterruptedException {
+        Thread.sleep(1000);
         getSearchInput().sendKeys(query, Keys.ENTER);
+        return new ShopPage(getDriver());
+    }
+
+    public boolean verifySearchInput(String query){
+        System.out.println(getSearchInput().getAttribute("value"));
+        return getSearchInput().getAttribute("value").equals(query);
     }
 }

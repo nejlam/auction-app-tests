@@ -16,7 +16,29 @@
             </classes>
     </test>
 
-    <test name="Bid product with different users">
+    <test name="Bid product with different users #1">
+        <parameter name="email" value="user.a@gmail.com"/>
+        <classes>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Bid product with different users #2">
+        <parameter name="email" value="user.b@gmail.com"/>
+        <classes>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Bid product with different users #3">
+        <parameter name="email" value="user.c@gmail.com"/>
+        <classes>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Bid product with different users #4">
+        <parameter name="email" value="user.d@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>

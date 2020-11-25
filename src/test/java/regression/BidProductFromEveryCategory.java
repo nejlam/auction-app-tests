@@ -42,12 +42,12 @@ public class BidProductFromEveryCategory extends TestBase {
 
     @Test(priority = 6)
     public void selectRandomItem(){
-        new ShopPage(driver).selectRandomProduct();
+        new ShopPage(driver).selectRandomItem();
     }
 
     @Test(priority = 9)
     public void placeBid() throws InterruptedException {
-        new ItemPage(driver).checkMsgAndPlaceBid();
+        new ItemPage(driver).checkEnterMsgAndPlaceBid();
     }
 
     @Test(priority = 10)

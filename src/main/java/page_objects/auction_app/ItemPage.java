@@ -251,10 +251,11 @@ public class ItemPage extends PageBase {
         getWishlistBtn().click();
     }
 
-    public String getNewHighestBidValue(){
+    public String getNewHighestBidValue() throws InterruptedException {
+        if(getHighestBid().getText().equals("$0")) Thread.sleep(2000);
         double highestValue = Double.parseDouble(getNum(getBidText(getHighestBid())));
         String newHighestValue = "";
-        if(highestValue == 999999.99){
+        if (highestValue == 999999.99){
             newHighestValue = String.valueOf(highestValue);
         }else{
             double newHighestValueDouble = highestValue + 0.1;
@@ -268,14 +269,14 @@ public class ItemPage extends PageBase {
         return msgNum;
     }
 
-    public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
+    public ItemPage checkEnterMsgAndPlaceBid() throws InterruptedException {
         System.out.println("Msg before loop:" + extractEnterPriceMsg());
         if(getEnterPriceMsg().getText().equals("Enter $0 or more")) {
             System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
-            Thread.sleep(10000);
+            Thread.sleep(1000);
             System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
         } placeBid(getEnterPriceMsg().getText());
-    return this;
+        return this;
     }
 
 }

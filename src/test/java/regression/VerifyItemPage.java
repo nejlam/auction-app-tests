@@ -85,7 +85,7 @@ public class VerifyItemPage extends TestBase {
     }
 
     @Test (priority = 15)
-    public void placeStartPriceBid() throws InterruptedException {
+    public void placeStartPriceBid(){
         new ItemPage(driver).placeBid(new ItemPage(driver).extractEnterPriceMsg());
     }
 
@@ -101,7 +101,7 @@ public class VerifyItemPage extends TestBase {
     }
 
     @Test(priority = 18)
-    public void placeHighestBid(){
+    public void placeHighestBid() throws InterruptedException {
         new ItemPage(driver).placeBid(new ItemPage(driver).getNewHighestBidValue());
     }
 
