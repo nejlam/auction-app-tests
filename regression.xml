@@ -15,11 +15,11 @@
                 <class name="regression.VerifyItemPage"/>
             </classes>
     </test>
-<!--
+
     <test name="Bid product with different users">
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
-!-->
+
 </suite>
