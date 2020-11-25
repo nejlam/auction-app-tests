@@ -16,4 +16,10 @@
         </classes>
     </test>
 
+    <test name="Sort Products by Price">
+        <classes>
+            <class name="regression.SortProductsByPrice"/>
+        </classes>
+    </test>
+
 </suite>

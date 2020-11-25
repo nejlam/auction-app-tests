@@ -259,7 +259,7 @@ public class ItemPage extends PageBase {
         return newHighestValue;
     }
 
-    private String getNum(String msg) {
+    public String getNum(String msg) {
         String msgNum = msg.replaceAll("[^0-9?!\\.]","");
         return msgNum;
     }

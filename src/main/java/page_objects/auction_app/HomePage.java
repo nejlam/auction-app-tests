@@ -20,6 +20,7 @@ public class HomePage extends PageBase {
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
     final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
     final static private String ACCOUNT_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[3]";
+    final static private String SHOP_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[2]";
 
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -62,6 +63,13 @@ public class HomePage extends PageBase {
 
     @FindBy(xpath = ACCOUNT_PAGE_LINK_XPATH)
     private WebElement accountPage;
+
+    @FindBy(xpath = SHOP_PAGE_LINK_XPATH)
+    private WebElement shopPageLink;
+
+    public WebElement getShopPageLink(){
+        return shopPageLink;
+    }
 
     public WebElement getAccountPage(){
         return accountPage;
@@ -134,5 +142,10 @@ public class HomePage extends PageBase {
         int randomProduct = rand.nextInt(allProducts.size());
         allProducts.get(randomProduct).click();
         return new ItemPage(getDriver());
+    }
+
+    public ShopPage clickShopPageLink(){
+        getShopPageLink().click();
+        return new ShopPage(getDriver());
     }
 }
