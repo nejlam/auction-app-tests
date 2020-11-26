@@ -1,8 +1,6 @@
 package page_objects.auction_app;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,6 +18,7 @@ public class HomePage extends PageBase {
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
     final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
     final static private String ACCOUNT_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[3]";
+    final static private String SEARCH_INPUT_XPATH = "//*[@id='root']/div/div[2]/div[1]/input";
 
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -62,6 +61,13 @@ public class HomePage extends PageBase {
 
     @FindBy(xpath = ACCOUNT_PAGE_LINK_XPATH)
     private WebElement accountPage;
+
+    @FindBy(xpath = SEARCH_INPUT_XPATH)
+    private WebElement searchInput;
+
+    public WebElement getSearchInput(){
+        return searchInput;
+    }
 
     public WebElement getAccountPage(){
         return accountPage;
@@ -134,5 +140,17 @@ public class HomePage extends PageBase {
         int randomProduct = rand.nextInt(allProducts.size());
         allProducts.get(randomProduct).click();
         return new ItemPage(getDriver());
+    }
+
+
+    public ShopPage searchItem(String query) throws InterruptedException {
+        Thread.sleep(1000);
+        getSearchInput().sendKeys(query, Keys.ENTER);
+        return new ShopPage(getDriver());
+    }
+
+    public boolean verifySearchInput(String query){
+        System.out.println(getSearchInput().getAttribute("value"));
+        return getSearchInput().getAttribute("value").equals(query);
     }
 }

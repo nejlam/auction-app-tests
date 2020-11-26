@@ -55,7 +55,7 @@ public class PlaceBid extends TestBase {
 
     @Test(priority = 6)
     public void placeBid() throws InterruptedException {
-        new ItemPage(driver).checkMsgAndPlaceBid();
+        new ItemPage(driver).checkEnterMsgAndPlaceBid();
     }
 
     @Test(priority = 7)
