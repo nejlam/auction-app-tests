@@ -1,5 +1,6 @@
 package page_objects;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -15,7 +16,7 @@ public abstract class PageBase {
 
     public PageBase(WebDriver driver, String pageUrlRegex) {
         this.driver = driver;
-        driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         WebDriverWait webDriverWait = new WebDriverWait(driver, 5);
         webDriverWait.until(ExpectedConditions.urlMatches(pageUrlRegex));
     }

@@ -16,4 +16,10 @@
         </classes>
     </test>
 
+    <test name="Add New Product">
+        <classes>
+            <class name="smoke.AddNewProduct"/>
+        </classes>
+    </test>
+
 </suite>

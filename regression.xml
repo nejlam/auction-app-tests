@@ -5,14 +5,54 @@
     <parameter name="browser" value="chrome"/>
 
     <test name="Bid product from Every Category">
-        <classes>
-            <class name="regression.BidProductFromEveryCategory"/>
-        </classes>
+            <classes>
+                <class name="regression.BidProductFromEveryCategory"/>
+            </classes>
     </test>
 
     <test name="Verify Item page">
+            <classes>
+                <class name="regression.VerifyItemPage"/>
+            </classes>
+    </test>
+
+    <test name="Bid product with different users #1">
+        <parameter name="email" value="user.a@gmail.com"/>
         <classes>
-            <class name="regression.VerifyItemPage"/>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Bid product with different users #2">
+        <parameter name="email" value="user.b@gmail.com"/>
+        <classes>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Bid product with different users #3">
+        <parameter name="email" value="user.c@gmail.com"/>
+        <classes>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Bid product with different users #4">
+        <parameter name="email" value="user.d@gmail.com"/>
+        <classes>
+            <class name="regression.BidProductWithDifferentUsers"/>
+        </classes>
+    </test>
+
+    <test name="Sort Products by Price">
+        <classes>
+            <class name="regression.SortProductsByPrice"/>
+        </classes>
+    </test>
+
+    <test name="Sort Products by Default">
+        <classes>
+            <class name="regression.SortProductsByDefault"/>
         </classes>
     </test>
 
@@ -28,3 +68,4 @@
         </classes>
     </test>
 </suite>
+

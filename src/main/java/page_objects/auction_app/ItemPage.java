@@ -13,7 +13,7 @@ public class ItemPage extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/shop\\d*";
     final static private String FEATURED_IMG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/img[1]";
     final static private String ADD_BID_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div/input";
-    final static private String PLACE_BID_BTN = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/button";
+    final static private String PLACE_BID_BTN = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div[2]/button";
     final static private String ENTER_PRICE_MSG_XPATH = "/html/body/div/div/div[3]/div[1]/div[2]/div[2]/div/div";
     final static private String PRODUCT_TITLE = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/h1";
     final static private String ALERT_MSG_CLASS = "alert";
@@ -163,6 +163,10 @@ public class ItemPage extends PageBase {
 
     //VERIFICATIONS
 
+    public Boolean verifySuccessfulAdd(String successMsg){
+        return getAlertMsg().getText().contains(successMsg);
+    }
+
     public Boolean verifyBidsInfoSection(){
         return getBidsInfo().isDisplayed();
     }
@@ -204,8 +208,8 @@ public class ItemPage extends PageBase {
     }
 
     public Boolean verifyHighestBidInTable() {
-        String tableHighestBid = getBidValue(getBidText(getHighestBidFromTable()));
-        String highestBid = getBidValue(getBidText(getHighestBid()));
+        String tableHighestBid = getNum(getBidText(getHighestBidFromTable()));
+        String highestBid = getNum(getBidText(getHighestBid()));
         return highestBid.equals(tableHighestBid);
     }
 
@@ -231,8 +235,8 @@ public class ItemPage extends PageBase {
         System.out.println("---------placeBid() messages-------");
         System.out.println("Item name: " + getProductTitle().getText());
         System.out.println("Enter price msg: " + extractEnterPriceMsg());
-        System.out.println("Enter bid value: " + getBidValue(extractEnterPriceMsg()));
-        getAddBidInput().sendKeys(getBidValue(bidValueMsg));
+        System.out.println("Enter bid value: " + getNum(extractEnterPriceMsg()));
+        getAddBidInput().sendKeys(getNum(bidValueMsg));
         clickBidButton();
     }
 
@@ -247,16 +251,22 @@ public class ItemPage extends PageBase {
         getWishlistBtn().click();
     }
 
-    public String getNewHighestBidValue(){
-        double HighestValue = Double.parseDouble(getBidValue(getBidText(getHighestBid())));
-        double newHighestValueDouble = HighestValue + 0.1;
-        String newHighestValue = String.valueOf(newHighestValueDouble);
+    public String getNewHighestBidValue() throws InterruptedException {
+        if(getHighestBid().getText().equals("$0")) Thread.sleep(2000);
+        double highestValue = Double.parseDouble(getNum(getBidText(getHighestBid())));
+        String newHighestValue = "";
+        if (highestValue == 999999.99){
+            newHighestValue = String.valueOf(highestValue);
+        }else{
+            double newHighestValueDouble = highestValue + 0.1;
+            newHighestValue = String.valueOf(newHighestValueDouble);
+        }
         return newHighestValue;
     }
 
-    private String getBidValue(String bidMsg) {
-        String bidValue = bidMsg.replaceAll("[^0-9?!\\.]","");
-        return bidValue;
+    public String getNum(String msg) {
+        String msgNum = msg.replaceAll("[^0-9?!\\.]","");
+        return msgNum;
     }
 
     public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
@@ -267,6 +277,14 @@ public class ItemPage extends PageBase {
             System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
         } placeBid(getEnterPriceMsg().getText());
     return this;
+    public ItemPage checkEnterMsgAndPlaceBid() throws InterruptedException {
+        System.out.println("Msg before loop:" + extractEnterPriceMsg());
+        if(getEnterPriceMsg().getText().equals("Enter $0 or more")) {
+            System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
+            Thread.sleep(1000);
+            System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
+        } placeBid(getEnterPriceMsg().getText());
+        return this;
     }
 
 }
