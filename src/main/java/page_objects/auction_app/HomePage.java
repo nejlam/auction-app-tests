@@ -18,6 +18,7 @@ public class HomePage extends PageBase {
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
     final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
     final static private String ACCOUNT_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[3]";
+    final static private String SHOP_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[2]";
     final static private String SEARCH_INPUT_XPATH = "//*[@id='root']/div/div[2]/div[1]/input";
 
     public HomePage(WebDriver driver){
@@ -62,6 +63,12 @@ public class HomePage extends PageBase {
     @FindBy(xpath = ACCOUNT_PAGE_LINK_XPATH)
     private WebElement accountPage;
 
+    @FindBy(xpath = SHOP_PAGE_LINK_XPATH)
+    private WebElement shopPageLink;
+
+    public WebElement getShopPageLink(){
+        return shopPageLink;
+      
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;
 
@@ -143,6 +150,12 @@ public class HomePage extends PageBase {
     }
 
 
+    public ShopPage clickShopPageLink(){
+        getShopPageLink().click();
+        return new ShopPage(getDriver());
+    }
+
+
     public ShopPage searchItem(String query) throws InterruptedException {
         Thread.sleep(1000);
         getSearchInput().sendKeys(query, Keys.ENTER);
@@ -153,4 +166,5 @@ public class HomePage extends PageBase {
         System.out.println(getSearchInput().getAttribute("value"));
         return getSearchInput().getAttribute("value").equals(query);
     }
+
 }
