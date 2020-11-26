@@ -22,4 +22,10 @@
         </classes>
     </test>
 
+    <test name="Sort Products by Default">
+        <classes>
+            <class name="regression.SortProductsByDefault"/>
+        </classes>
+    </test>
+
 </suite>

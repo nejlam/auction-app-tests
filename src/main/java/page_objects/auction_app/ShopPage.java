@@ -22,6 +22,7 @@ public class ShopPage extends PageBase {
     final static private String SORT_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[1]/select";
     final static private String ITEM_PRICE_TXT_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div";
     final static private String SORT_VALUES_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[1]/select/option";
+    final static private String ITEM_TITLE_LIST_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div/h3";
     private Object List;
 
     public ShopPage(WebDriver driver){
@@ -62,6 +63,13 @@ public class ShopPage extends PageBase {
 
     @FindBy(xpath = SORT_VALUES_XPATH)
     private List<WebElement> sortValues;
+
+    @FindBy(xpath = ITEM_TITLE_LIST_XPATH)
+    private List<WebElement> itemTitleList;
+
+    public List<WebElement> getItemTitleList(){
+        return itemTitleList;
+    }
 
     public Select getSortDropdown(){
         return new Select(sortDropdown);
@@ -134,6 +142,21 @@ public class ShopPage extends PageBase {
             }
         }
         return sortedPrices.equals(prices);
+    }
+
+    public boolean verifySortDefault(){
+        List<String> titles = new ArrayList<String>();
+        List<String> sortedTitles = (java.util.List<String>) List;
+        for (WebElement e : getItemTitleList())
+        {
+            wait.until(ExpectedConditions.visibilityOf(e));
+            titles.add(e.getText());
+        }
+        sortedTitles = new ArrayList<String>(titles);
+        Collections.sort(sortedTitles);
+        System.out.println("Expected sort:" + sortedTitles);
+        System.out.println("Actual sort:" + titles);
+        return sortedTitles.equals(titles);
     }
 
 }
