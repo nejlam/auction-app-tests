@@ -66,11 +66,12 @@ public class HomePage extends PageBase {
     @FindBy(xpath = SHOP_PAGE_LINK_XPATH)
     private WebElement shopPageLink;
 
-    public WebElement getShopPageLink(){
-        return shopPageLink;
-      
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;
+
+    public WebElement getShopPageLink() {
+        return shopPageLink;
+    }
 
     public WebElement getSearchInput(){
         return searchInput;
@@ -149,12 +150,10 @@ public class HomePage extends PageBase {
         return new ItemPage(getDriver());
     }
 
-
     public ShopPage clickShopPageLink(){
         getShopPageLink().click();
         return new ShopPage(getDriver());
     }
-
 
     public ShopPage searchItem(String query) throws InterruptedException {
         Thread.sleep(1000);

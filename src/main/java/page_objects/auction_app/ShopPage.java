@@ -27,8 +27,6 @@ import java.util.Random;
 public class ShopPage extends PageBase {
     final private static String PAGE_URL_REGEX = "\\/shop\\d*";
     final static private String FIRST_ITEM_XPATH= "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div[1]/div/h3";
-
-    final static private String DISPLAYED_PRODUCTS_LIST_XPATH= "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div/h3";
     final static private String SORT_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[1]/select";
     final static private String ITEM_PRICE_TXT_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div";
     final static private String SORT_VALUES_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[1]/select/option";
@@ -37,21 +35,16 @@ public class ShopPage extends PageBase {
 
     final static private String DISPLAYED_ITEMS_LIST_XPATH= "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div/h3";
 
-    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
-
-    private void waitForVisibility(WebElement element){
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-
-
     public ShopPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
 
-
     WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
+    private void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
     private void waitForListElementsNum(String list, int number){
         wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(list), number));
@@ -61,18 +54,9 @@ public class ShopPage extends PageBase {
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(list), number));
     }
 
-    private void waitForPresenceOfElements(String list){
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(list)));
-    }
-
     private void waitForVisibilityOfAllElem(List<WebElement> list){
         wait.until(ExpectedConditions.visibilityOfAllElements(list));
     }
-
-
-    @FindBy(xpath = BREADCRUMB_CATEGORY_ITEM_XPATH)
-    private WebElement breadcrumbCategoryItem;
-
 
     @FindBy(xpath = FIRST_ITEM_XPATH)
     private WebElement firstItem;
@@ -98,12 +82,8 @@ public class ShopPage extends PageBase {
         return new Select(sortDropdown);
     }
 
-    public List<WebElement> getDisplayedProductsList() {
-        return displayedProductsList;
-
     public List<WebElement> getDisplayedItemsList() {
         return displayedItemsList;
-
     }
 
     public WebElement getFirstItem(){
@@ -124,11 +104,9 @@ public class ShopPage extends PageBase {
         return new ItemPage(getDriver());
     }
 
-
     public void selectSortOption(String value){
         waitForListElementsMoreThanNum(SORT_VALUES_XPATH, 2);
         getSortDropdown().selectByValue(value);
-
     }
 
     public boolean verifySortPrices(String sort){
@@ -164,11 +142,10 @@ public class ShopPage extends PageBase {
         return sortedPrices.equals(prices);
     }
 
-    public boolean verifySortDefault(){
+    public boolean verifySortDefault() {
         List<String> titles = new ArrayList<String>();
         List<String> sortedTitles = (java.util.List<String>) List;
-        for (WebElement e : getItemTitleList())
-        {
+        for (WebElement e : getItemTitleList()) {
             wait.until(ExpectedConditions.visibilityOf(e));
             String cap = e.getText().substring(0, 1).toUpperCase() + e.getText().substring(1);
             titles.add(cap);
@@ -178,6 +155,7 @@ public class ShopPage extends PageBase {
         System.out.println("Expected sort:" + sortedTitles);
         System.out.println("Actual sort:" + titles);
         return sortedTitles.equals(titles);
+    }
 
     public boolean verifyFirstItem(String query){
         waitForVisibility(getFirstItem());
