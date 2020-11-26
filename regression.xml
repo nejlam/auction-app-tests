@@ -56,6 +56,16 @@
         </classes>
     </test>
 
+    <test name="Register Without Accepting Terms">
+        <classes>
+            <class name="regression.RegisterWithoutAcceptingTerms"/>
+        </classes>
+    </test>
+
+    <test name="Bid Product Logged Out">
+        <classes>
+            <class name="regression.BidProductLoggedOut"/>
+        </classes>
+    </test>
 </suite>
-=======
-</suite>
+

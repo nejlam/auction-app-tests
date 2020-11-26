@@ -1,10 +1,9 @@
-package smoke;
+package regression;
 
-import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
-import junit.framework.TestCase;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import page_objects.auction_app.AccountPage;
 import page_objects.auction_app.HomePage;
 import page_objects.auction_app.RegistrationPage;
@@ -12,25 +11,17 @@ import testUtils.TestBase;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RegisterAccount extends TestBase {
+public class RegisterWithoutAcceptingTerms extends TestBase {
     final static private String FIRST_NAME = "Beth";
     final static private String LAST_NAME = "Harmon";
     final static private String EMAIL = "betharmon@gmail.com";
     final static private String PASSWORD = "12345678";
-    final static private String EXPECTED_ACCOUNT_SUCCESS_MSG = "Account created successfully";
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
+    final static private String ERROR_MSG = "*Please accept our terms";
 
-    public String getHomeActiveLinkValue(){
-        return ACTIVE_LINK_ATTRIBUTE_VALUE;
-    }
-
-    public String getPassword(){
-        return PASSWORD;
-    }
 
     @BeforeTest
     public String getEmail() throws IOException {
@@ -57,17 +48,12 @@ public class RegisterAccount extends TestBase {
 
 
     @Test(priority = 2)
-    public void checkAgreeToTerms(){
-        new RegistrationPage(driver).clickAgreeToTermsCheck();
-    }
-
-    @Test(priority = 3)
     public void populateRegistrationForm() throws IOException {
         new RegistrationPage(driver).populateForm(FIRST_NAME, LAST_NAME, getEmail(), PASSWORD);
     }
 
-    @Test(priority = 4)
-    public void verifyAccountIsRegistered(){
-        Assert.assertTrue(new AccountPage(driver).verifySuccessMessage(EXPECTED_ACCOUNT_SUCCESS_MSG));
+    @Test(priority = 3)
+    public void verifyErrorMsg(){
+        Assert.assertTrue(new RegistrationPage(driver).verifyTermsAndConditionsErrorMsg(ERROR_MSG));
     }
 }

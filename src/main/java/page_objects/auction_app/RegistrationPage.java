@@ -13,8 +13,8 @@ public class RegistrationPage extends PageBase {
     final static private String PASSWORD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div/form/div[4]/input";
     final static private String SUBMIT_BUTTON_XPATH = "//*[@id='root']/div/div[3]/div/form/button";
     final static private String ALERT_MSG_XPATH = "//*[@id='root']/div/div[3]";
-    final static private String AGREE_TO_TERMS_CHECK = "//*[@id='root']/div/div[3]/div/form/div[5]/div[1]/label";
-
+    final static private String AGREE_TO_TERMS_CHECK_XPATH = "//*[@id='root']/div/div[3]/div/form/div[5]/div[1]/label";
+    final static private String ERROR_AGREE_TO_TERMS_XPATH = "//*[@id='root']/div/div[3]/div/form/div[5]/div[2]";
 
     public RegistrationPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -39,8 +39,15 @@ public class RegistrationPage extends PageBase {
     @FindBy(xpath = ALERT_MSG_XPATH)
     private WebElement alertMessage;
 
-    @FindBy(xpath = AGREE_TO_TERMS_CHECK)
+    @FindBy(xpath = AGREE_TO_TERMS_CHECK_XPATH)
     private WebElement agreeToTermsCheck;
+
+    @FindBy(xpath = ERROR_AGREE_TO_TERMS_XPATH)
+    private WebElement errorAgreeToTerms;
+
+    public WebElement getErrorAgreeToTerms(){
+        return errorAgreeToTerms;
+    }
 
     public WebElement getAgreeToTermsCheck(){
         return agreeToTermsCheck;
@@ -70,13 +77,20 @@ public class RegistrationPage extends PageBase {
         return alertMessage;
     }
 
-    public AccountPage populateForm(String firstName, String lastName, String email, String password){
+    public void populateForm(String firstName, String lastName, String email, String password){
         getFirstNameInputField().sendKeys(firstName);
         getLastNameInputField().sendKeys(lastName);
         getEmailInputField().sendKeys(email);
         getPasswordInputField().sendKeys(password);
-        getAgreeToTermsCheck().click();
         getSubmitButton().click();
-        return new AccountPage(getDriver());
     }
+
+    public void clickAgreeToTermsCheck(){
+        getAgreeToTermsCheck().click();
+    }
+
+    public boolean verifyTermsAndConditionsErrorMsg(String errorMsg){
+        return getErrorAgreeToTerms().getText().equals(errorMsg);
+    }
+
 }
