@@ -150,7 +150,8 @@ public class ShopPage extends PageBase {
         for (WebElement e : getItemTitleList())
         {
             wait.until(ExpectedConditions.visibilityOf(e));
-            titles.add(e.getText());
+            String cap = e.getText().substring(0, 1).toUpperCase() + e.getText().substring(1);
+            titles.add(cap);
         }
         sortedTitles = new ArrayList<String>(titles);
         Collections.sort(sortedTitles);
