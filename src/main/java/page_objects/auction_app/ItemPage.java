@@ -13,7 +13,7 @@ public class ItemPage extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/shop\\d*";
     final static private String FEATURED_IMG_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/img[1]";
     final static private String ADD_BID_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div/input";
-    final static private String PLACE_BID_BTN = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/button";
+    final static private String PLACE_BID_BTN = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[2]/div[2]/button";
     final static private String ENTER_PRICE_MSG_XPATH = "/html/body/div/div/div[3]/div[1]/div[2]/div[2]/div/div";
     final static private String PRODUCT_TITLE = "//*[@id='root']/div/div[3]/div[1]/div[2]/div[1]/h1";
     final static private String ALERT_MSG_CLASS = "alert";
@@ -213,6 +213,10 @@ public class ItemPage extends PageBase {
         return highestBid.equals(tableHighestBid);
     }
 
+    public Boolean verifyAlertMsgTxt(String msg){
+        return getAlertMsg().getText().contains(msg);
+    }
+
     //METHODS
 
     public void closeAlertBtn(){
@@ -247,10 +251,11 @@ public class ItemPage extends PageBase {
         getWishlistBtn().click();
     }
 
-    public String getNewHighestBidValue(){
+    public String getNewHighestBidValue() throws InterruptedException {
+        if(getHighestBid().getText().equals("$0")) Thread.sleep(2000);
         double highestValue = Double.parseDouble(getNum(getBidText(getHighestBid())));
         String newHighestValue = "";
-        if(highestValue == 999999.99){
+        if (highestValue == 999999.99){
             newHighestValue = String.valueOf(highestValue);
         }else{
             double newHighestValueDouble = highestValue + 0.1;
@@ -264,16 +269,14 @@ public class ItemPage extends PageBase {
         return msgNum;
     }
 
-    public ItemPage checkMsgAndPlaceBid() throws InterruptedException {
+    public ItemPage checkEnterMsgAndPlaceBid() throws InterruptedException {
         System.out.println("Msg before loop:" + extractEnterPriceMsg());
-        if(extractEnterPriceMsg().equals("Enter $0 or more")) {
+        if(getEnterPriceMsg().getText().equals("Enter $0 or more")) {
             System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
-            synchronized (getDriver()){
-                wait(10000);
-            }
+            Thread.sleep(1000);
             System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
-        } placeBid(extractEnterPriceMsg());
-    return this;
+        } placeBid(getEnterPriceMsg().getText());
+        return this;
     }
 
 }
