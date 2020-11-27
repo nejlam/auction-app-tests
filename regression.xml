@@ -62,10 +62,16 @@
             <class name="regression.BidProductLoggedOut"/>
         </classes>
     </test>
-    -->
+
     <test name="Update Required Profile Info">
         <classes>
             <class name="regression.UpdateRequiredProfileInfo"/>
+        </classes>
+    </test>
+    -->
+    <test name="Register with Existing Email">
+        <classes>
+            <class name="regression.RegisterWithExistingEmail"/>
         </classes>
     </test>
 
