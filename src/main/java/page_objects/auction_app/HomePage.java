@@ -6,6 +6,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+
+
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +28,7 @@ public class HomePage extends PageBase {
     final static private String ACCOUNT_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[3]";
     final static private String SHOP_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[2]";
     final static private String SEARCH_INPUT_XPATH = "//*[@id='root']/div/div[2]/div[1]/input";
+    final static private String EXTERNAL_LINKS = "a";
 
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -68,6 +77,13 @@ public class HomePage extends PageBase {
 
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;
+
+    @FindBy(tagName = EXTERNAL_LINKS)
+    private List<WebElement> externalLinksList;
+
+    /*public List<WebElement> getExternalLinksList(){
+        return externalLinksList;
+    }*/
 
     public WebElement getShopPageLink() {
         return shopPageLink;
@@ -164,6 +180,49 @@ public class HomePage extends PageBase {
     public boolean verifySearchInput(String query){
         System.out.println(getSearchInput().getAttribute("value"));
         return getSearchInput().getAttribute("value").equals(query);
+    }
+
+    public boolean checkBrokenLinks(){
+        boolean brokenLinks = false;
+        List<WebElement> links = getDriver().findElements(By.tagName("a"));
+        Iterator<WebElement> it = links.iterator();
+        String homePage = getDriver().getCurrentUrl();
+        String url = "";
+        HttpURLConnection huc = null;
+        int respCode = 200;
+
+        while(it.hasNext()){
+            url = it.next().getAttribute("href");
+            System.out.println(url);
+
+            if(url == null || url.isEmpty()){
+                System.out.println("URL is either not configured for anchor tag or it is empty");
+                continue;
+            }
+
+            if(!url.startsWith(homePage)){
+                System.out.println("URL belongs to another domain, skipping it.");
+                continue;
+            }
+
+            try {
+                huc = (HttpURLConnection)(new URL(url).openConnection());
+                huc.setRequestMethod("HEAD");
+                huc.connect();
+                respCode = huc.getResponseCode();
+                if(respCode >= 400){
+                    brokenLinks = true;
+                    System.out.println(url+" is a broken link");
+                }
+                else{
+                    System.out.println(url+" is a valid link");
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return brokenLinks;
     }
 
 }
