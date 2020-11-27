@@ -3,29 +3,42 @@ package page_objects.auction_app;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 
 import java.util.List;
 
 public class AccountPage extends PageBase {
     final private static String PAGE_URL_REGEX = "\\/my_account\\d*";
-    final private static String ACCOUNT_CREATED_SUCCESS_MESSAGE_XPATH = "//*[@id='root']/div/div[3]";
-    final private static String LOGOUT_BUTTON_XPATH = "//*[@id='root']/div/div[1]/div[2]/a";
+    final private static String SUCCESS_MESSAGE_XPATH = "//*[@id='root']/div/div[3]";
     final static private String ACCOUNT_TABS_XPATH = "//*[@id='root']/div/div[3]/div/div[1]/button";
+    final private static String CLOSE_ALERT_BTN = "//*[@id='root']/div/div[3]/button";
+
 
     public AccountPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
 
-    @FindBy(xpath = ACCOUNT_CREATED_SUCCESS_MESSAGE_XPATH)
-    private WebElement createAccSuccessMessage;
+    WebDriverWait wait = new WebDriverWait(getDriver(),30);
 
-    @FindBy(xpath = LOGOUT_BUTTON_XPATH)
-    private WebElement logoutButton;
+    private void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
     @FindBy(xpath = ACCOUNT_TABS_XPATH)
     private List<WebElement> accountTabs;
+
+    @FindBy(xpath = CLOSE_ALERT_BTN)
+    private WebElement closeAlert;
+
+    @FindBy(xpath = SUCCESS_MESSAGE_XPATH)
+    private WebElement createAccSuccessMessage;
+
+    public WebElement getCloseAlert(){
+        return closeAlert;
+    }
 
     public List<WebElement> getAccountTabs(){
         return accountTabs;
@@ -35,20 +48,17 @@ public class AccountPage extends PageBase {
         return createAccSuccessMessage;
     }
 
-    public WebElement getLogoutButton(){
-        return logoutButton;
-    }
-
     public void clickTab(int index){
         getAccountTabs().get(index).click();
     }
 
-    public HomePage clickLogoutButton(){
-        getLogoutButton().click();
-        return new HomePage(getDriver());
+    public void closeAlertBtn(){
+        getCloseAlert().click();
     }
 
     public Boolean verifySuccessMessage(String successMessage){
+        waitForVisibility(getCloseAlert());
+        System.out.println("S:" + getSuccessMessage().getText());
         return getSuccessMessage().getText().contains(successMessage);
     }
 }

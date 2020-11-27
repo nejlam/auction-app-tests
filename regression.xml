@@ -4,6 +4,7 @@
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
 
+    <!--
     <test name="Bid product from Every Category">
             <classes>
                 <class name="regression.BidProductFromEveryCategory"/>
@@ -44,15 +45,9 @@
         </classes>
     </test>
 
-    <test name="Sort Products by Price">
+    <test name="Sort Products by Price and by Default">
         <classes>
-            <class name="regression.SortProductsByPrice"/>
-        </classes>
-    </test>
-
-    <test name="Sort Products by Default">
-        <classes>
-            <class name="regression.SortProductsByDefault"/>
+            <class name="regression.SortProducts"/>
         </classes>
     </test>
 
@@ -67,5 +62,12 @@
             <class name="regression.BidProductLoggedOut"/>
         </classes>
     </test>
+    -->
+    <test name="Update Required Profile Info">
+        <classes>
+            <class name="regression.UpdateRequiredProfileInfo"/>
+        </classes>
+    </test>
+
 </suite>
 

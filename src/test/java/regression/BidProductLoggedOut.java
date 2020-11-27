@@ -29,7 +29,7 @@ public class BidProductLoggedOut extends TestBase {
 
     @Test (priority = 3)
     public void placeStartPriceBid() throws InterruptedException {
-        new ItemPage(driver).checkMsgAndPlaceBid();
+        new ItemPage(driver).checkEnterMsgAndPlaceBid();
     }
 
     @Test(priority = 4)
