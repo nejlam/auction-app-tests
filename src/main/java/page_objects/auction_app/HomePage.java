@@ -5,13 +5,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
-
-
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -218,7 +213,6 @@ public class HomePage extends PageBase {
                     System.out.println(url+" is a valid link");
                 }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
