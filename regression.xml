@@ -74,5 +74,10 @@
         </classes>
     </test>
 
+    <test name="Verify broken links">
+        <classes>
+            <class name="regression.VerifyBrokenLinks"/>
+        </classes>
+    </test>
 </suite>
 
