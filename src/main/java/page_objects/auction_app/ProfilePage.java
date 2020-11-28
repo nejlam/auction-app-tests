@@ -21,8 +21,6 @@ public class ProfilePage extends PageBase {
     final private static String EMAIL_INPUT_NAME = "email";
     final private static String VERIFIED_BTN_XPATH = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[5]/div/div[1]";
     final private static String SAVE_BTN = "//*[@id='root']/div/div[3]/div/form/div[4]/button[2]";
-    final private static String FIRST_NAME_ALERT = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[1]/div";
-    final private static String LAST_NAME_ALERT = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[2]/div";
     final private static String GENDER_ALERT = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[3]/div";
     final private static String MONTH_ALERT = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[4]/div[2]/div[1]/div";
     final private static String DAY_ALERT = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[4]/div[2]/div[2]/div";
@@ -68,12 +66,6 @@ public class ProfilePage extends PageBase {
     @FindBy(xpath = SAVE_BTN)
     private WebElement saveBtn;
 
-    @FindBy(xpath = FIRST_NAME_ALERT)
-    private WebElement firstNameAlert;
-
-    @FindBy(xpath = LAST_NAME_ALERT)
-    private WebElement lastNameAlert;
-
     @FindBy(xpath = GENDER_ALERT)
     private WebElement genderAlert;
 
@@ -94,10 +86,6 @@ public class ProfilePage extends PageBase {
 
     @FindBy(xpath = EMAIL_ALERT)
     private WebElement emailAlert;
-
-    public WebElement getEmailAlert(){
-        return emailAlert;
-    }
 
     public WebElement getSaveAlert(){
         return saveAlert;
@@ -121,14 +109,6 @@ public class ProfilePage extends PageBase {
 
     public WebElement getGenderAlert(){
         return genderAlert;
-    }
-
-    public WebElement getLastNameAlert(){
-        return lastNameAlert;
-    }
-
-    public WebElement getFirstNameAlert(){
-        return firstNameAlert;
     }
 
     public WebElement getSaveBtn(){
@@ -171,10 +151,6 @@ public class ProfilePage extends PageBase {
         return firstNameInput;
     }
 
-    public WebElement getChangePhotoBtn(){
-        return changePhotoBtn;
-    }
-
     public ProfilePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
@@ -206,12 +182,19 @@ public class ProfilePage extends PageBase {
         return el.isDisplayed();
     }
 
-    public boolean verifyAlertMsg(String alert, String alertElement){
-        return alert.contains(alertElement + " is required");
+    public boolean verifyAlertMsg(WebElement el, String alertElement){
+        new AccountPage(getDriver()).waitForVisibility(el);
+        return el.getText().contains(alertElement + " is required");
     }
 
     public void clearEmailAndAddNew(String email){
         getEmailInput().clear();
         getEmailInput().sendKeys(email);
+    }
+
+    public boolean verifyUpdatedField(WebElement el, String updatedValue){
+        System.out.println("Value: " + el.getAttribute("value"));
+        System.out.println("Updated value: " + updatedValue);
+        return el.getAttribute("value").equals(updatedValue);
     }
 }

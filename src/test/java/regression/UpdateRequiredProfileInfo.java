@@ -75,31 +75,31 @@ public class UpdateRequiredProfileInfo extends TestBase {
 
     @Test(priority = 9)
     public void verifyGenderAlert(){
-        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getGenderAlert().getText(), "Gender"));
+        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getGenderAlert(), "Gender"));
     }
 
     @Test(priority = 10)
     public void verifyMonthAlert(){
-        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getMonthAlert().getText(), "Month"));
+        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getMonthAlert(), "Month"));
     }
 
     @Test(priority = 11)
     public void verifyDayAlert(){
-        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getDayAlert().getText(), "Day"));
+        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getDayAlert(), "Day"));
     }
 
     @Test(priority = 12)
     public void verifyYearAlert(){
-        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getYearAlert().getText(), "Year"));
+        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getYearAlert(), "Year"));
     }
 
     @Test(priority = 13)
     public void verifyPhoneAlert(){
-        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getPhoneAlert().getText(), "Phone number"));
+        Assert.assertTrue(getProfilePage().verifyAlertMsg(getProfilePage().getPhoneAlert(), "Phone number"));
     }
 
     @Test(priority = 14)
-    public void clearFieldsAgain(){
+    public void clearFields(){
         getProfilePage().clearFields();
     }
 
@@ -124,16 +124,36 @@ public class UpdateRequiredProfileInfo extends TestBase {
     }
 
     @Test(priority = 19)
+    public void verifyFirstName(){
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getFirstNameInput(), FIRST_NAME));
+    }
+
+    @Test(priority = 20)
+    public void verifyLastName(){
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getLastNameInput(), LAST_NAME));
+    }
+
+    @Test(priority = 21)
+    public void verifyPhoneNumber(){
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getPhoneInput(), PHONE));
+    }
+
+    @Test(priority = 22)
+    public void verifyEmail() throws IOException {
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getEmailInput(), getEmail()));
+    }
+
+    @Test(priority = 23)
     public void changeEmailToExistingOne(){
         getProfilePage().clearEmailAndAddNew(EXISTING_EMAIL);
     }
 
-    @Test(priority = 20)
-    public void clickSaveButton(){
+    @Test(priority = 24)
+    public void clickSaveButton() {
         getProfilePage().clickSaveBtn();
     }
 
-    @Test(priority = 21)
+    @Test(priority = 25)
     public void verifyErrorMsg(){
         Assert.assertTrue(new AccountPage(driver).verifySuccessMessage(EXPECTED_EMAIL_ERROR_MSG));
     }

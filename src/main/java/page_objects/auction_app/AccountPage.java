@@ -23,7 +23,7 @@ public class AccountPage extends PageBase {
 
     WebDriverWait wait = new WebDriverWait(getDriver(),30);
 
-    private void waitForVisibility(WebElement element){
+    public void waitForVisibility(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
