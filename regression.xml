@@ -44,15 +44,9 @@
         </classes>
     </test>
 
-    <test name="Sort Products by Price">
+    <test name="Sort Products by Price and by Default">
         <classes>
-            <class name="regression.SortProductsByPrice"/>
-        </classes>
-    </test>
-
-    <test name="Sort Products by Default">
-        <classes>
-            <class name="regression.SortProductsByDefault"/>
+            <class name="regression.SortProducts"/>
         </classes>
     </test>
 
@@ -65,6 +59,18 @@
     <test name="Bid Product Logged Out">
         <classes>
             <class name="regression.BidProductLoggedOut"/>
+        </classes>
+    </test>
+
+    <test name="Register with Existing Email">
+        <classes>
+            <class name="regression.RegisterWithExistingEmail"/>
+        </classes>
+    </test>
+
+    <test name="Update Required Profile Info">
+        <classes>
+            <class name="regression.UpdateRequiredProfileInfo"/>
         </classes>
     </test>
 

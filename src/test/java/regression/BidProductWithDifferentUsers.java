@@ -64,7 +64,7 @@ public class BidProductWithDifferentUsers extends TestBase {
 
     @Test(priority = 10)
     public void verifyAlertMsgTxt(){
-       new ItemPage(driver).verifyAlertMsgTxt(HIGHEST_BID_SUCCESS_MSG);
+       Assert.assertTrue(new ItemPage(driver).verifyAlertMsgTxt(HIGHEST_BID_SUCCESS_MSG));
        new ItemPage(driver).closeAlertBtn();
     }
 
