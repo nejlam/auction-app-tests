@@ -98,7 +98,7 @@ public class ShopPage extends PageBase {
         while(staleElement){
             try{
                 List<WebElement> productPricesList = getDriver().findElements(By.xpath(ITEM_PRICE_TXT_XPATH));
-                waitForListElementsNum(ITEM_PRICE_TXT_XPATH, 12);
+                waitForListElementsNum(ITEM_PRICE_TXT_XPATH, productPricesList.size());
                 waitForVisibilityOfAllElem(productPricesList);
                 for (WebElement e : productPricesList)
                 {

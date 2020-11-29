@@ -9,8 +9,10 @@ import testUtils.TestBase;
 public class SearchProducts extends TestBase {
 
     final private static String UNIQUE_QUERY = "shoes";
-    final private static String PARTIAL_QUERY = "sho";
+    final private static String PARTIAL_QUERY = "ha";
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
+    final static private String PRICE_DESC = "price";
+    final static private String PRICE_ASC = "price_asc";
 
     @Test(priority = 0)
     public void verifyHomePage(){
@@ -46,4 +48,26 @@ public class SearchProducts extends TestBase {
     public void verifySearchResultPartial(){
         Assert.assertTrue(new ShopPage(driver).verifySearchResults(PARTIAL_QUERY, "partial"));
     }
+
+    @Test(priority = 7)
+    public void sortResultsPriceAsc(){
+        new ShopPage(driver).selectSortOption(PRICE_ASC);
+    }
+
+    @Test(priority = 8)
+    public void verifySortPriceAsc(){
+        Assert.assertTrue(new ShopPage(driver).verifySortPrices(PRICE_ASC));
+    }
+
+    @Test(priority = 9)
+    public void sortResultsPriceDesc(){
+        new ShopPage(driver).selectSortOption(PRICE_DESC);
+    }
+
+    @Test(priority = 10)
+    public void verifySortPriceDesc(){
+        Assert.assertTrue(new ShopPage(driver).verifySortPrices(PRICE_DESC));
+    }
+
+
 }
