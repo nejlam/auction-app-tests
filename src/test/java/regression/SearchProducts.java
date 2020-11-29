@@ -29,7 +29,7 @@ public class SearchProducts extends TestBase {
 
     @Test(priority = 3)
     public void verifySearchResultFull(){
-        Assert.assertTrue(new ShopPage(driver).verifySearchResults(UNIQUE_QUERY, "full"));
+        Assert.assertTrue(new ShopPage(driver).verifySearchResults(UNIQUE_QUERY, "unique"));
     }
 
     @Test(priority = 4)

@@ -152,7 +152,7 @@ public class ShopPage extends PageBase {
             String r = e.getText().toLowerCase();
             wait.until(ExpectedConditions.visibilityOf(e));
 
-            if(search.equals("full")){
+            if(search.equals("unique")){
                 if(r.equals(q)){
                     System.out.println("Match: " + r);
                     found = true;
