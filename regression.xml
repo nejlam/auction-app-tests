@@ -79,5 +79,12 @@
             <class name="regression.VerifyBrokenLinks"/>
         </classes>
     </test>
+
+    <test name="Verify search results">
+        <classes>
+            <class name="regression.SearchProducts"/>
+        </classes>
+    </test>
+
 </suite>
 
