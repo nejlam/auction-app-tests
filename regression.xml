@@ -79,5 +79,12 @@
             <class name="regression.VerifyBrokenLinks"/>
         </classes>
     </test>
+
+    <test name="Schedule New Item">
+        <parameter name="status" value="scheduled"/>
+        <classes>
+            <class name="smoke.AddNewProduct"/>
+        </classes>
+    </test>
 </suite>
 

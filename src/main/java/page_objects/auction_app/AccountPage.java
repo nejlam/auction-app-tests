@@ -15,7 +15,6 @@ public class AccountPage extends PageBase {
     final static private String ACCOUNT_TABS_XPATH = "//*[@id='root']/div/div[3]/div/div[1]/button";
     final private static String CLOSE_ALERT_BTN = "//*[@id='root']/div/div[3]/button";
 
-
     public AccountPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
@@ -61,4 +60,9 @@ public class AccountPage extends PageBase {
         System.out.println("S:" + getSuccessMessage().getText());
         return getSuccessMessage().getText().contains(successMessage);
     }
+
+    public boolean verifyActiveTab(String tab, int index){
+        return getAccountTabs().get(index).getText().equals(tab);
+    }
+
 }

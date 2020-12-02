@@ -5,29 +5,39 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page_objects.PageBase;
 
+import java.util.List;
+
 public class SellerPage extends PageBase {
 
     final static private String PAGE_URL_REGEX = "\\/my_account/seller\\d*";
-    final static private String START_SELLING_BTN = "//*[@id='root']/div/div[3]/div/div[2]/div[2]/button";
-    final static private String ACTIVE_TAB = "//*[@id='root']/div/nav/ol/li[2]/div";
+    final static private String ADD_NEW_ITEM_BTN = "//*[@id='root']/div/div[3]/div/div[2]/button[4]";
+    final static private String SELLER_TABS = "//*[@id='root']/div/div[3]/div/div[2]/button";
+    final static private String TABLE_ITEMS_TITLE_XPATH = "//*[@id='root']/div/div[3]/div/div[3]/table/tbody/tr/td[2]/div[1]";
 
     public SellerPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
 
-    @FindBy(xpath = START_SELLING_BTN)
-    private WebElement startSellingBtn;
+    @FindBy(xpath = ADD_NEW_ITEM_BTN)
+    private WebElement addNewItemBtn;
 
-    @FindBy(xpath = ACTIVE_TAB)
-    private WebElement activeTab;
+    @FindBy(xpath = SELLER_TABS)
+    private List<WebElement> sellerTabs;
 
-    public WebElement getActiveTab(){
-        return activeTab;
+    @FindBy(xpath = TABLE_ITEMS_TITLE_XPATH)
+    private List<WebElement> tableItemsTitles;
+
+    public List<WebElement> getTableItemsTitles(){
+        return tableItemsTitles;
+    }
+
+    public List<WebElement> getSellerTabs (){
+        return sellerTabs;
     }
 
     public WebElement getStartSellingBtn(){
-        return startSellingBtn;
+        return addNewItemBtn;
     }
 
     public SellPageProductInfo clickStartSellingBtn(){
@@ -35,8 +45,37 @@ public class SellerPage extends PageBase {
         return new SellPageProductInfo(getDriver());
     }
 
-    public boolean verifyActiveTab(String tab){
-        return getActiveTab().getText().equals(tab);
+    public void openSellerTab(String status){
+        getSellerTabs().get(getTabIndex(status)).click();
+    }
+
+    private int getTabIndex(String status){
+        int index;
+        if(status.equals("active")){
+            index = 1;
+        } else if(status.equals("scheduled")){
+            index = 0;
+        } else {
+            index = 2;
+        }
+        return index;
+    }
+
+    public boolean verifyActiveTab(String status){
+        System.out.println("Active tab: " + getSellerTabs().get(getTabIndex(status)).getText());
+        return getSellerTabs().get(getTabIndex(status)).getText().equals(status);
+    }
+
+    public boolean verifyItemInTable(String itemTitle){
+        boolean found = false;
+        for(WebElement e: getTableItemsTitles()){
+            if(e.getText().equals(itemTitle))
+                found = true;
+                System.out.println("Added item: " + itemTitle);
+                System.out.println("Item in table: " + e.getText());
+            break;
+        }
+        return found;
     }
 
 }

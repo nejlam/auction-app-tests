@@ -17,6 +17,7 @@
     </test>
 
     <test name="Add New Product">
+        <parameter name="status" value="active"/>
         <classes>
             <class name="smoke.AddNewProduct"/>
         </classes>
