@@ -95,10 +95,10 @@ public class SellPageSetPrices extends PageBase {
     }
 
     public void setDatesAndClickNext(String status){
-        if(status.equals("active")){
+        if(status.equals("Active")){
             getStartDateInput().sendKeys(getToday(), Keys.ENTER);
             getEndDateInput().sendKeys(addDaysToToday(1), Keys.ENTER);
-        } else if (status.equals("scheduled")){
+        } else if (status.equals("Scheduled")){
             getStartDateInput().sendKeys(addDaysToToday(2), Keys.ENTER);
             getEndDateInput().sendKeys(addDaysToToday(5), Keys.ENTER);
         }

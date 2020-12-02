@@ -81,10 +81,11 @@
     </test>
 
     <test name="Schedule New Item">
-        <parameter name="status" value="scheduled"/>
+        <parameter name="status" value="Scheduled"/>
         <classes>
             <class name="smoke.AddNewProduct"/>
         </classes>
     </test>
+
 </suite>
 

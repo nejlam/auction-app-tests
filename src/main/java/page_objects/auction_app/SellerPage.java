@@ -51,9 +51,9 @@ public class SellerPage extends PageBase {
 
     private int getTabIndex(String status){
         int index;
-        if(status.equals("active")){
+        if(status.equals("Active")){
             index = 1;
-        } else if(status.equals("scheduled")){
+        } else if(status.equals("Scheduled")){
             index = 0;
         } else {
             index = 2;

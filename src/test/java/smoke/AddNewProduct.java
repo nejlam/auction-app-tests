@@ -175,11 +175,11 @@ public class AddNewProduct extends TestBase {
     @Test(priority = 24)
     @Parameters("status")
     public void verifySellerTab(String status){
-        new SellerPage(driver).verifyActiveTab(status);
+       Assert.assertTrue(new SellerPage(driver).verifyActiveTab(status));
     }
 
     @Test(priority = 25)
     public void verifyNewItemInTable(){
-        new SellerPage(driver).verifyItemInTable(NEW_ITEM_TITLE);
+        Assert.assertTrue(new SellerPage(driver).verifyItemInTable(NEW_ITEM_TITLE));
     }
 }

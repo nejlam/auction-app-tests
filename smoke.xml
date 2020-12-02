@@ -3,7 +3,6 @@
 <suite name="Smoke test" verbose="9">
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
     <parameter name="browser" value="chrome"/>
-
     <test name="Register Account">
         <classes>
             <class name="smoke.RegisterAccount"/>
@@ -17,7 +16,7 @@
     </test>
 
     <test name="Add New Product">
-        <parameter name="status" value="active"/>
+        <parameter name="status" value="Active"/>
         <classes>
             <class name="smoke.AddNewProduct"/>
         </classes>
