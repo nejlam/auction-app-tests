@@ -2,6 +2,7 @@ package page_objects.auction_app;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -97,6 +97,7 @@ public class ShopPage extends PageBase {
 
         while(staleElement){
             try{
+                Thread.sleep(1000);
                 List<WebElement> productPricesList = getDriver().findElements(By.xpath(ITEM_PRICE_TXT_XPATH));
                 waitForListElementsNum(ITEM_PRICE_TXT_XPATH, productPricesList.size());
                 waitForVisibilityOfAllElem(productPricesList);
@@ -116,10 +117,11 @@ public class ShopPage extends PageBase {
                 System.out.println("Expected sort:" + sortedPrices);
                 System.out.println("Actual sort:" + prices);
                 staleElement = false;
-            } catch(org.openqa.selenium.StaleElementReferenceException ex){
+            } catch(StaleElementReferenceException | InterruptedException ex){
                 staleElement = true;
             }
         }
+
         return sortedPrices.equals(prices);
     }
 
@@ -165,6 +167,7 @@ public class ShopPage extends PageBase {
                 } else{
                     System.out.println("Doesn't match: " + r);
                     found = false;
+                    break;
                 }
             }
 

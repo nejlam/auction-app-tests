@@ -9,7 +9,7 @@ import testUtils.TestBase;
 public class SearchProducts extends TestBase {
 
     final private static String UNIQUE_QUERY = "shoes";
-    final private static String PARTIAL_QUERY = "ha";
+    final private static String PARTIAL_QUERY = "sho";
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String PRICE_DESC = "price";
     final static private String PRICE_ASC = "price_asc";
