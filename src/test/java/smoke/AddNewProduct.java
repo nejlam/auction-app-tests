@@ -12,10 +12,6 @@ import page_objects.auction_app.*;
 import testUtils.TestBase;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class AddNewProduct extends TestBase {

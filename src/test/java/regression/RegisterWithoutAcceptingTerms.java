@@ -28,11 +28,6 @@ public class RegisterWithoutAcceptingTerms extends TestBase {
         SimpleDateFormat formatter = new SimpleDateFormat("MMddHHmm");
         Date date = new Date();
         String emailAddress = formatter.format(date)+EMAIL;
-        //write data to the csv file
-        CSVWriter writer = new CSVWriter(new FileWriter("data/data.csv"));
-        String[] email = {emailAddress};
-        writer.writeNext(email);
-        writer.flush();
         return emailAddress;
     }
 
