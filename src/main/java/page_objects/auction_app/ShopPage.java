@@ -2,23 +2,14 @@ package page_objects.auction_app;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-
-import org.apache.xpath.operations.Bool;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,8 +23,6 @@ public class ShopPage extends PageBase {
     final static private String SORT_VALUES_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[1]/select/option";
     final static private String ITEM_TITLE_LIST_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div/h3";
     private Object List;
-
-    final static private String DISPLAYED_ITEMS_LIST_XPATH= "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div/h3";
 
     public ShopPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
@@ -61,10 +50,6 @@ public class ShopPage extends PageBase {
     @FindBy(xpath = FIRST_ITEM_XPATH)
     private WebElement firstItem;
 
-    @FindBy(xpath = DISPLAYED_ITEMS_LIST_XPATH)
-    private List<WebElement> displayedItemsList;
-
-
     @FindBy(xpath = SORT_DROPDOWN_XPATH)
     private WebElement sortDropdown;
 
@@ -82,10 +67,6 @@ public class ShopPage extends PageBase {
         return new Select(sortDropdown);
     }
 
-    public List<WebElement> getDisplayedItemsList() {
-        return displayedItemsList;
-    }
-
     public WebElement getFirstItem(){
         return firstItem;
     }
@@ -97,7 +78,7 @@ public class ShopPage extends PageBase {
 
     public ItemPage selectRandomItem(){
         // Find and click on a random item
-        List<WebElement> allProducts = getDisplayedItemsList();
+        List<WebElement> allProducts = getItemTitleList();
         Random rand = new Random();
         int randomProduct = rand.nextInt(allProducts.size());
         allProducts.get(randomProduct).click();
@@ -116,8 +97,9 @@ public class ShopPage extends PageBase {
 
         while(staleElement){
             try{
+                Thread.sleep(1000);
                 List<WebElement> productPricesList = getDriver().findElements(By.xpath(ITEM_PRICE_TXT_XPATH));
-                waitForListElementsNum(ITEM_PRICE_TXT_XPATH, 12);
+                waitForListElementsNum(ITEM_PRICE_TXT_XPATH, productPricesList.size());
                 waitForVisibilityOfAllElem(productPricesList);
                 for (WebElement e : productPricesList)
                 {
@@ -135,10 +117,11 @@ public class ShopPage extends PageBase {
                 System.out.println("Expected sort:" + sortedPrices);
                 System.out.println("Actual sort:" + prices);
                 staleElement = false;
-            } catch(org.openqa.selenium.StaleElementReferenceException ex){
+            } catch(StaleElementReferenceException | InterruptedException ex){
                 staleElement = true;
             }
         }
+
         return sortedPrices.equals(prices);
     }
 
@@ -162,4 +145,33 @@ public class ShopPage extends PageBase {
         return getFirstItem().getText().equals(query);
     }
 
+    public boolean verifySearchResults(String query, String search){
+        System.out.println("Query: " + query.toLowerCase());
+        boolean found = false;
+
+        for(WebElement e : getItemTitleList()){
+            String q = query.toLowerCase();
+            String r = e.getText().toLowerCase();
+            wait.until(ExpectedConditions.visibilityOf(e));
+
+            if(search.equals("unique")){
+                if(r.equals(q)){
+                    System.out.println("Match: " + r);
+                    found = true;
+                    break;
+                }
+            } else if(search.equals("partial")){
+                if(r.contains(q)) {
+                    System.out.println("Match: " + r);
+                    found = true;
+                } else{
+                    System.out.println("Doesn't match: " + r);
+                    found = false;
+                    break;
+                }
+            }
+
+        }
+        return found;
+    }
 }

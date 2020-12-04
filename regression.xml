@@ -84,6 +84,10 @@
         <parameter name="status" value="Scheduled"/>
         <classes>
             <class name="smoke.AddNewProduct"/>
+
+    <test name="Verify search results">
+        <classes>
+            <class name="regression.SearchProducts"/>
         </classes>
     </test>
 
