@@ -168,6 +168,7 @@ public class HomePage extends PageBase {
 
     public ShopPage searchItem(String query) throws InterruptedException {
         Thread.sleep(1000);
+        getSearchInput().clear();
         getSearchInput().sendKeys(query, Keys.ENTER);
         return new ShopPage(getDriver());
     }
