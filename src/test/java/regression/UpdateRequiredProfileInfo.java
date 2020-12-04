@@ -2,12 +2,10 @@ package regression;
 
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import page_objects.auction_app.*;
 import smoke.RegisterAccount;
 import testUtils.TestBase;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,13 +18,13 @@ public class UpdateRequiredProfileInfo extends TestBase {
     final static private String EXPECTED_ACCOUNT_SUCCESS_MSG = "Account created successfully";
     final static private String EXISTING_EMAIL = "user_n@gmail.com";
     final static private String EXPECTED_EMAIL_ERROR_MSG = "Email already in use";
+    final private String EMAIL = getEmail();
 
     private ProfilePage getProfilePage(){
         return new ProfilePage(driver);
     }
 
-    @BeforeTest
-    public String getEmail() throws IOException {
+    private String getEmail(){
         SimpleDateFormat formatter = new SimpleDateFormat("MMddHHmm");
         Date date = new Date();
         String emailAddress = formatter.format(date)+"nana@gmail.com";
@@ -49,8 +47,8 @@ public class UpdateRequiredProfileInfo extends TestBase {
     }
 
     @Test(priority = 3)
-    public void populateRegistrationForm() throws IOException {
-        new RegistrationPage(driver).populateForm(FIRST_NAME, LAST_NAME, getEmail(), new RegisterAccount().getPassword());
+    public void populateRegistrationForm() {
+        new RegistrationPage(driver).populateForm(FIRST_NAME, LAST_NAME, EMAIL, new RegisterAccount().getPassword());
     }
 
     @Test(priority = 4)
@@ -104,8 +102,8 @@ public class UpdateRequiredProfileInfo extends TestBase {
     }
 
     @Test(priority = 15)
-    public void populateRequiredFields() throws IOException {
-        getProfilePage().populateRequiredFields(FIRST_NAME,LAST_NAME, GENDER, PHONE, getEmail());
+    public void populateRequiredFields(){
+        getProfilePage().populateRequiredFields(FIRST_NAME,LAST_NAME, GENDER, PHONE, EMAIL);
     }
 
     @Test(priority = 16)
@@ -139,8 +137,8 @@ public class UpdateRequiredProfileInfo extends TestBase {
     }
 
     @Test(priority = 22)
-    public void verifyEmail() throws IOException {
-        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getEmailInput(), getEmail()));
+    public void verifyEmail(){
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getEmailInput(), EMAIL));
     }
 
     @Test(priority = 23)

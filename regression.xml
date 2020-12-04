@@ -80,6 +80,11 @@
         </classes>
     </test>
 
+    <test name="Schedule New Item">
+        <parameter name="status" value="Scheduled"/>
+        <classes>
+            <class name="smoke.AddNewProduct"/>
+
     <test name="Verify search results">
         <classes>
             <class name="regression.SearchProducts"/>
