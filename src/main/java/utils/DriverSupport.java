@@ -41,7 +41,7 @@ public class DriverSupport {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             options.addArguments("window-size=1200x600");
-            driver = new ChromeDriver();
+            driver = new ChromeDriver(options);
         } else if (browser.equals("safari")) {
             SafariOptions safariOptions = new SafariOptions();
             safariOptions.setUseTechnologyPreview(true);
