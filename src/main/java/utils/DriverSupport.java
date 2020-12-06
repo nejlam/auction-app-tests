@@ -25,12 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverSupport {
     private WebDriver driver;
-    private Capabilities capabilities;
+    //private Capabilities capabilities;
     //DesiredCapabilities capability = DesiredCapabilities.chrome();
 
     private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://localhost:4444/wd/hub");
     private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
     private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "10000"));
+    DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
 
 
     public WebDriver initDriver(String browser) throws InterruptedException {
@@ -61,7 +62,7 @@ public class DriverSupport {
             if (browser.equals("remote-firefox")) {
                 //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
-                DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
+               // DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
             }
             for (int i = 0; i < 10; i++){
                 try {
