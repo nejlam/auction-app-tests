@@ -3,6 +3,7 @@ package utils;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -27,8 +28,12 @@ public class DriverSupport {
     private Capabilities capabilities;
     //DesiredCapabilities capability = DesiredCapabilities.chrome();
 
+    private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://localhost:4444/wd/hub");
+    private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
+    private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "10000"));
 
-    public WebDriver initDriver(String browser) {
+
+    public WebDriver initDriver(String browser) throws InterruptedException {
         java.util.Properties p = new Properties();
 
         if (browser.equals("firefox")) {
@@ -56,15 +61,17 @@ public class DriverSupport {
             if (browser.equals("remote-firefox")) {
                 //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
-                capabilities = DesiredCapabilities.chrome();
-                //capability.setBrowserName("chrome");
-                //capability.setPlatform(Platform.LINUX);
+                DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
             }
-            try {
+            for (int i = 0; i < 10; i++){
+                try {
                 driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),
                         capabilities);
-            } catch (MalformedURLException e) {
+                } catch (WebDriverException | MalformedURLException e) {
                 e.printStackTrace();
+                System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
+                Thread.sleep(1000);
+                }
             }
         }
 

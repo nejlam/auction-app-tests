@@ -9,7 +9,7 @@ public abstract class TestBase {
 
     @BeforeTest(alwaysRun = true)
     @Parameters({"browser","url"})
-    public void setUp(String browser, String url) {
+    public void setUp(String browser, String url) throws InterruptedException {
         DriverSupport driverSupport = new DriverSupport();
         driver = driverSupport.initDriver(browser);
         driver.get(url);
