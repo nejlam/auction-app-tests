@@ -7,7 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
+
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SellPageLocationAndShipping extends PageBase {
@@ -22,7 +25,9 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/div/label";
     final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[2]/label";
     final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[3]/label";
-    //credit card info vars
+    final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[8]/button[2]";
+    final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
+    //payment info vars
     final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
     final static private String CARD_NUMBER_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[2]/input";
     final static private String EXP_YEAR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select";
@@ -30,10 +35,13 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String EXP_MONTH_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select";
     final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option";
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
-
-    final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[8]/button[2]";
-    final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
-
+    final static private String PAYPAL_BTN_XPATH = "//*[@id='buttons-container']/div/div[1]/div";
+    final static private String PAYPAL_EMAIL_INPUT_ID = "email";
+    final static private String PAYPAL_PSWD_INPUT_ID = "password";
+    final static private String PAYPAL_LOGIN_BTN_ID = "btnLogin";
+    final static private String PAYMENT_SUBMIT_BTN = "payment-submit-btn";
+    final static private String PAYPAL_IFRAME_ID = "jsx-iframe-a3650b2174";
+    final static private String PAYPAL_IFRAME_XPATH = "///*[@id='zoid-paypal-buttons-1ce1ca0cea_mtc6mdk6mdq']";
 
     public SellPageLocationAndShipping(WebDriver driver) {
         super(driver, PAGE_URL_REGEX);
@@ -109,7 +117,49 @@ public class SellPageLocationAndShipping extends PageBase {
     @FindBy(xpath = STEP_TITLE)
     private WebElement stepTitle;
 
+    @FindBy(xpath = PAYPAL_BTN_XPATH)
+    private WebElement paypalBtn;
+
+    @FindBy(id = PAYPAL_EMAIL_INPUT_ID)
+    private WebElement paypalEmailInput;
+
+    @FindBy(id = PAYPAL_PSWD_INPUT_ID)
+    private WebElement paypalPswdInput;
+
+    @FindBy(id = PAYPAL_LOGIN_BTN_ID)
+    private WebElement paypalLoginBtn;
+
+    @FindBy(id = PAYMENT_SUBMIT_BTN)
+    private WebElement paymentSubmitBtn;
+
+    @FindBy(xpath = PAYPAL_IFRAME_XPATH)
+    private WebElement paypalIFrame;
+
     //GETTERS
+
+    public WebElement getPaypalIFrame(){
+        return paypalIFrame;
+    }
+
+    public WebElement getPaymentSubmitBtn(){
+        return paymentSubmitBtn;
+    }
+
+    public WebElement getPaypalLoginBtn(){
+        return paypalLoginBtn;
+    }
+
+    public WebElement getPaypalPswdInput(){
+        return paypalPswdInput;
+    }
+
+    public WebElement getPaypalEmailInput(){
+        return paypalEmailInput;
+    }
+
+    public WebElement getPaypalBtn(){
+        return paypalBtn;
+    }
 
     public WebElement getStepTitle() {
         return stepTitle;
@@ -204,6 +254,45 @@ public class SellPageLocationAndShipping extends PageBase {
         getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
         getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
         getCvcInput().sendKeys(cvc);
+    }
+
+    public void populatePaymentInfo(String payment, String nameOnCard, String cardNumber, String cvc,
+                                    String paypalEmail, String paypalPswd){
+        if(payment.equals("Credit card")){
+            getCreditCardCheckbox().click();
+            getNameOnCardInput().sendKeys(nameOnCard);
+            getCardNumberInput().sendKeys(cardNumber);
+            getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
+            getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpMonthValues().size()));
+            getCvcInput().sendKeys(cvc);
+        } else{
+            getPayPalCheckbox().click();
+            waitForVisibility(getPaypalIFrame());
+            getDriver().switchTo().frame(PAYPAL_IFRAME_ID);
+            waitForVisibility(getPaypalBtn());
+            getPaypalBtn().click();
+            String parent = getDriver().getWindowHandle();
+            Set<String> s= getDriver().getWindowHandles();
+            Iterator<String> I1= s.iterator();
+            while(I1.hasNext())
+            {
+                String childWindow=I1.next();
+
+                if(!parent.equals(childWindow))
+                {
+                    getDriver().switchTo().window(childWindow);
+                    System.out.println(getDriver().switchTo().window(childWindow).getTitle());
+                    getPaypalEmailInput().sendKeys(paypalEmail);
+                    getPaypalPswdInput().sendKeys(paypalPswd);
+                    getPaypalLoginBtn().click();
+                    wait.until(ExpectedConditions.titleContains("Checkout"));
+                    getPaymentSubmitBtn().click();
+                }
+            }
+            getDriver().switchTo().window(parent);
+            wait.until(ExpectedConditions.titleIs("Auction app"));
+
+        }
     }
 
     public ItemPage clickDoneBtn() {

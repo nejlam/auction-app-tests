@@ -28,7 +28,7 @@ public class DriverSupport {
         java.util.Properties p = new Properties();
 
         if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", "resources/geckodriver");
             FirefoxOptions options = new FirefoxOptions();
             options.addArguments("headless");
             options.addArguments("--start-maximized");
@@ -37,7 +37,7 @@ public class DriverSupport {
             driver = new FirefoxDriver(capabilities);
 
         } else if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             options.addArguments("window-size=1200x600");

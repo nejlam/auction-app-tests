@@ -10,6 +10,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import page_objects.auction_app.*;
 import testUtils.TestBase;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -20,7 +22,7 @@ public class AddNewProduct extends TestBase {
     final static private String ZIPCODE = "71000";
     final static private String PHONE = "61123123";
     final static private String SUCCESS_ALERT = "You have successfully added a new product!";
-    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\product_photos\\img";
+    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+ File.separator + "data" + File.separator + "product_photos" + File.separator +"img";
     final static private String PHOTO_EXTENSION = ".jpg";
     final static private int PHOTOS_QUANTITY = 3;
     final static private String NAME_ON_CARD = "Beth";
@@ -30,6 +32,8 @@ public class AddNewProduct extends TestBase {
     final static private String PRODUCT_INFO_TEXT = "DETAIL INFORMATION ABOUT PRODUCT";
     final static private String PRICES_INFO_TEXT = "SET PRICES";
     final static private String LOCATION_SHIPPING_INFO_TEXT = "LOCATION & SHIPPING";
+    final static private String PAYPAL_EMAIL = "sb-tjkba3613907@personal.example.com";
+    final static private String PAYPAL_PSWD = "vQGEK@5k";
     final private String NEW_ITEM_TITLE = getLorem().getWords(2,4);
 
 
@@ -142,8 +146,9 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 19)
-    public void populatePaymentInfo(){
-        new SellPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
+    @Parameters("payment")
+    public void populatePaymentInfo(String payment){
+        new SellPageLocationAndShipping(driver).populatePaymentInfo(payment, NAME_ON_CARD, CARD_NUMBER, CVC, PAYPAL_EMAIL, PAYPAL_PSWD);
     }
 
     @Test(priority = 20)
