@@ -62,17 +62,16 @@ public class DriverSupport {
             if (browser.equals("remote-firefox")) {
                 //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
-               // DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
-            for (int i = 0; i < 10; i++){
-                try {
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),
-                        capabilities);
-                } catch (WebDriverException | MalformedURLException e) {
-                e.printStackTrace();
-                System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
-                Thread.sleep(1000);
+                for (int i = 0; i < 10; i++){
+                    try {
+                    driver = new RemoteWebDriver(new URL("http://34.107.168.50:4444/wd/hub"),
+                            capabilities);
+                    } catch (WebDriverException | MalformedURLException e) {
+                    e.printStackTrace();
+                    System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
+                    Thread.sleep(1000);
+                    }
                 }
-            }
             }
         }
 
