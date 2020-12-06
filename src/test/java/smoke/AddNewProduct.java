@@ -146,9 +146,8 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 19)
-    @Parameters("payment")
-    public void populatePaymentInfo(String payment){
-        new SellPageLocationAndShipping(driver).populatePaymentInfo(payment, NAME_ON_CARD, CARD_NUMBER, CVC, PAYPAL_EMAIL, PAYPAL_PSWD);
+    public void populatePaymentInfo(){
+        new SellPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
     }
 
     @Test(priority = 20)

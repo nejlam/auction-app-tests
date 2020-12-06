@@ -256,45 +256,6 @@ public class SellPageLocationAndShipping extends PageBase {
         getCvcInput().sendKeys(cvc);
     }
 
-    public void populatePaymentInfo(String payment, String nameOnCard, String cardNumber, String cvc,
-                                    String paypalEmail, String paypalPswd){
-        if(payment.equals("Credit card")){
-            getCreditCardCheckbox().click();
-            getNameOnCardInput().sendKeys(nameOnCard);
-            getCardNumberInput().sendKeys(cardNumber);
-            getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
-            getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpMonthValues().size()));
-            getCvcInput().sendKeys(cvc);
-        } else{
-            getPayPalCheckbox().click();
-            waitForVisibility(getPaypalIFrame());
-            getDriver().switchTo().frame(PAYPAL_IFRAME_ID);
-            waitForVisibility(getPaypalBtn());
-            getPaypalBtn().click();
-            String parent = getDriver().getWindowHandle();
-            Set<String> s= getDriver().getWindowHandles();
-            Iterator<String> I1= s.iterator();
-            while(I1.hasNext())
-            {
-                String childWindow=I1.next();
-
-                if(!parent.equals(childWindow))
-                {
-                    getDriver().switchTo().window(childWindow);
-                    System.out.println(getDriver().switchTo().window(childWindow).getTitle());
-                    getPaypalEmailInput().sendKeys(paypalEmail);
-                    getPaypalPswdInput().sendKeys(paypalPswd);
-                    getPaypalLoginBtn().click();
-                    wait.until(ExpectedConditions.titleContains("Checkout"));
-                    getPaymentSubmitBtn().click();
-                }
-            }
-            getDriver().switchTo().window(parent);
-            wait.until(ExpectedConditions.titleIs("Auction app"));
-
-        }
-    }
-
     public ItemPage clickDoneBtn() {
         getDoneBtn().click();
         return new ItemPage(getDriver());
