@@ -66,7 +66,7 @@ public class DriverSupport {
             }
             for (int i = 0; i < 10; i++){
                 try {
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),
+                driver = new RemoteWebDriver(new URL("http://34.107.168.50:4444/wd/hub"),
                         capabilities);
                 } catch (WebDriverException | MalformedURLException e) {
                 e.printStackTrace();
