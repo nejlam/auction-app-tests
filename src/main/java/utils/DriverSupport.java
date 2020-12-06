@@ -1,6 +1,7 @@
 package utils;
 
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,6 +13,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
+import sun.security.krb5.internal.crypto.Des;
 
 import java.util.Properties;
 
@@ -23,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 public class DriverSupport {
     private WebDriver driver;
     private Capabilities capabilities;
+    //DesiredCapabilities capability = DesiredCapabilities.chrome();
+
 
     public WebDriver initDriver(String browser) {
         java.util.Properties p = new Properties();
@@ -50,12 +54,14 @@ public class DriverSupport {
 
         if (browser.contains("remote")) {
             if (browser.equals("remote-firefox")) {
-                capabilities = DesiredCapabilities.firefox();
+                //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
                 capabilities = DesiredCapabilities.chrome();
+                //capability.setBrowserName("chrome");
+                //capability.setPlatform(Platform.LINUX);
             }
             try {
-                driver = new RemoteWebDriver(new URL("http://34.107.168.50:4444/wd/hub"),
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),
                         capabilities);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
