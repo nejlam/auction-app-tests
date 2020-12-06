@@ -39,7 +39,7 @@ public class DriverSupport {
         } else if (browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("headless");
+            options.addArguments("--headless");
             options.addArguments("window-size=1200x600");
             driver = new ChromeDriver(options);
         } else if (browser.equals("safari")) {
