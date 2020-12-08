@@ -25,8 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverSupport {
     private WebDriver driver;
-    //private Capabilities capabilities;
-    //DesiredCapabilities capability = DesiredCapabilities.chrome();
 
     private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://localhost:4444/wd/hub");
     private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
@@ -62,9 +60,12 @@ public class DriverSupport {
             if (browser.equals("remote-firefox")) {
                 //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
+                final ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--headless");
+                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 for (int i = 0; i < 10; i++){
                     try {
-                    driver = new RemoteWebDriver(new URL("http://34.107.168.50:4444/wd/hub"),
+                    driver = new RemoteWebDriver(new URL("http://10.4.1.30:4444/wd/hub"),
                             capabilities);
                     } catch (WebDriverException | MalformedURLException e) {
                     e.printStackTrace();
