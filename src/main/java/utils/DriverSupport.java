@@ -69,7 +69,7 @@ public class DriverSupport {
                 capability.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 for (int i = 0; i < 10; i++){
                     try {
-                    driver = new RemoteWebDriver(new URL("http://34.107.132.102/wd/hub"),
+                    driver = new RemoteWebDriver(new URL("http://10.4.1.30:4444/wd/hub"),
                             capability);
                     } catch (WebDriverException | MalformedURLException e) {
                     e.printStackTrace();
