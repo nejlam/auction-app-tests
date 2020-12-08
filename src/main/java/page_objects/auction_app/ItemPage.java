@@ -164,6 +164,7 @@ public class ItemPage extends PageBase {
     //VERIFICATIONS
 
     public Boolean verifySuccessfulAdd(String successMsg){
+        waitForVisibility(getAlertMsg());
         return getAlertMsg().getText().contains(successMsg);
     }
 

@@ -1,10 +1,14 @@
 package page_objects.auction_app;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
 
+import java.rmi.server.ExportException;
 import java.util.List;
 
 public class SellerPage extends PageBase {
@@ -18,6 +22,9 @@ public class SellerPage extends PageBase {
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
 
     @FindBy(xpath = ADD_NEW_ITEM_BTN)
     private WebElement addNewItemBtn;
@@ -67,8 +74,10 @@ public class SellerPage extends PageBase {
     }
 
     public boolean verifyItemInTable(String itemTitle){
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(TABLE_ITEMS_TITLE_XPATH),1));
         boolean found = false;
         for(WebElement e: getTableItemsTitles()){
+            wait.until(ExpectedConditions.visibilityOf(e));
             if(e.getText().equals(itemTitle))
                 found = true;
                 System.out.println("Added item: " + itemTitle);
