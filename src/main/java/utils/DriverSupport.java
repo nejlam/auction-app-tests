@@ -26,11 +26,12 @@ import java.util.concurrent.TimeUnit;
 public class DriverSupport {
     private WebDriver driver;
 
-    /*private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://34.107.132.102/wd/hub");
+    private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://23.251.148.254:4444/wd/hub");
     private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
-    private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "10000"));
-*/
-    DesiredCapabilities capability = DesiredCapabilities.chrome();
+    private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "0"));
+    DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
+
+    //DesiredCapabilities capability = DesiredCapabilities.chrome();
 
     public WebDriver initDriver(String browser) throws InterruptedException {
         java.util.Properties p = new Properties();
@@ -61,19 +62,16 @@ public class DriverSupport {
                 //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
                 final ChromeOptions chromeOptions = new ChromeOptions();
-                //System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+                System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
                 chromeOptions.addArguments("--headless");
-                DesiredCapabilities capability = DesiredCapabilities.chrome();
-                capability.setBrowserName("chrome");
-                capability.setPlatform(Platform.LINUX);
-                capability.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 for (int i = 0; i < 10; i++){
                     try {
-                    driver = new RemoteWebDriver(new URL("http://10.4.1.30:4444/wd/hub"),
-                            capability);
+                    driver = new RemoteWebDriver(new URL("http://23.251.148.254:4444/wd/hub"),
+                            capabilities);
                     } catch (WebDriverException | MalformedURLException e) {
                     e.printStackTrace();
-                    //System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
+                    System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
                     Thread.sleep(1000);
                     }
                 }
