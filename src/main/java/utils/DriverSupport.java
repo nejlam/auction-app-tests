@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class DriverSupport {
     private WebDriver driver;
 
-    private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://localhost:4444/wd/hub");
+    private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://10.4.1.30:4444/wd/hub");
     private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
     private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "10000"));
     DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
