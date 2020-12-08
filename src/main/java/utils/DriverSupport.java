@@ -61,6 +61,7 @@ public class DriverSupport {
                 //capabilities = DesiredCapabilities.firefox();
             } else if (browser.equals("remote-chrome")) {
                 final ChromeOptions chromeOptions = new ChromeOptions();
+                System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
                 chromeOptions.addArguments("--headless");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 for (int i = 0; i < 10; i++){
