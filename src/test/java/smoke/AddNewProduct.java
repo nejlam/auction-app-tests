@@ -179,7 +179,7 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 25)
-    public void verifyNewItemInTable(){
+    public void verifyNewItemInTable() throws InterruptedException {
         Assert.assertTrue(new SellerPage(driver).verifyItemInTable(NEW_ITEM_TITLE));
     }
 }

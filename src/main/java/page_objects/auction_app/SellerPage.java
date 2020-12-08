@@ -73,8 +73,10 @@ public class SellerPage extends PageBase {
         return getSellerTabs().get(getTabIndex(status)).getText().equals(status);
     }
 
-    public boolean verifyItemInTable(String itemTitle){
+    public boolean verifyItemInTable(String itemTitle) throws InterruptedException {
+        Thread.sleep(1000);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(TABLE_ITEMS_TITLE_XPATH),1));
+        wait.until(ExpectedConditions.visibilityOfAllElements(getTableItemsTitles()));
         boolean found = false;
         for(WebElement e: getTableItemsTitles()){
             wait.until(ExpectedConditions.visibilityOf(e));

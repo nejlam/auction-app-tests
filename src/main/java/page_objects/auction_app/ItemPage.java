@@ -165,6 +165,7 @@ public class ItemPage extends PageBase {
 
     public Boolean verifySuccessfulAdd(String successMsg){
         waitForVisibility(getAlertMsg());
+        System.out.println("Success message: " + getAlertMsg().getText());
         return getAlertMsg().getText().contains(successMsg);
     }
 
@@ -197,6 +198,8 @@ public class ItemPage extends PageBase {
     }
 
     public Boolean verifyAlertMsg(){
+        waitForVisibility(getAlertMsg());
+        System.out.println("Alert message is: " + getAlertMsg().getText());
         return getAlertMsg().isDisplayed();
     }
 
