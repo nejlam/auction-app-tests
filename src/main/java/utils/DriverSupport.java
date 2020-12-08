@@ -67,7 +67,7 @@ public class DriverSupport {
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 for (int i = 0; i < 10; i++){
                     try {
-                    driver = new RemoteWebDriver(new URL("http://23.251.148.254:4444/wd/hub"),
+                    driver = new RemoteWebDriver(new URL("http://selenium-selenium-hub:4444/wd/hub"),
                             capabilities);
                     } catch (WebDriverException | MalformedURLException e) {
                     e.printStackTrace();
