@@ -138,6 +138,8 @@ public class HomePage extends PageBase {
     }
 
     public ItemPage clickOnFirstProduct(){
+        wait.until(ExpectedConditions.visibilityOf(getFeaturedProduct()));
+        waitForElementToBeClickable(getFeaturedProduct());
         getFeaturedProduct().click();
         return new ItemPage(getDriver());
     }

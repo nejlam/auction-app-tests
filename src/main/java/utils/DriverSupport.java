@@ -14,7 +14,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
-import sun.security.krb5.internal.crypto.Des;
 
 import java.util.Properties;
 
@@ -34,7 +33,7 @@ public class DriverSupport {
     //DesiredCapabilities capability = DesiredCapabilities.chrome();
 
     public WebDriver initDriver(String browser) throws InterruptedException {
-        
+
                 final ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--headless");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);

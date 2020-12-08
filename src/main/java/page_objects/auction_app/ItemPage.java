@@ -214,6 +214,7 @@ public class ItemPage extends PageBase {
     }
 
     public Boolean verifyAlertMsgTxt(String msg){
+        waitForVisibility(getAlertMsg());
         return getAlertMsg().getText().contains(msg);
     }
 
@@ -221,6 +222,7 @@ public class ItemPage extends PageBase {
 
     public void closeAlertBtn(){
         waitForVisibility(getAlertCloseBtn());
+        waitElementToBeClickable(getAlertCloseBtn());
         getAlertCloseBtn().click();
     }
 
