@@ -215,6 +215,7 @@ public class ItemPage extends PageBase {
 
     public Boolean verifyAlertMsgTxt(String msg){
         waitForVisibility(getAlertMsg());
+        System.out.println("Alert message is present: " + getAlertMsg().getText());
         return getAlertMsg().getText().contains(msg);
     }
 

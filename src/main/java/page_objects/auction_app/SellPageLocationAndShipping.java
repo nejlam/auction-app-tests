@@ -258,6 +258,7 @@ public class SellPageLocationAndShipping extends PageBase {
 
     public ItemPage clickDoneBtn() {
         getDoneBtn().click();
+        System.out.println("Done button is clicked");
         return new ItemPage(getDriver());
     }
 
