@@ -38,17 +38,14 @@ public class DriverSupport {
                 final ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--headless");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                for (int i = 0; i < 10; i++){
                     try {
                     driver = new RemoteWebDriver(new URL("http://selenium-selenium-hub:4444/wd/hub"),
                             capabilities);
                     } catch (WebDriverException | MalformedURLException e) {
                     e.printStackTrace();
                     System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
-                    Thread.sleep(1000);
                     }
-                }
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                
         return driver;
     }
 }
