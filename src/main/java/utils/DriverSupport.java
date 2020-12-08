@@ -26,43 +26,16 @@ import java.util.concurrent.TimeUnit;
 public class DriverSupport {
     private WebDriver driver;
 
-    private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://23.251.148.254:4444/wd/hub");
+    private final static String SELENIUM_URL = System.getProperty("selenium.url", "http://selenium-selenium-hub:4444/wd/hub");
     private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
-    private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "0"));
+    private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "10"));
     DesiredCapabilities capabilities = new DesiredCapabilities(SELENIUM_BROWSER, "", Platform.ANY);
 
     //DesiredCapabilities capability = DesiredCapabilities.chrome();
 
     public WebDriver initDriver(String browser) throws InterruptedException {
-        java.util.Properties p = new Properties();
-
-        if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "resources/geckodriver");
-            FirefoxOptions options = new FirefoxOptions();
-            options.addArguments("headless");
-            options.addArguments("--start-maximized");
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("acceptInsecureCerts",true);
-            driver = new FirefoxDriver(capabilities);
-
-        } else if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors",
-                    "--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
-            driver = new ChromeDriver(options);
-        } else if (browser.equals("safari")) {
-            SafariOptions safariOptions = new SafariOptions();
-            safariOptions.setUseTechnologyPreview(true);
-            driver = new SafariDriver(safariOptions);
-        }
-
-        if (browser.contains("remote")) {
-            if (browser.equals("remote-firefox")) {
-                //capabilities = DesiredCapabilities.firefox();
-            } else if (browser.equals("remote-chrome")) {
+        
                 final ChromeOptions chromeOptions = new ChromeOptions();
-                System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
                 chromeOptions.addArguments("--headless");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 for (int i = 0; i < 10; i++){
@@ -75,9 +48,6 @@ public class DriverSupport {
                     Thread.sleep(1000);
                     }
                 }
-            }
-        }
-
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         return driver;
     }
