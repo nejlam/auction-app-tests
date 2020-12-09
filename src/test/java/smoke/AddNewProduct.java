@@ -151,7 +151,7 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 20)
-    public void finishAddingItem(){
+    public void finishAddingItem() throws InterruptedException {
         new SellPageLocationAndShipping(driver).clickDoneBtn();
     }
 

@@ -256,9 +256,10 @@ public class SellPageLocationAndShipping extends PageBase {
         getCvcInput().sendKeys(cvc);
     }
 
-    public ItemPage clickDoneBtn() {
+    public ItemPage clickDoneBtn() throws InterruptedException {
         getDoneBtn().click();
         System.out.println("Done button is clicked");
+        Thread.sleep(2000);
         return new ItemPage(getDriver());
     }
 
