@@ -74,12 +74,14 @@ public class SellerPage extends PageBase {
     }
 
     public boolean verifyItemInTable(String itemTitle) throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(TABLE_ITEMS_TITLE_XPATH),1));
         wait.until(ExpectedConditions.visibilityOfAllElements(getTableItemsTitles()));
+        System.out.println("Items list size is: " + getTableItemsTitles().size());
         boolean found = false;
         for(WebElement e: getTableItemsTitles()){
             wait.until(ExpectedConditions.visibilityOf(e));
+            System.out.println("Item title is: " + e.getText());
             if(e.getText().equals(itemTitle))
                 found = true;
                 System.out.println("Added item: " + itemTitle);
