@@ -36,7 +36,6 @@ public class DriverSupport {
 
                 final ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--headless");
-                chromeOptions.addArguments("--window-size=1920,1080");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                     try {
                     driver = new RemoteWebDriver(new URL("http://23.251.148.254:4444/wd/hub"),
