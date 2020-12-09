@@ -75,7 +75,7 @@ public class SellerPage extends PageBase {
 
     public boolean verifyItemInTable(String itemTitle) throws InterruptedException {
         Thread.sleep(2000);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(TABLE_ITEMS_TITLE_XPATH),1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(TABLE_ITEMS_TITLE_XPATH),0));
         wait.until(ExpectedConditions.visibilityOfAllElements(getTableItemsTitles()));
         System.out.println("Items list size is: " + getTableItemsTitles().size());
         boolean found = false;
