@@ -32,8 +32,6 @@ public class AddNewProduct extends TestBase {
     final static private String PRODUCT_INFO_TEXT = "DETAIL INFORMATION ABOUT PRODUCT";
     final static private String PRICES_INFO_TEXT = "SET PRICES";
     final static private String LOCATION_SHIPPING_INFO_TEXT = "LOCATION & SHIPPING";
-    final static private String PAYPAL_EMAIL = "sb-tjkba3613907@personal.example.com";
-    final static private String PAYPAL_PSWD = "vQGEK@5k";
     final private String NEW_ITEM_TITLE = getLorem().getWords(2,4);
 
 
@@ -98,7 +96,7 @@ public class AddNewProduct extends TestBase {
         new SellPageProductInfo(driver).populateForm(NEW_ITEM_TITLE, getLorem().getWords(5,10),
                 PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
     }
-/*
+
     @Test(priority = 10)
     public void verifyAddedPhotos(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyNumberOfAddedPhotos(PHOTOS_QUANTITY));
@@ -108,7 +106,7 @@ public class AddNewProduct extends TestBase {
     public void verifyMsgAfterPhotosUpload(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyMsgForPhotoUploads(PHOTOS_QUANTITY));
     }
-*/
+
     @Test(priority = 12)
     public void verifyPriceInfoStep(){
         Assert.assertTrue(new SellPageSetPrices(driver).verifyStepTitle(PRICES_INFO_TEXT));

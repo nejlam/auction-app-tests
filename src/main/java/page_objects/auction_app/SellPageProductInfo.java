@@ -2,6 +2,8 @@ package page_objects.auction_app;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebDriver;
@@ -169,6 +171,7 @@ public class SellPageProductInfo extends PageBase {
     }
 
     private void uploadPhotos(String filePath, String fileExtension, int quantity){
+        ((RemoteWebDriver)getDriver()).setFileDetector(new LocalFileDetector());
         String photoPath = "";
         for(int i = 1; i<quantity; i++){
             photoPath = filePath + i + fileExtension;
