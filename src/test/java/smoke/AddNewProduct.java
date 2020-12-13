@@ -96,7 +96,7 @@ public class AddNewProduct extends TestBase {
         new SellPageProductInfo(driver).populateForm(NEW_ITEM_TITLE, getLorem().getWords(5,10),
                 PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
     }
-
+/* EXECUTE FILES UPLOAD ONLY LOCALLY
     @Test(priority = 10)
     public void verifyAddedPhotos(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyNumberOfAddedPhotos(PHOTOS_QUANTITY));
@@ -106,7 +106,7 @@ public class AddNewProduct extends TestBase {
     public void verifyMsgAfterPhotosUpload(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyMsgForPhotoUploads(PHOTOS_QUANTITY));
     }
-
+*/
     @Test(priority = 12)
     public void verifyPriceInfoStep(){
         Assert.assertTrue(new SellPageSetPrices(driver).verifyStepTitle(PRICES_INFO_TEXT));
