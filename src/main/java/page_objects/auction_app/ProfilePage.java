@@ -3,9 +3,10 @@ package page_objects.auction_app;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ProfilePage extends PageBase {
@@ -29,8 +30,23 @@ public class ProfilePage extends PageBase {
     final private static String EMAIL_ALERT = "//*[@id='root']/div/div[3]/div/form/div[1]/div[2]/div[2]/div[6]/div";
     final private static String SAVE_ALERT = "//*[@id='root']/div/div[3]/div/form/div[5]";
 
+    public ProfilePage(WebDriver driver){
+        super(driver, PAGE_URL_REGEX);
+        initElements();
+    }
+
     private int getRandomNumber(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max);
+    }
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
+    private void waitForVisibilityOfElement(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    private void waitForElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     @FindBy(xpath = CHANGE_PHOTO_BTN_XPATH)
@@ -86,6 +102,8 @@ public class ProfilePage extends PageBase {
 
     @FindBy(xpath = EMAIL_ALERT)
     private WebElement emailAlert;
+
+    //GETTERS
 
     public WebElement getSaveAlert(){
         return saveAlert;
@@ -151,10 +169,7 @@ public class ProfilePage extends PageBase {
         return firstNameInput;
     }
 
-    public ProfilePage(WebDriver driver){
-        super(driver, PAGE_URL_REGEX);
-        initElements();
-    }
+    //METHODS
 
     public void populateRequiredFields(String firstName, String lastName, String gender, String phone, String email){
         getFirstNameInput().sendKeys(firstName);
@@ -175,6 +190,8 @@ public class ProfilePage extends PageBase {
     }
 
     public void clickSaveBtn(){
+        waitForVisibilityOfElement(getSaveBtn());
+        waitForElementToBeClickable(getSaveBtn());
         getSaveBtn().click();
     }
 
@@ -183,8 +200,12 @@ public class ProfilePage extends PageBase {
     }
 
     public boolean verifyAlertMsg(WebElement el, String alertElement){
-        new AccountPage(getDriver()).waitForVisibility(el);
-        return el.getText().contains(alertElement + " is required");
+        waitForVisibilityOfElement(el);
+        boolean alert = el.getText().contains(alertElement + " is required");
+        if(alert){
+        System.out.println("Alert message: " + el.getText());
+        } else System.out.println("Alert is not present");
+        return alert;
     }
 
     public void clearEmailAndAddNew(String email){
@@ -193,7 +214,7 @@ public class ProfilePage extends PageBase {
     }
 
     public boolean verifyUpdatedField(WebElement el, String updatedValue){
-        System.out.println("Value: " + el.getAttribute("value"));
+        System.out.println("Initial value: " + el.getAttribute("value"));
         System.out.println("Updated value: " + updatedValue);
         return el.getAttribute("value").equals(updatedValue);
     }

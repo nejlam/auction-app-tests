@@ -30,9 +30,9 @@ public class HomePage extends PageBase {
         initElements();
     }
 
-    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
-
     Random rand = new Random();
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
 
     private void waitForVisibilityAllElements(List<WebElement> list){
         wait.until(ExpectedConditions.visibilityOfAllElements(list));
@@ -44,6 +44,10 @@ public class HomePage extends PageBase {
 
     private void waitForListElementsNum(String listXpath, int number){
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(listXpath), number));
+    }
+
+    private void waitForVisibilityOfElement(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     @FindBy(xpath = LOGIN_LINK_XPATH)
@@ -73,12 +77,7 @@ public class HomePage extends PageBase {
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;
 
-    @FindBy(tagName = EXTERNAL_LINKS)
-    private List<WebElement> externalLinksList;
-
-    /*public List<WebElement> getExternalLinksList(){
-        return externalLinksList;
-    }*/
+    //GETTERS
 
     public WebElement getShopPageLink() {
         return shopPageLink;
@@ -116,6 +115,8 @@ public class HomePage extends PageBase {
         return featuredProduct;
     }
 
+    //METHODS
+
     public AccountPage clickAccountPageLink(){
         waitForElementToBeClickable(getAccountPage());
         getAccountPage().click();
@@ -133,12 +134,17 @@ public class HomePage extends PageBase {
     }
 
     public Boolean verifyHomepageLink(String attributeValue){
+        waitForVisibilityOfElement(getHomepageLink());
         String classValue = getHomepageLink().getAttribute("class");
-        return classValue.contains(attributeValue);
+        boolean homeAttribute = classValue.contains(attributeValue);
+        if(homeAttribute){
+            System.out.println("Home page is opened.");
+        } else System.out.println("Home page is not opened.");
+        return homeAttribute;
     }
 
     public ItemPage clickOnFirstProduct(){
-        wait.until(ExpectedConditions.visibilityOf(getFeaturedProduct()));
+        waitForVisibilityOfElement(getFeaturedProduct());
         waitForElementToBeClickable(getFeaturedProduct());
         getFeaturedProduct().click();
         return new ItemPage(getDriver());
@@ -154,7 +160,6 @@ public class HomePage extends PageBase {
     }
 
     public ItemPage selectRandomFeaturedProduct(){
-        // Find and click on a random product
         waitForVisibilityAllElements(getFeaturedProductsList());
         waitForListElementsNum(FEATURED_PRODUCTS_LIST_XPATH, 3);
         List<WebElement> allProducts = getFeaturedProductsList();
@@ -164,11 +169,13 @@ public class HomePage extends PageBase {
     }
 
     public ShopPage clickShopPageLink(){
+        waitForVisibilityOfElement(getShopPageLink());
         getShopPageLink().click();
         return new ShopPage(getDriver());
     }
 
     public ShopPage searchItem(String query) throws InterruptedException {
+        waitForVisibilityOfElement(getSearchInput());
         Thread.sleep(1000);
         getSearchInput().clear();
         getSearchInput().sendKeys(query, Keys.ENTER);
@@ -176,7 +183,8 @@ public class HomePage extends PageBase {
     }
 
     public boolean verifySearchInput(String query){
-        System.out.println(getSearchInput().getAttribute("value"));
+        System.out.println("Search input: " + query);
+        System.out.println("Search input entered: " + getSearchInput().getAttribute("value"));
         return getSearchInput().getAttribute("value").equals(query);
     }
 

@@ -33,6 +33,7 @@ public class ItemPage extends PageBase {
     private void waitForVisibility(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
+
     private void waitElementToBeClickable(WebElement element){
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
@@ -89,6 +90,8 @@ public class ItemPage extends PageBase {
 
     @FindBy(xpath = ALERT_CLOSE_BTN)
     private WebElement alertCloseBtn;
+
+    //GETTERS
 
     public WebElement getAlertCloseBtn(){
         return alertCloseBtn;
@@ -150,8 +153,7 @@ public class ItemPage extends PageBase {
         return bidsInfo;
     }
 
-
-    //EXTRACT BID VALUES
+    //METHODS
 
     private String getBidText(WebElement bidMsg){
         return bidMsg.getText();
@@ -160,8 +162,6 @@ public class ItemPage extends PageBase {
     public String extractEnterPriceMsg(){
         return getEnterPriceMsg().getText();
     }
-
-    //VERIFICATIONS
 
     public Boolean verifySuccessfulAdd(String successMsg){
         waitForVisibility(getAlertMsg());
@@ -198,32 +198,41 @@ public class ItemPage extends PageBase {
     }
 
     public Boolean verifyAlertMsg(){
+        waitForVisibility(getAlertCloseBtn());
         waitForVisibility(getAlertMsg());
+        boolean alert = getAlertMsg().isDisplayed();
+        if(alert)
         System.out.println("Alert message is: " + getAlertMsg().getText());
-        return getAlertMsg().isDisplayed();
+        return alert;
     }
 
     public Boolean verifyRelatedItemsSection(){
+        waitForVisibility(getRelatedItemsSection());
         return getRelatedItemsSection().isDisplayed();
     }
 
     public Boolean verifyBidsTable(){
+        waitForVisibility(getBidsTable());
         return getBidsTable().isDisplayed();
     }
 
     public Boolean verifyHighestBidInTable() {
+        waitForVisibility(getHighestBidFromTable());
         String tableHighestBid = getNum(getBidText(getHighestBidFromTable()));
         String highestBid = getNum(getBidText(getHighestBid()));
+        System.out.println("Highest bid in the table: " + tableHighestBid);
+        System.out.println("Placed bid: " + highestBid);
         return highestBid.equals(tableHighestBid);
     }
 
     public Boolean verifyAlertMsgTxt(String msg){
         waitForVisibility(getAlertMsg());
-        System.out.println("Alert message is present: " + getAlertMsg().getText());
-        return getAlertMsg().getText().contains(msg);
+        boolean alert = getAlertMsg().getText().contains(msg);
+        if(alert){
+            System.out.println("Alert message is present: " + getAlertMsg().getText());
+        } else System.out.println("Alert is not present");
+        return alert;
     }
-
-    //METHODS
 
     public void closeAlertBtn(){
         waitForVisibility(getAlertCloseBtn());
@@ -232,6 +241,7 @@ public class ItemPage extends PageBase {
     }
 
     public LoginPage clickLoginButton(){
+        waitForVisibility(new HomePage(getDriver()).getLoginLink());
         new HomePage(getDriver()).clickLoginLink();
         return new LoginPage(getDriver());
     }
@@ -239,7 +249,7 @@ public class ItemPage extends PageBase {
     public void placeBid(String bidValueMsg){
         waitForVisibility(getHighestBid());
         waitForVisibility(getEnterPriceMsg());
-        System.out.println("---------placeBid() messages-------");
+        System.out.println("---------Values for placing a bid:-------");
         System.out.println("Item name: " + getProductTitle().getText());
         System.out.println("Enter price msg: " + extractEnterPriceMsg());
         System.out.println("Enter bid value: " + getNum(extractEnterPriceMsg()));
@@ -248,6 +258,7 @@ public class ItemPage extends PageBase {
     }
 
     private void clickBidButton(){
+        waitForVisibility(getPlaceBidBtn());
         if(getPlaceBidBtn().isEnabled()) {
             getPlaceBidBtn().click();
         }
@@ -264,6 +275,7 @@ public class ItemPage extends PageBase {
         String newHighestValue = "";
         if (highestValue == 999999.99){
             newHighestValue = String.valueOf(highestValue);
+            System.out.println("The highest bid has been entered.");
         }else{
             double newHighestValueDouble = highestValue + 0.1;
             newHighestValue = String.valueOf(newHighestValueDouble);

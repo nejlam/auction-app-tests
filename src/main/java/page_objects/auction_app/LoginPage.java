@@ -14,12 +14,14 @@ public class LoginPage extends PageBase {
     final static private String PASSWORD_INPUT_XPATH = "//*[@id=\"root\"]/div/div[3]/div/form/div[2]/input";
     final static private String LOGIN_BTN_XPATH = "//*[@id=\"root\"]/div/div[3]/div/form/button";
 
-
     WebDriverWait wait = new WebDriverWait(getDriver(), 20);
-
 
     private void waitForElementToBeClickable(WebElement element){
         wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    private void waitForVisibility(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public LoginPage(WebDriver driver){
@@ -36,6 +38,8 @@ public class LoginPage extends PageBase {
     @FindBy(xpath = LOGIN_BTN_XPATH)
     private WebElement loginBtn;
 
+    //GETTERS
+
     public WebElement getEmailInputField(){
         return emailInputField;
     }
@@ -48,9 +52,12 @@ public class LoginPage extends PageBase {
         return loginBtn;
     }
 
+    //METHODS
+
     public void populateLoginForm(String email, String password){
         getEmailInputField().sendKeys(email);
         getPasswordInputField().sendKeys(password);
+        waitForVisibility(getLoginBtn());
         waitForElementToBeClickable(getLoginBtn());
         getLoginBtn().click();
     }

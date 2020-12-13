@@ -25,6 +25,13 @@ public class SellerPage extends PageBase {
 
     WebDriverWait wait = new WebDriverWait(getDriver(), 20);
 
+    private void waitForVisibilityOfElement(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    private void waitForVisibilityAllElements(List<WebElement> list){
+        wait.until(ExpectedConditions.visibilityOfAllElements(list));
+    }
 
     @FindBy(xpath = ADD_NEW_ITEM_BTN)
     private WebElement addNewItemBtn;
@@ -34,6 +41,8 @@ public class SellerPage extends PageBase {
 
     @FindBy(xpath = TABLE_ITEMS_TITLE_XPATH)
     private List<WebElement> tableItemsTitles;
+
+    //GETTERS
 
     public List<WebElement> getTableItemsTitles(){
         return tableItemsTitles;
@@ -47,12 +56,16 @@ public class SellerPage extends PageBase {
         return addNewItemBtn;
     }
 
+    //METHODS
+
     public SellPageProductInfo clickStartSellingBtn(){
+        waitForVisibilityOfElement(getStartSellingBtn());
         getStartSellingBtn().click();
         return new SellPageProductInfo(getDriver());
     }
 
     public void openSellerTab(String status){
+        waitForVisibilityAllElements(getSellerTabs());
         getSellerTabs().get(getTabIndex(status)).click();
     }
 
@@ -69,6 +82,7 @@ public class SellerPage extends PageBase {
     }
 
     public boolean verifyActiveTab(String status){
+        waitForVisibilityAllElements(getSellerTabs());
         System.out.println("Active tab: " + getSellerTabs().get(getTabIndex(status)).getText());
         return getSellerTabs().get(getTabIndex(status)).getText().equals(status);
     }

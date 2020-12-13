@@ -31,7 +31,7 @@ public class ShopPage extends PageBase {
 
     WebDriverWait wait = new WebDriverWait(getDriver(), 20);
 
-    private void waitForVisibility(WebElement element){
+    private void waitForVisibilityOfElement(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -59,6 +59,8 @@ public class ShopPage extends PageBase {
     @FindBy(xpath = ITEM_TITLE_LIST_XPATH)
     private List<WebElement> itemTitleList;
 
+    //GETTERS
+
     public List<WebElement> getItemTitleList(){
         return itemTitleList;
     }
@@ -71,13 +73,16 @@ public class ShopPage extends PageBase {
         return firstItem;
     }
 
+    //METHODS
+
     public ItemPage clickFirstItem(){
+        waitForVisibilityOfElement(getFirstItem());
         getFirstItem().click();
         return new ItemPage(getDriver());
     }
 
     public ItemPage selectRandomItem(){
-        // Find and click on a random item
+        waitForVisibilityOfAllElem(getItemTitleList());
         List<WebElement> allProducts = getItemTitleList();
         Random rand = new Random();
         int randomProduct = rand.nextInt(allProducts.size());
@@ -141,7 +146,9 @@ public class ShopPage extends PageBase {
     }
 
     public boolean verifyFirstItem(String query){
-        waitForVisibility(getFirstItem());
+        waitForVisibilityOfElement(getFirstItem());
+        System.out.println("Search query is: " + query);
+        System.out.println("First item is: " + getFirstItem().getText());
         return getFirstItem().getText().equals(query);
     }
 
