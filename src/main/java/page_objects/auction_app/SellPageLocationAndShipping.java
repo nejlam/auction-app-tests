@@ -7,10 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SellPageLocationAndShipping extends PageBase {
@@ -35,13 +32,6 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String EXP_MONTH_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select";
     final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option";
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
-    final static private String PAYPAL_BTN_XPATH = "//*[@id='buttons-container']/div/div[1]/div";
-    final static private String PAYPAL_EMAIL_INPUT_ID = "email";
-    final static private String PAYPAL_PSWD_INPUT_ID = "password";
-    final static private String PAYPAL_LOGIN_BTN_ID = "btnLogin";
-    final static private String PAYMENT_SUBMIT_BTN = "payment-submit-btn";
-    final static private String PAYPAL_IFRAME_ID = "jsx-iframe-a3650b2174";
-    final static private String PAYPAL_IFRAME_XPATH = "///*[@id='zoid-paypal-buttons-1ce1ca0cea_mtc6mdk6mdq']";
 
     public SellPageLocationAndShipping(WebDriver driver) {
         super(driver, PAGE_URL_REGEX);
@@ -117,49 +107,8 @@ public class SellPageLocationAndShipping extends PageBase {
     @FindBy(xpath = STEP_TITLE)
     private WebElement stepTitle;
 
-    @FindBy(xpath = PAYPAL_BTN_XPATH)
-    private WebElement paypalBtn;
-
-    @FindBy(id = PAYPAL_EMAIL_INPUT_ID)
-    private WebElement paypalEmailInput;
-
-    @FindBy(id = PAYPAL_PSWD_INPUT_ID)
-    private WebElement paypalPswdInput;
-
-    @FindBy(id = PAYPAL_LOGIN_BTN_ID)
-    private WebElement paypalLoginBtn;
-
-    @FindBy(id = PAYMENT_SUBMIT_BTN)
-    private WebElement paymentSubmitBtn;
-
-    @FindBy(xpath = PAYPAL_IFRAME_XPATH)
-    private WebElement paypalIFrame;
 
     //GETTERS
-
-    public WebElement getPaypalIFrame(){
-        return paypalIFrame;
-    }
-
-    public WebElement getPaymentSubmitBtn(){
-        return paymentSubmitBtn;
-    }
-
-    public WebElement getPaypalLoginBtn(){
-        return paypalLoginBtn;
-    }
-
-    public WebElement getPaypalPswdInput(){
-        return paypalPswdInput;
-    }
-
-    public WebElement getPaypalEmailInput(){
-        return paypalEmailInput;
-    }
-
-    public WebElement getPaypalBtn(){
-        return paypalBtn;
-    }
 
     public WebElement getStepTitle() {
         return stepTitle;

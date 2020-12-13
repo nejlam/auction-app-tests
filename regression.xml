@@ -2,9 +2,7 @@
 
 <suite name="Regression tests" verbose="9">
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
-    <parameter name="browser" value="chrome"/>
-<!--
-
+   <!-- <parameter name="browser" value="chrome"/> -->
     <test name="Bid product from Every Category">
             <classes>
                 <class name="regression.BidProductFromEveryCategory"/>
@@ -16,12 +14,14 @@
                 <class name="regression.VerifyItemPage"/>
             </classes>
     </test>
+
     <test name="Bid product with different users #1">
         <parameter name="email" value="user.a@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
+<!--
 
     <test name="Bid product with different users #2">
         <parameter name="email" value="user.b@gmail.com"/>
@@ -43,13 +43,13 @@
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
-
+-->
     <test name="Sort Products by Price and by Default">
         <classes>
             <class name="regression.SortProducts"/>
         </classes>
     </test>
--->
+
     <test name="Register Without Accepting Terms">
         <classes>
             <class name="regression.RegisterWithoutAcceptingTerms"/>
