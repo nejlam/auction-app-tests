@@ -18,12 +18,12 @@ public abstract class TestBase {
 
     @BeforeTest(alwaysRun = true)
     public void startTest(final ITestContext testContext) {
-        System.out.println("Test running: " + testContext.getName());
+        System.out.println("------Test running: " + testContext.getName() + "------");
     }
 
     @AfterTest(alwaysRun = true)
     public void endTest(final ITestContext testContext){
-        System.out.println("Test completed: " + testContext.getName());
+        System.out.println("------Test completed: " + testContext.getName() + "------");
     }
 
     @AfterTest(alwaysRun = true)

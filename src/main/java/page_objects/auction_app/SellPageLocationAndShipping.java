@@ -22,7 +22,7 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/div/label";
     final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[2]/label";
     final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[3]/label";
-    final static private String DONE_BTN_ID = "btn-sell-done";
+    final static private String DONE_BTN_XPATH = "//*[@id='btn-sell-done']";
     final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
     //payment info vars
     final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
@@ -92,7 +92,7 @@ public class SellPageLocationAndShipping extends PageBase {
     @FindBy(xpath = CVC_INPUT_XPATH)
     private WebElement cvcInput;
 
-    @FindBy(id = DONE_BTN_ID)
+    @FindBy(xpath = DONE_BTN_XPATH)
     private WebElement doneBtn;
 
     @FindBy(xpath = CITY_DROPDOWN_VALUES)
@@ -115,10 +115,6 @@ public class SellPageLocationAndShipping extends PageBase {
 
     public List<WebElement> getExpYearValues() {
         return expYearValues;
-    }
-
-    public List<WebElement> getExpMonthValues() {
-        return expMonthValues;
     }
 
     public List<WebElement> getCityDropdownValues() {
@@ -207,6 +203,7 @@ public class SellPageLocationAndShipping extends PageBase {
 
     public ItemPage clickDoneBtn() throws InterruptedException {
         waitForVisibilityOfElement(getDoneBtn());
+        getDoneBtn().click();
         System.out.println("Done button is clicked");
         Thread.sleep(2000);
         return new ItemPage(getDriver());
