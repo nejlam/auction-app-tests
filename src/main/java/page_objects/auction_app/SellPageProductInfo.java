@@ -165,7 +165,7 @@ public class SellPageProductInfo extends PageBase {
         getColorDropdown().selectByIndex(getRandomNumber(2, getColorValues().size()));
         waitForListElementsNum(SIZE_VALUES_XPATH, 2);
         getSizeDropdown().selectByIndex(getRandomNumber(2, getSizeValues().size()));
-        //uploadPhotos(filePath, extension, quantity);
+        uploadPhotos(filePath, extension, quantity);
         getNextBtn().click();
         return new SellPageSetPrices(getDriver());
     }
