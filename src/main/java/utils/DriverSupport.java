@@ -23,12 +23,15 @@ public class DriverSupport {
     public WebDriver initDriver(String browser){
 
         if(browser.equals("chrome")){
+
             System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("headless");
             options.addArguments("window-size=1200x600");
             driver = new ChromeDriver();
+
         } else if(browser.equals("firefox")){
+
             System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
             FirefoxOptions options = new FirefoxOptions();
             options.addArguments("headless");
@@ -36,7 +39,9 @@ public class DriverSupport {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("acceptInsecureCerts",true);
             driver = new FirefoxDriver();
+
         } else if(browser.contains("remote")){
+
             if(browser.equals("remote-chrome")){
                 final ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--headless");
@@ -49,11 +54,10 @@ public class DriverSupport {
                     System.out.println(String.format("Error connecting to %s: %s. Retrying", SELENIUM_URL, e));
                 }
             }
+
         }
 
-
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
 
         return driver;
     }

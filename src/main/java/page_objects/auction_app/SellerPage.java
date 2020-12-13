@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
-import java.rmi.server.ExportException;
 import java.util.List;
 
 public class SellerPage extends PageBase {
