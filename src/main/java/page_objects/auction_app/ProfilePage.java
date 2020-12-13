@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
+
+import java.util.SimpleTimeZone;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ProfilePage extends PageBase {
@@ -214,8 +216,10 @@ public class ProfilePage extends PageBase {
     }
 
     public boolean verifyUpdatedField(WebElement el, String updatedValue){
-        System.out.println("Initial value: " + el.getAttribute("value"));
-        System.out.println("Updated value: " + updatedValue);
-        return el.getAttribute("value").equals(updatedValue);
+        boolean updated = el.getAttribute("value").equals(updatedValue);
+        if(updated){
+            System.out.println("Updated value: " + updatedValue);
+        } else System.out.println("Value is not updated");
+        return updated;
     }
 }
