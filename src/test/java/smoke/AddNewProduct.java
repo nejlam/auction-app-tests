@@ -68,7 +68,7 @@ public class AddNewProduct extends TestBase {
 
     @Test(priority = 4)
     public void openAccountPage(){
-        new HomePage(driver).clickAccountPageLink();
+        new HomePage(driver).clickNavbarTab(2);
     }
 
     @Test(priority = 5)
@@ -159,24 +159,28 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 22)
-    public void openSellerPageForVerification(){
-        new HomePage(driver).clickAccountPageLink()
-        .clickTab(1);
+    public void openAccountPageForVerification(){
+        new HomePage(driver).clickNavbarTab(2);
     }
 
     @Test(priority = 23)
+    public void openSellerPageForVerification(){
+        new AccountPage(driver).clickTab(1);
+    }
+
+    @Test(priority = 24)
     @Parameters("status")
     public void openSellerTab(String status){
         new SellerPage(driver).openSellerTab(status);
     }
 
-    @Test(priority = 24)
+    @Test(priority = 25)
     @Parameters("status")
     public void verifySellerTab(String status){
        Assert.assertTrue(new SellerPage(driver).verifyActiveTab(status));
     }
 
-    @Test(priority = 25)
+    @Test(priority = 26)
     public void verifyNewItemInTable() throws InterruptedException {
         Assert.assertTrue(new SellerPage(driver).verifyItemInTable(NEW_ITEM_TITLE));
     }

@@ -20,7 +20,7 @@ public class SortProducts extends TestBase {
 
     @Test(priority = 1)
     public void openShopPage(){
-        new HomePage(driver).clickShopPageLink();
+        new HomePage(driver).clickNavbarTab(1);
     }
 
     @Test(priority = 2)

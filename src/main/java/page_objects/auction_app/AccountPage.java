@@ -39,6 +39,8 @@ public class AccountPage extends PageBase {
     @FindBy(xpath = SUCCESS_MESSAGE_XPATH)
     private WebElement createAccSuccessMessage;
 
+    //GETTERS
+
     public WebElement getCloseAlert(){
         return closeAlert;
     }
@@ -50,6 +52,8 @@ public class AccountPage extends PageBase {
     public WebElement getSuccessMessage(){
         return createAccSuccessMessage;
     }
+
+    //METHODS
 
     public void clickTab(int index){
         getAccountTabs().get(index).click();
