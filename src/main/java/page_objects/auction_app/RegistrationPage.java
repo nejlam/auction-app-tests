@@ -58,6 +58,8 @@ public class RegistrationPage extends PageBase {
     @FindBy(xpath = CLOSE_ALERT_BTN)
     private WebElement closeAlert;
 
+    //GETTERS
+
     public WebElement getCloseAlert(){
         return closeAlert;
     }
@@ -94,6 +96,8 @@ public class RegistrationPage extends PageBase {
         return alertMessage;
     }
 
+    //METHODS
+
     public void populateForm(String firstName, String lastName, String email, String password){
         getFirstNameInputField().sendKeys(firstName);
         getLastNameInputField().sendKeys(lastName);
@@ -107,13 +111,21 @@ public class RegistrationPage extends PageBase {
     }
 
     public boolean verifyTermsAndConditionsErrorMsg(String errorMsg){
-        return getErrorAgreeToTerms().getText().equals(errorMsg);
+        waitForVisibility(getErrorAgreeToTerms());
+        String errorTxt = getErrorAgreeToTerms().getText();
+        if(errorTxt.equals(errorMsg)){
+            System.out.println("Error message: " + errorTxt);
+        } else System.out.println("Error message is not present");
+        return errorTxt.equals(errorMsg);
     }
 
     public boolean verifyAlertMsgTxt(String msg){
         waitForVisibility(getCloseAlert());
-        System.out.println(getAlertMessage().getText());
-        return getAlertMessage().getText().contains(msg);
+        boolean alert = getAlertMessage().getText().contains(msg);
+        if(alert){
+            System.out.println("Alert message: " + getAlertMessage().getText());
+        } else System.out.println("Alert message is not present");
+        return alert;
     }
 
 }

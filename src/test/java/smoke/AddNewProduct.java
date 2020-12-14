@@ -10,6 +10,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import page_objects.auction_app.*;
 import testUtils.TestBase;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -20,7 +22,7 @@ public class AddNewProduct extends TestBase {
     final static private String ZIPCODE = "71000";
     final static private String PHONE = "61123123";
     final static private String SUCCESS_ALERT = "You have successfully added a new product!";
-    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+"\\data\\product_photos\\img";
+    final static private String PHOTO_FILE_PATH = System.getProperty("user.dir")+ File.separator + "data" + File.separator + "product_photos" + File.separator +"img";
     final static private String PHOTO_EXTENSION = ".jpg";
     final static private int PHOTOS_QUANTITY = 3;
     final static private String NAME_ON_CARD = "Beth";
@@ -66,7 +68,7 @@ public class AddNewProduct extends TestBase {
 
     @Test(priority = 4)
     public void openAccountPage(){
-        new HomePage(driver).clickAccountPageLink();
+        new HomePage(driver).clickNavbarTab(2);
     }
 
     @Test(priority = 5)
@@ -94,7 +96,7 @@ public class AddNewProduct extends TestBase {
         new SellPageProductInfo(driver).populateForm(NEW_ITEM_TITLE, getLorem().getWords(5,10),
                 PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);
     }
-
+/* EXECUTE FILES UPLOAD ONLY LOCALLY
     @Test(priority = 10)
     public void verifyAddedPhotos(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyNumberOfAddedPhotos(PHOTOS_QUANTITY));
@@ -104,7 +106,7 @@ public class AddNewProduct extends TestBase {
     public void verifyMsgAfterPhotosUpload(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyMsgForPhotoUploads(PHOTOS_QUANTITY));
     }
-
+*/
     @Test(priority = 12)
     public void verifyPriceInfoStep(){
         Assert.assertTrue(new SellPageSetPrices(driver).verifyStepTitle(PRICES_INFO_TEXT));
@@ -147,7 +149,7 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 20)
-    public void finishAddingItem(){
+    public void finishAddingItem() throws InterruptedException {
         new SellPageLocationAndShipping(driver).clickDoneBtn();
     }
 
@@ -157,25 +159,29 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 22)
-    public void openSellerPageForVerification(){
-        new HomePage(driver).clickAccountPageLink()
-        .clickTab(1);
+    public void openAccountPageForVerification(){
+        new HomePage(driver).clickNavbarTab(2);
     }
 
     @Test(priority = 23)
+    public void openSellerPageForVerification(){
+        new AccountPage(driver).clickTab(1);
+    }
+
+    @Test(priority = 24)
     @Parameters("status")
     public void openSellerTab(String status){
         new SellerPage(driver).openSellerTab(status);
     }
 
-    @Test(priority = 24)
+    @Test(priority = 25)
     @Parameters("status")
     public void verifySellerTab(String status){
        Assert.assertTrue(new SellerPage(driver).verifyActiveTab(status));
     }
 
-    @Test(priority = 25)
-    public void verifyNewItemInTable(){
+    @Test(priority = 26)
+    public void verifyNewItemInTable() throws InterruptedException {
         Assert.assertTrue(new SellerPage(driver).verifyItemInTable(NEW_ITEM_TITLE));
     }
 }

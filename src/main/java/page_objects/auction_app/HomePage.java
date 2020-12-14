@@ -16,23 +16,20 @@ public class HomePage extends PageBase {
     final static private String PAGE_URL_REGEX = "\\/d*";
     final static private String LOGIN_LINK_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[1]";
     final static private String CREATE_ACCOUNT_LINK_XPATH = "//*[@id='root']/div/div[1]/div[2]/a[2]";
-    final static private String HOME_PAGE_LINK = "//*[@id='root']/div/div[2]/div[2]/a[1]";
     final static private String FEATURED_PRODUCT = "//*[@id='root']/div/div[3]/div[1]/div[2]/div/button";
     final static private String CATEGORIES_LIST_XPATH = "//*[@id='root']/div/div[3]/div[1]/div[1]/button";
     final static private String FEATURED_PRODUCTS_LIST_XPATH = "//*[@id='root']/div/div[3]/div[3]/div[2]/div/h3";
-    final static private String ACCOUNT_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[3]";
-    final static private String SHOP_PAGE_LINK_XPATH = "//*[@id='root']/div/div[2]/div[2]/a[2]";
     final static private String SEARCH_INPUT_XPATH = "//*[@id='root']/div/div[2]/div[1]/input";
-    final static private String EXTERNAL_LINKS = "a";
+    final static private String NAVBAR_TABS_XPATH = "//*[@id='root']/div/div[2]/div[2]/a";
 
     public HomePage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
 
-    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
-
     Random rand = new Random();
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
 
     private void waitForVisibilityAllElements(List<WebElement> list){
         wait.until(ExpectedConditions.visibilityOfAllElements(list));
@@ -46,14 +43,15 @@ public class HomePage extends PageBase {
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(listXpath), number));
     }
 
+    private void waitForVisibilityOfElement(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
     @FindBy(xpath = LOGIN_LINK_XPATH)
     private WebElement loginLink;
 
     @FindBy(xpath = CREATE_ACCOUNT_LINK_XPATH)
     private WebElement createAccountLink;
-
-    @FindBy(xpath = HOME_PAGE_LINK)
-    private WebElement homepageLink;
 
     @FindBy(xpath = FEATURED_PRODUCT)
     private WebElement featuredProduct;
@@ -64,32 +62,20 @@ public class HomePage extends PageBase {
     @FindBy(xpath = FEATURED_PRODUCTS_LIST_XPATH)
     private List<WebElement> featuredProductsList;
 
-    @FindBy(xpath = ACCOUNT_PAGE_LINK_XPATH)
-    private WebElement accountPage;
-
-    @FindBy(xpath = SHOP_PAGE_LINK_XPATH)
-    private WebElement shopPageLink;
-
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     private WebElement searchInput;
 
-    @FindBy(tagName = EXTERNAL_LINKS)
-    private List<WebElement> externalLinksList;
+    @FindBy(xpath = NAVBAR_TABS_XPATH)
+    private List<WebElement> navbarTabs;
 
-    /*public List<WebElement> getExternalLinksList(){
-        return externalLinksList;
-    }*/
+    //GETTERS
 
-    public WebElement getShopPageLink() {
-        return shopPageLink;
+    public List<WebElement> getNavbarTabs(){
+        return navbarTabs;
     }
 
     public WebElement getSearchInput(){
         return searchInput;
-    }
-
-    public WebElement getAccountPage(){
-        return accountPage;
     }
 
     public List<WebElement> getFeaturedProductsList() {
@@ -98,10 +84,6 @@ public class HomePage extends PageBase {
 
     public List<WebElement> getCategoriesList() {
         return categoriesList;
-    }
-
-    public WebElement getHomepageLink(){
-        return homepageLink;
     }
 
     public WebElement getLoginLink(){
@@ -116,10 +98,12 @@ public class HomePage extends PageBase {
         return featuredProduct;
     }
 
-    public AccountPage clickAccountPageLink(){
-        waitForElementToBeClickable(getAccountPage());
-        getAccountPage().click();
-        return new AccountPage(getDriver());
+    //METHODS
+
+    public void clickNavbarTab(int index){
+        waitForVisibilityAllElements(getNavbarTabs());
+        waitForVisibilityOfElement(getNavbarTabs().get(index));
+        getNavbarTabs().get(index).click();
     }
 
     public RegistrationPage clickCreateAccountLink(){
@@ -133,11 +117,18 @@ public class HomePage extends PageBase {
     }
 
     public Boolean verifyHomepageLink(String attributeValue){
-        String classValue = getHomepageLink().getAttribute("class");
-        return classValue.contains(attributeValue);
+        waitForVisibilityOfElement(getNavbarTabs().get(0));
+        String classValue = getNavbarTabs().get(0).getAttribute("class");
+        boolean homeAttribute = classValue.contains(attributeValue);
+        if(homeAttribute){
+            System.out.println("Home page is opened.");
+        } else System.out.println("Home page is not opened.");
+        return homeAttribute;
     }
 
     public ItemPage clickOnFirstProduct(){
+        waitForVisibilityOfElement(getFeaturedProduct());
+        waitForElementToBeClickable(getFeaturedProduct());
         getFeaturedProduct().click();
         return new ItemPage(getDriver());
     }
@@ -152,7 +143,6 @@ public class HomePage extends PageBase {
     }
 
     public ItemPage selectRandomFeaturedProduct(){
-        // Find and click on a random product
         waitForVisibilityAllElements(getFeaturedProductsList());
         waitForListElementsNum(FEATURED_PRODUCTS_LIST_XPATH, 3);
         List<WebElement> allProducts = getFeaturedProductsList();
@@ -161,12 +151,8 @@ public class HomePage extends PageBase {
         return new ItemPage(getDriver());
     }
 
-    public ShopPage clickShopPageLink(){
-        getShopPageLink().click();
-        return new ShopPage(getDriver());
-    }
-
     public ShopPage searchItem(String query) throws InterruptedException {
+        waitForVisibilityOfElement(getSearchInput());
         Thread.sleep(1000);
         getSearchInput().clear();
         getSearchInput().sendKeys(query, Keys.ENTER);
@@ -174,7 +160,8 @@ public class HomePage extends PageBase {
     }
 
     public boolean verifySearchInput(String query){
-        System.out.println(getSearchInput().getAttribute("value"));
+        System.out.println("Search input: " + query);
+        System.out.println("Search input entered: " + getSearchInput().getAttribute("value"));
         return getSearchInput().getAttribute("value").equals(query);
     }
 

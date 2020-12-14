@@ -2,7 +2,7 @@
 
 <suite name="Smoke test" verbose="9">
     <parameter name="url" value="https://auction-app-test.netlify.app/"/>
-    <parameter name="browser" value="chrome"/>
+
     <test name="Register Account">
         <classes>
             <class name="smoke.RegisterAccount"/>

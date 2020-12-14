@@ -20,10 +20,14 @@ public class AccountPage extends PageBase {
         initElements();
     }
 
-    WebDriverWait wait = new WebDriverWait(getDriver(),30);
+    WebDriverWait wait = new WebDriverWait(getDriver(), 20);
 
-    public void waitForVisibility(WebElement element){
+    private void waitForVisibilityOfElement(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    private void waitForElementToBeClickable(WebElement element){
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     @FindBy(xpath = ACCOUNT_TABS_XPATH)
@@ -34,6 +38,8 @@ public class AccountPage extends PageBase {
 
     @FindBy(xpath = SUCCESS_MESSAGE_XPATH)
     private WebElement createAccSuccessMessage;
+
+    //GETTERS
 
     public WebElement getCloseAlert(){
         return closeAlert;
@@ -47,17 +53,21 @@ public class AccountPage extends PageBase {
         return createAccSuccessMessage;
     }
 
+    //METHODS
+
     public void clickTab(int index){
         getAccountTabs().get(index).click();
     }
 
     public void closeAlertBtn(){
+        waitForVisibilityOfElement(getCloseAlert());
+        waitForElementToBeClickable(getCloseAlert());
         getCloseAlert().click();
     }
 
     public Boolean verifySuccessMessage(String successMessage){
-        waitForVisibility(getCloseAlert());
-        System.out.println("S:" + getSuccessMessage().getText());
+        waitForVisibilityOfElement(getCloseAlert());
+        System.out.println("Displayed message:" + getSuccessMessage().getText());
         return getSuccessMessage().getText().contains(successMessage);
     }
 

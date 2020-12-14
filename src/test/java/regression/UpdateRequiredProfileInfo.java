@@ -14,6 +14,8 @@ public class UpdateRequiredProfileInfo extends TestBase {
     final private static String LAST_NAME = "Bah";
     final private static String PHONE = "61123123";
     final private static String GENDER = "Female";
+    final private static String UPDATED_FIRST_NAME = "Nanna";
+    final private static String UPDATED_LAST_NAME = "Lya";
     final private static String EXPECTED_UPDATE_SUCCESS_MSG = "You have successfully updated your profile info!";
     final static private String EXPECTED_ACCOUNT_SUCCESS_MSG = "Account created successfully";
     final static private String EXISTING_EMAIL = "user_n@gmail.com";
@@ -103,7 +105,7 @@ public class UpdateRequiredProfileInfo extends TestBase {
 
     @Test(priority = 15)
     public void populateRequiredFields(){
-        getProfilePage().populateRequiredFields(FIRST_NAME,LAST_NAME, GENDER, PHONE, EMAIL);
+        getProfilePage().populateRequiredFields(UPDATED_FIRST_NAME,UPDATED_LAST_NAME, GENDER, PHONE, EMAIL);
     }
 
     @Test(priority = 16)
@@ -123,12 +125,12 @@ public class UpdateRequiredProfileInfo extends TestBase {
 
     @Test(priority = 19)
     public void verifyFirstName(){
-        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getFirstNameInput(), FIRST_NAME));
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getFirstNameInput(), UPDATED_FIRST_NAME));
     }
 
     @Test(priority = 20)
     public void verifyLastName(){
-        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getLastNameInput(), LAST_NAME));
+        Assert.assertTrue(getProfilePage().verifyUpdatedField(getProfilePage().getLastNameInput(), UPDATED_LAST_NAME));
     }
 
     @Test(priority = 21)

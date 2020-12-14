@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,6 +45,11 @@ public class SellPageProductInfo extends PageBase {
     private void waitForListElementsNum(String listXpath, int number){
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(listXpath), number));
     }
+
+    public void waitForVisibilityOfElement(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
 
     @FindBy(xpath = ITEM_TITLE_INPUT_XPATH)
     private WebElement itemTitleInput;
@@ -91,6 +95,8 @@ public class SellPageProductInfo extends PageBase {
 
     @FindBy(xpath = UPLOAD_PHOTOS_MSG_XPATH)
     private WebElement uploadPhotosMsg;
+
+    //GETTERS
 
     public WebElement getUploadPhotosMsg(){
         return uploadPhotosMsg;
@@ -152,6 +158,7 @@ public class SellPageProductInfo extends PageBase {
         return new Select(subcategoryDropdown);
     }
 
+    //METHODS
 
     public SellPageSetPrices populateForm(String title, String description, String filePath, String extension, int quantity){
         getItemTitleInput().sendKeys(title);
@@ -163,7 +170,7 @@ public class SellPageProductInfo extends PageBase {
         getColorDropdown().selectByIndex(getRandomNumber(2, getColorValues().size()));
         waitForListElementsNum(SIZE_VALUES_XPATH, 2);
         getSizeDropdown().selectByIndex(getRandomNumber(2, getSizeValues().size()));
-        uploadPhotos(filePath, extension, quantity);
+        //uploadPhotos(filePath, extension, quantity); EXECUTE FILES UPLOAD ONLY LOCALLY
         getNextBtn().click();
         return new SellPageSetPrices(getDriver());
     }
@@ -186,8 +193,11 @@ public class SellPageProductInfo extends PageBase {
         return uploadedPhotosSize == quantity;
     }
 
-    public boolean verifyStepTitle(String stepTitle){
-        return getStepTitle().getText().equals(stepTitle);
+    public boolean verifyStepTitle(String stepTitle) {
+        waitForVisibilityOfElement(getItemTitleInput());
+        boolean step = getStepTitle().getText().equals(stepTitle);
+        System.out.println("Step title is: " + getStepTitle().getText());
+        return step;
     }
 
     public boolean verifyMsgForPhotoUploads(int quantity){

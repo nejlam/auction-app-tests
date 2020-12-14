@@ -22,7 +22,9 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/div/label";
     final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[2]/label";
     final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[3]/label";
-    //credit card info vars
+    final static private String DONE_BTN_XPATH = "//*[@id='btn-sell-done']";
+    final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
+    //payment info vars
     final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
     final static private String CARD_NUMBER_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[2]/input";
     final static private String EXP_YEAR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select";
@@ -30,10 +32,6 @@ public class SellPageLocationAndShipping extends PageBase {
     final static private String EXP_MONTH_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select";
     final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option";
     final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
-
-    final static private String DONE_BTN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[8]/button[2]";
-    final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
-
 
     public SellPageLocationAndShipping(WebDriver driver) {
         super(driver, PAGE_URL_REGEX);
@@ -47,7 +45,7 @@ public class SellPageLocationAndShipping extends PageBase {
 
     WebDriverWait wait = new WebDriverWait(getDriver(),30);
 
-    public void waitForVisibility(WebElement element){
+    public void waitForVisibilityOfElement(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -117,10 +115,6 @@ public class SellPageLocationAndShipping extends PageBase {
 
     public List<WebElement> getExpYearValues() {
         return expYearValues;
-    }
-
-    public List<WebElement> getExpMonthValues() {
-        return expMonthValues;
     }
 
     public List<WebElement> getCityDropdownValues() {
@@ -198,6 +192,7 @@ public class SellPageLocationAndShipping extends PageBase {
     }
 
     public void populateCardPaymentForm(String nameOnCard, String cardNumber, String cvc) {
+        waitForVisibilityOfElement(getCreditCardCheckbox());
         getCreditCardCheckbox().click();
         getNameOnCardInput().sendKeys(nameOnCard);
         getCardNumberInput().sendKeys(cardNumber);
@@ -206,22 +201,29 @@ public class SellPageLocationAndShipping extends PageBase {
         getCvcInput().sendKeys(cvc);
     }
 
-    public ItemPage clickDoneBtn() {
+    public ItemPage clickDoneBtn() throws InterruptedException {
+        waitForVisibilityOfElement(getDoneBtn());
         getDoneBtn().click();
+        System.out.println("Done button is clicked");
+        Thread.sleep(2000);
         return new ItemPage(getDriver());
     }
 
     public void clickFeatureProductPayment() {
+        waitForVisibilityOfElement(getFeatureCheckbox());
         getFeatureCheckbox().click();
     }
 
     public void clickShippingPayment() {
+        waitForVisibilityOfElement(getShippingCheckbox());
         getShippingCheckbox().click();
     }
 
     public boolean verifyStepTitle(String stepTitle) {
-        waitForVisibility(getAddressInput());
-        return getStepTitle().getText().equals(stepTitle);
+        waitForVisibilityOfElement(getAddressInput());
+        boolean step = getStepTitle().getText().equals(stepTitle);
+        System.out.println("Step title is: " + getStepTitle().getText());
+        return step;
     }
 
 }

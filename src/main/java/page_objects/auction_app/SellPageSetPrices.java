@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page_objects.PageBase;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +29,7 @@ public class SellPageSetPrices extends PageBase {
 
     WebDriverWait wait = new WebDriverWait(getDriver(),30);
 
-    public void waitForVisibility(WebElement element){
+    public void waitForVisibilityOfElement(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -74,6 +73,8 @@ public class SellPageSetPrices extends PageBase {
     @FindBy(xpath = STEP_TITLE)
     private WebElement stepTitle;
 
+    //GETTERS
+
     public WebElement getStepTitle(){
         return stepTitle;
     }
@@ -94,7 +95,11 @@ public class SellPageSetPrices extends PageBase {
         return endDateInput;
     }
 
+    //METHODS
+
     public void setDatesAndClickNext(String status){
+        waitForVisibilityOfElement(getStartDateInput());
+        waitForVisibilityOfElement(getEndDateInput());
         if(status.equals("Active")){
             getStartDateInput().sendKeys(getToday(), Keys.ENTER);
             getEndDateInput().sendKeys(addDaysToToday(1), Keys.ENTER);
@@ -107,12 +112,17 @@ public class SellPageSetPrices extends PageBase {
     }
 
     public void setStartPrice(){
-        getPriceInput().sendKeys(getRandomDouble());
+        waitForVisibilityOfElement(getPriceInput());
+        String price = getRandomDouble();
+        getPriceInput().sendKeys(price);
+        System.out.println("Start price entered is: " + price);
     }
 
-    public boolean verifyStepTitle(String stepTitle){
-        waitForVisibility(getPriceInput());
-        return getStepTitle().getText().equals(stepTitle);
+    public boolean verifyStepTitle(String stepTitle) {
+        waitForVisibilityOfElement(getPriceInput());
+        boolean step = getStepTitle().getText().equals(stepTitle);
+        System.out.println("Step title is: " + getStepTitle().getText());
+        return step;
     }
 
 
