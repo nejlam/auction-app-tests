@@ -22,11 +22,11 @@ This is a test automation project done as a part of the [Atlantbh](https://www.a
  mvn --v
  ```
  
- ## Running the tests
+ ## Running the tests locally 
 
-To run the tests go to the project folder, and type in terminal:
+To run the tests locally go to the project folder, and type in terminal:
 
 ```
- mvn clean test -DsuiteXmlFile={suiteName}
- ```
-example: mvn clean test -DsuiteXmlFile=smoke.xml.
+ mvn clean test -DsuiteXmlFile={suiteName} -Dbrowser=chrome
+ ``` 
+example: mvn clean test -DsuiteXmlFile=smoke.xml -Dbrowser=chrome
