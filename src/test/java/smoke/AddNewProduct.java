@@ -79,8 +79,8 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 5)
-    public void openAccountPage(){
-        new HomePage(driver).clickNavbarTab(2);
+    public void closeAlertBtn(){
+        new AccountPage(driver).closeAlertBtn();
     }
 
     @Test(priority = 6)
