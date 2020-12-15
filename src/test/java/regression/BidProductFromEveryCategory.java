@@ -10,8 +10,8 @@ import testUtils.TestBase;
 
 public class BidProductFromEveryCategory extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
-    final static private String PASSWORD = "11111111";
-    final static private String EMAIL = "betharmon@gmail.com";
+    final static private String PASSWORD = "aaaaaaaa";
+    final static private String EMAIL = "c@gmail.com";
 
 
     @Test(priority = 0)

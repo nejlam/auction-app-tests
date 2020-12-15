@@ -18,7 +18,7 @@ public class UpdateRequiredProfileInfo extends TestBase {
     final private static String UPDATED_LAST_NAME = "Lya";
     final private static String EXPECTED_UPDATE_SUCCESS_MSG = "You have successfully updated your profile info!";
     final static private String EXPECTED_ACCOUNT_SUCCESS_MSG = "Account created successfully";
-    final static private String EXISTING_EMAIL = "user_n@gmail.com";
+    final static private String EXISTING_EMAIL = "a@gmail.com";
     final static private String EXPECTED_EMAIL_ERROR_MSG = "Email already in use";
     final private String EMAIL = getEmail();
 

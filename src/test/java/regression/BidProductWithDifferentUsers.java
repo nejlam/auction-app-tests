@@ -12,7 +12,7 @@ import testUtils.TestBase;
 public class BidProductWithDifferentUsers extends TestBase {
 
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
-    final static private String SEARCH_QUERY = "Ketchup";
+    final static private String SEARCH_QUERY = "Fridge";
     final static private String PASSWORD = "aaaaaaaa";
     final static private String HIGHEST_BID_SUCCESS_MSG = "Congratulations! You are the highest bidder!";
 

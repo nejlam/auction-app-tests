@@ -10,7 +10,7 @@
 
   <name>auction-app-tests</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.auction-app-test.netlify.com</url>
+  <url>http://www.auction-app-master.netlify.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

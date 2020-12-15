@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Smoke test" verbose="9">
-    <parameter name="url" value="https://auction-app-test.netlify.app/"/>
+    <parameter name="url" value="https://auction-app-master.netlify.app/"/>
 
     <test name="Register Account">
         <classes>

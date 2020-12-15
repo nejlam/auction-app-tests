@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Regression tests" verbose="9">
-    <parameter name="url" value="https://auction-app-test.netlify.app/"/>
+    <parameter name="url" value="https://auction-app-master.netlify.app/"/>
 
     <test name="Bid product from Every Category">
             <classes>
@@ -16,28 +16,21 @@
     </test>
 
     <test name="Bid product with different users #1">
-        <parameter name="email" value="user.a@gmail.com"/>
+        <parameter name="email" value="a@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
 
     <test name="Bid product with different users #2">
-        <parameter name="email" value="user.b@gmail.com"/>
+        <parameter name="email" value="b@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
 
     <test name="Bid product with different users #3">
-        <parameter name="email" value="user.c@gmail.com"/>
-        <classes>
-            <class name="regression.BidProductWithDifferentUsers"/>
-        </classes>
-    </test>
-
-    <test name="Bid product with different users #4">
-        <parameter name="email" value="user.d@gmail.com"/>
+        <parameter name="email" value="c@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
