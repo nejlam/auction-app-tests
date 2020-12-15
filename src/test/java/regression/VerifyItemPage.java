@@ -10,7 +10,7 @@ import testUtils.TestBase;
 
 public class VerifyItemPage extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
-    final static private String EMAIL = "c@gmail.com";
+    final static private String EMAIL = "auctionapp.atlantbh@gmail.com";
     final static private String PASSWORD = "aaaaaaaa";
 
     @Test(priority = 0)
