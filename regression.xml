@@ -2,7 +2,7 @@
 
 <suite name="Regression tests" verbose="9">
     <parameter name="url" value="https://auction-app-master.netlify.app/"/>
-<!--
+
     <test name="Bid product from Every Category">
             <classes>
                 <class name="regression.BidProductFromEveryCategory"/>
@@ -71,7 +71,7 @@
             <class name="regression.VerifyBrokenLinks"/>
         </classes>
     </test>
--->
+
     <test name="Schedule New Item">
         <parameter name="status" value="Scheduled"/>
         <classes>
