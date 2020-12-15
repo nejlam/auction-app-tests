@@ -14,10 +14,15 @@ import testUtils.TestBase;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddNewProduct extends TestBase {
 
+    final private static String FIRST_NAME = "Anny";
+    final private static String LAST_NAME = "Bah";
+    final private static String PASSWORD = "aaaaaaaa";
     final static private String COUNTRY = "Bosnia and Herzegovina";
     final static private String ZIPCODE = "71000";
     final static private String PHONE = "61123123";
@@ -33,13 +38,14 @@ public class AddNewProduct extends TestBase {
     final static private String PRICES_INFO_TEXT = "SET PRICES";
     final static private String LOCATION_SHIPPING_INFO_TEXT = "LOCATION & SHIPPING";
     final private String NEW_ITEM_TITLE = getLorem().getWords(2,4);
+    final static private String EXPECTED_ACCOUNT_SUCCESS_MSG = "Account created successfully";
 
 
     @BeforeTest
-    public String getEmail() throws IOException {
-        CSVReader reader = new CSVReader(new FileReader("data/data.csv"));
-        String[] email = reader.readNext();
-        return email[0];
+    private String getEmail(){
+        SimpleDateFormat formatter = new SimpleDateFormat("MMddHHmm");
+        Date date = new Date();
+        return formatter.format(date)+"nana@gmail.com";
     }
 
     public Lorem getLorem(){
@@ -52,46 +58,52 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 1)
-    public void openLoginPage(){
-        new HomePage(driver).clickLoginLink();
+    public void openRegistrationPage(){
+        new HomePage(driver).clickCreateAccountLink();
     }
 
+
     @Test(priority = 2)
-    public void populateLoginForm() throws IOException {
-        new LoginPage(driver).populateLoginForm(getEmail(), new RegisterAccount().getPassword());
+    public void checkAgreeToTerms(){
+        new RegistrationPage(driver).clickAgreeToTermsCheck();
     }
 
     @Test(priority = 3)
-    public void verifyHomePageAfterLogin(){
-        Assert.assertTrue((new HomePage(driver)).verifyHomepageLink(new RegisterAccount().getHomeActiveLinkValue()));
+    public void populateRegistrationForm() {
+        new RegistrationPage(driver).populateForm(FIRST_NAME, LAST_NAME, getEmail(), PASSWORD);
     }
 
     @Test(priority = 4)
+    public void verifyAccountIsRegistered(){
+        Assert.assertTrue(new AccountPage(driver).verifySuccessMessage(EXPECTED_ACCOUNT_SUCCESS_MSG));
+    }
+
+    @Test(priority = 5)
     public void openAccountPage(){
         new HomePage(driver).clickNavbarTab(2);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 6)
     public void openSellerPage(){
         new AccountPage(driver).clickTab(1);
     }
 
-    @Test(priority = 6)
+    @Test(priority = 7)
     public void verifySellerPage(){
         Assert.assertTrue(new AccountPage(driver).verifyActiveTab(SELLER_TAB, 1));
     }
 
-    @Test(priority = 7)
+    @Test(priority = 8)
     public void openSellWizard(){
         new SellerPage(driver).clickStartSellingBtn();
     }
 
-    @Test(priority = 8)
+    @Test(priority = 9)
     public void verifyProductInfoStep(){
         Assert.assertTrue(new SellPageProductInfo(driver).verifyStepTitle(PRODUCT_INFO_TEXT));
     }
 
-    @Test(priority = 9)
+    @Test(priority = 10)
     public void populateProductInfo(){
         new SellPageProductInfo(driver).populateForm(NEW_ITEM_TITLE, getLorem().getWords(5,10),
                 PHOTO_FILE_PATH, PHOTO_EXTENSION, PHOTOS_QUANTITY);

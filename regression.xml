@@ -30,7 +30,7 @@
     </test>
 
     <test name="Bid product with different users #3">
-        <parameter name="email" value="c@gmail.com"/>
+        <parameter name="email" value="auctionapp.atlantbh@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
