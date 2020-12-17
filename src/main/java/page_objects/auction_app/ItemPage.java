@@ -125,10 +125,6 @@ public class ItemPage extends PageBase {
         return alertMsg;
     }
 
-    public WebElement getProductTitle(){
-        return productTitle;
-    }
-
     public WebElement getEnterPriceMsg(){
         return enterPriceMsg;
     }
@@ -249,10 +245,6 @@ public class ItemPage extends PageBase {
     public void placeBid(String bidValueMsg){
         waitForVisibility(getHighestBid());
         waitForVisibility(getEnterPriceMsg());
-        System.out.println("---------Values for placing a bid:-------");
-        System.out.println("Item name: " + getProductTitle().getText());
-        System.out.println("Enter price msg: " + extractEnterPriceMsg());
-        System.out.println("Enter bid value: " + getNum(extractEnterPriceMsg()));
         getAddBidInput().sendKeys(getNum(bidValueMsg));
         clickBidButton();
     }
@@ -290,11 +282,8 @@ public class ItemPage extends PageBase {
 
 
     public ItemPage checkEnterMsgAndPlaceBid() throws InterruptedException {
-        System.out.println("Msg before loop:" + extractEnterPriceMsg());
         if(getEnterPriceMsg().getText().equals("Enter $0 or more")) {
-            System.out.println("Msg before wait:" + getEnterPriceMsg().getText());
             Thread.sleep(1000);
-            System.out.println("Msg after wait:" + getEnterPriceMsg().getText());
         } placeBid(getEnterPriceMsg().getText());
         return this;
     }
