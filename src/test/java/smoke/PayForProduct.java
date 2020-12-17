@@ -8,7 +8,7 @@ import testUtils.TestBase;
 public class PayForProduct extends TestBase {
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String PASSWORD = "aaaaaaaa";
-    final static private String EMAIL = "c@gmail.com";
+    final static private String EMAIL = "t1@gmail.com";
     final static private String NAME_ON_CARD = "Beth";
     final static private String CARD_NUMBER = "4242424242424242";
     final static private String CVC = "123";
