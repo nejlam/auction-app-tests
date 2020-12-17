@@ -11,7 +11,7 @@ import java.io.IOException;
 public class RegisterWithExistingEmail extends TestBase {
     final static private String FIRST_NAME = "Beth";
     final static private String LAST_NAME = "Harmon";
-    final static private String EXISTING_EMAIL = "user_n@gmail.com";
+    final static private String EXISTING_EMAIL = "a@gmail.com";
     final static private String PASSWORD = "12345678";
     final static private String ACTIVE_LINK_ATTRIBUTE_VALUE = "black-active-nav-link";
     final static private String EXPECTED_EMAIL_ERROR_MSG = "Email already in use";

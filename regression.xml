@@ -16,21 +16,21 @@
     </test>
 
     <test name="Bid product with different users #1">
-        <parameter name="email" value="a@gmail.com"/>
+        <parameter name="email" value="t1@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
 
     <test name="Bid product with different users #2">
-        <parameter name="email" value="b@gmail.com"/>
+        <parameter name="email" value="t2@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
     </test>
 
     <test name="Bid product with different users #3">
-        <parameter name="email" value="auctionapp.atlantbh@gmail.com"/>
+        <parameter name="email" value="t3@gmail.com"/>
         <classes>
             <class name="regression.BidProductWithDifferentUsers"/>
         </classes>
