@@ -11,27 +11,27 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SellPageLocationAndShipping extends PageBase {
-    final static private String PAGE_URL_REGEX = "\\/my_account/seller\\d*";
-    final static private String ADDRESS_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[1]/input";
-    final static private String COUNTRY_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[1]/select";
-    final static private String CITY_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select";
-    final static private String CITY_DROPDOWN_VALUES = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[2]/div[2]/select/option";
-    final static private String ZIPCODE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[3]/input";
-    final static private String PHONE_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[4]/div/input";
+    final static private String PAGE_URL_REGEX = "\\/my_account\\d*";
+    final static private String ADDRESS_INPUT_NAME = "street";
+    final static private String COUNTRY_DROPDOWN_NAME = "country";
+    final static private String CITY_DROPDOWN_NAME = "city";
+    final static private String CITY_DROPDOWN_VALUES = "//*[@name='city']/option";
+    final static private String ZIPCODE_INPUT_NAME = "zip";
+    final static private String PHONE_INPUT_NAME = "phone";
     final static private String SHIPPING_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[5]/div/label";
     final static private String FEATURE_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[6]/div/label";
     final static private String PAYPAL_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[2]/label";
     final static private String CREDIT_CARD_CHECKBOX_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[3]/label";
-    final static private String DONE_BTN_XPATH = "//*[@id='btn-sell-done']";
+    final static private String DONE_BTN_XPATH = "//*[@type='submit']";
     final static private String STEP_TITLE = "//*[@id='root']/div/div[3]/div[2]/div[1]";
     //payment info vars
-    final static private String NAME_ON_CARD_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[1]/input";
-    final static private String CARD_NUMBER_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[4]/div[2]/input";
-    final static private String EXP_YEAR_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select";
-    final static private String EXP_YEAR_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[1]/select/option";
-    final static private String EXP_MONTH_DROPDOWN_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select";
-    final static private String EXP_MONTH_VALUES_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[1]/div[2]/select/option";
-    final static private String CVC_INPUT_XPATH = "//*[@id='root']/div/div[3]/div[2]/div[2]/form/div[7]/div[5]/div[2]/input";
+    final static private String NAME_ON_CARD_INPUT_NAME = "card.name";
+    final static private String CARD_NUMBER_INPUT_NAME = "card.cardNumber";
+    final static private String EXP_YEAR_DROPDOWN_NAME = "card.expirationYear";
+    final static private String EXP_YEAR_VALUES_XPATH = "//*[@name='card.expirationYear']/option";
+    final static private String EXP_MONTH_DROPDOWN_NAME = "card.expirationMonth";
+    final static private String EXP_MONTH_VALUES_XPATH = "//*[@name='card.expirationMonth']/option";
+    final static private String CVC_INPUT_NAME = "card.cvc";
 
     public SellPageLocationAndShipping(WebDriver driver) {
         super(driver, PAGE_URL_REGEX);
@@ -50,19 +50,19 @@ public class SellPageLocationAndShipping extends PageBase {
     }
 
 
-    @FindBy(xpath = ADDRESS_INPUT_XPATH)
+    @FindBy(name = ADDRESS_INPUT_NAME)
     private WebElement addressInput;
 
-    @FindBy(xpath = COUNTRY_DROPDOWN_XPATH)
+    @FindBy(name = COUNTRY_DROPDOWN_NAME)
     private WebElement countryDropdown;
 
-    @FindBy(xpath = CITY_DROPDOWN_XPATH)
+    @FindBy(name = CITY_DROPDOWN_NAME)
     private WebElement cityDropdown;
 
-    @FindBy(xpath = ZIPCODE_INPUT_XPATH)
+    @FindBy(name = ZIPCODE_INPUT_NAME)
     private WebElement zipcodeInput;
 
-    @FindBy(xpath = PHONE_INPUT_XPATH)
+    @FindBy(name = PHONE_INPUT_NAME)
     private WebElement phoneInput;
 
     @FindBy(xpath = SHIPPING_CHECKBOX_XPATH)
@@ -77,19 +77,19 @@ public class SellPageLocationAndShipping extends PageBase {
     @FindBy(xpath = CREDIT_CARD_CHECKBOX_XPATH)
     private WebElement creditCardCheckbox;
 
-    @FindBy(xpath = NAME_ON_CARD_INPUT_XPATH)
+    @FindBy(name = NAME_ON_CARD_INPUT_NAME)
     private WebElement nameOnCardInput;
 
-    @FindBy(xpath = CARD_NUMBER_INPUT_XPATH)
+    @FindBy(name = CARD_NUMBER_INPUT_NAME)
     private WebElement cardNumberInput;
 
-    @FindBy(xpath = EXP_YEAR_DROPDOWN_XPATH)
+    @FindBy(name = EXP_YEAR_DROPDOWN_NAME)
     private WebElement expYearDropdown;
 
-    @FindBy(xpath = EXP_MONTH_DROPDOWN_XPATH)
+    @FindBy(name = EXP_MONTH_DROPDOWN_NAME)
     private WebElement expMonthDropdown;
 
-    @FindBy(xpath = CVC_INPUT_XPATH)
+    @FindBy(name = CVC_INPUT_NAME)
     private WebElement cvcInput;
 
     @FindBy(xpath = DONE_BTN_XPATH)
@@ -184,6 +184,7 @@ public class SellPageLocationAndShipping extends PageBase {
     //METHODS
 
     public void populateLocationForm(String address, String country, String zipCode, String phone) {
+        waitForVisibilityOfElement(getAddressInput());
         getAddressInput().sendKeys(address);
         getCountryDropdown().selectByVisibleText(country);
         getCityDropdown().selectByIndex(getRandomNumber(1, getCityDropdownValues().size()));
@@ -192,13 +193,17 @@ public class SellPageLocationAndShipping extends PageBase {
     }
 
     public void populateCardPaymentForm(String nameOnCard, String cardNumber, String cvc) {
-        waitForVisibilityOfElement(getCreditCardCheckbox());
-        getCreditCardCheckbox().click();
+        waitForVisibilityOfElement(getNameOnCardInput());
         getNameOnCardInput().sendKeys(nameOnCard);
         getCardNumberInput().sendKeys(cardNumber);
         getExpYearDropdown().selectByIndex(getRandomNumber(2, getExpYearValues().size()));
         getExpMonthDropdown().selectByIndex(getRandomNumber(2,getExpYearValues().size()));
         getCvcInput().sendKeys(cvc);
+    }
+
+    public void clickCreditCardCheckbox(){
+        waitForVisibilityOfElement(getCreditCardCheckbox());
+        getCreditCardCheckbox().click();
     }
 
     public ItemPage clickDoneBtn() throws InterruptedException {

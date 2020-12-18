@@ -175,6 +175,7 @@ public class SellPageProductInfo extends PageBase {
         return new SellPageSetPrices(getDriver());
     }
 
+    //EXECUTE ONLY LOCALLY
     private void uploadPhotos(String filePath, String fileExtension, int quantity){
         String photoPath = "";
         for(int i = 1; i<quantity; i++){
@@ -188,6 +189,7 @@ public class SellPageProductInfo extends PageBase {
         return msgNum;
     }
 
+    //EXECUTE ONLY LOCALLY
     public boolean verifyNumberOfAddedPhotos(int quantity){
         int uploadedPhotosSize = getUploadedFilesList().size();
         return uploadedPhotosSize == quantity;
@@ -200,6 +202,7 @@ public class SellPageProductInfo extends PageBase {
         return step;
     }
 
+    //EXECUTE ONLY LOCALLY
     public boolean verifyMsgForPhotoUploads(int quantity){
         if(getUploadedFilesList().size()>=10) {
             return getUploadPhotosMsg().getText().equals("You can't add anymore photos");

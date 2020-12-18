@@ -34,15 +34,15 @@ public class AccountPage extends PageBase {
     private List<WebElement> accountTabs;
 
     @FindBy(xpath = CLOSE_ALERT_BTN)
-    private WebElement closeAlert;
+    private WebElement closeAlertBtn;
 
     @FindBy(xpath = SUCCESS_MESSAGE_XPATH)
     private WebElement createAccSuccessMessage;
 
     //GETTERS
 
-    public WebElement getCloseAlert(){
-        return closeAlert;
+    public WebElement getCloseAlertBtn(){
+        return closeAlertBtn;
     }
 
     public List<WebElement> getAccountTabs(){
@@ -60,13 +60,13 @@ public class AccountPage extends PageBase {
     }
 
     public void closeAlertBtn(){
-        waitForVisibilityOfElement(getCloseAlert());
-        waitForElementToBeClickable(getCloseAlert());
-        getCloseAlert().click();
+        waitForVisibilityOfElement(getCloseAlertBtn());
+        waitForElementToBeClickable(getCloseAlertBtn());
+        getCloseAlertBtn().click();
     }
 
     public Boolean verifySuccessMessage(String successMessage){
-        waitForVisibilityOfElement(getCloseAlert());
+        waitForVisibilityOfElement(getCloseAlertBtn());
         System.out.println("Displayed message:" + getSuccessMessage().getText());
         return getSuccessMessage().getText().contains(successMessage);
     }

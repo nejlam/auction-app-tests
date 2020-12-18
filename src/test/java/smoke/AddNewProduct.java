@@ -144,43 +144,48 @@ public class AddNewProduct extends TestBase {
     }
 
     @Test(priority = 19)
-    public void populatePaymentInfo(){
-        new SellPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
+    public void chooseCreditCardPayment(){
+        new SellPageLocationAndShipping(driver).clickCreditCardCheckbox();
     }
 
     @Test(priority = 20)
+    public void populateCreditCardPaymentInfo(){
+        new SellPageLocationAndShipping(driver).populateCardPaymentForm(NAME_ON_CARD, CARD_NUMBER, CVC);
+    }
+
+    @Test(priority = 21)
     public void finishAddingItem() throws InterruptedException {
         new SellPageLocationAndShipping(driver).clickDoneBtn();
     }
 
-    @Test(priority = 21)
+    @Test(priority = 22)
     public void verifyProductIsAdded(){
        Assert.assertTrue(new ItemPage(driver).verifySuccessfulAdd(SUCCESS_ALERT));
     }
 
-    @Test(priority = 22)
+    @Test(priority = 23)
     public void openAccountPageForVerification(){
         new HomePage(driver).clickNavbarTab(2);
     }
 
-    @Test(priority = 23)
+    @Test(priority = 24)
     public void openSellerPageForVerification(){
         new AccountPage(driver).clickTab(1);
     }
 
-    @Test(priority = 24)
+    @Test(priority = 25)
     @Parameters("status")
     public void openSellerTab(String status){
         new SellerPage(driver).openSellerTab(status);
     }
 
-    @Test(priority = 25)
+    @Test(priority = 26)
     @Parameters("status")
     public void verifySellerTab(String status){
        Assert.assertTrue(new SellerPage(driver).verifyActiveTab(status));
     }
 
-    @Test(priority = 26)
+    @Test(priority = 27)
     public void verifyNewItemInTable() throws InterruptedException {
         Assert.assertTrue(new SellerPage(driver).verifyItemInTable(NEW_ITEM_TITLE));
     }

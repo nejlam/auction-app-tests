@@ -22,4 +22,11 @@
         </classes>
     </test>
 
+    <test name="Pay for Product">
+        <classes>
+            <class name="smoke.PayForProduct"/>
+        </classes>
+    </test>
+
+
 </suite>

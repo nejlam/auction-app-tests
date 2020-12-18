@@ -24,12 +24,17 @@ public class ShopPage extends PageBase {
     final static private String ITEM_TITLE_LIST_XPATH = "//*[@id='root']/div/div[3]/div/div[2]/div[2]/div/div/h3";
     private Object List;
 
+
     public ShopPage(WebDriver driver){
         super(driver, PAGE_URL_REGEX);
         initElements();
     }
 
     WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+
+    List<WebElement> allProducts = getItemTitleList();
+
+    Random rand = new Random();
 
     private void waitForVisibilityOfElement(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
@@ -83,8 +88,6 @@ public class ShopPage extends PageBase {
 
     public ItemPage selectRandomItem(){
         waitForVisibilityOfAllElem(getItemTitleList());
-        List<WebElement> allProducts = getItemTitleList();
-        Random rand = new Random();
         int randomProduct = rand.nextInt(allProducts.size());
         allProducts.get(randomProduct).click();
         return new ItemPage(getDriver());
